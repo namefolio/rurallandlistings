@@ -1,0 +1,18 @@
+# Deploys run in Cloudflare Workers Builds (the repo is connected to the Worker), so no Cloudflare secrets live here.
+# This workflow only triggers a daily rebuild, so expired Verified listings drop to Basic.
+# Setup: Worker > Settings > Builds > Deploy Hooks > create one, then add its URL as the repo secret DEPLOY_HOOK_URL.
+name: Daily rebuild
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Workers Builds deploy hook
+        env: { HOOK: '${{ secrets.DEPLOY_HOOK_URL }}' }
+        run: |
+          if [ -z "$HOOK" ]; then echo "DEPLOY_HOOK_URL not set; skipping."; exit 0; fi
+          curl -fsS -X POST "$HOOK"

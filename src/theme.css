@@ -1,0 +1,46 @@
+/* Niche design tokens. The next site changes this file (and site.config.ts), not src/styles/base.css.
+   Direction (docs/BRIEF.md): flash-sheet print. Ink on paper, 2px ink rules, one traditional-red accent.
+   Contrast (WCAG): ink/paper 17.5, red/paper 7.0, teal/paper 7.4, muted/paper 7.4, paper/ink 17.5 (banner). */
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('/fonts/atkinson-hyperlegible-next.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Metric-matched fallback so the swap does not shift layout. */
+@font-face {
+  font-family: 'Atkinson Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 104%;
+  ascent-override: 92%;
+  descent-override: 24%;
+}
+
+:root {
+  --font-body: 'Atkinson Hyperlegible Next', 'Atkinson Fallback', system-ui, sans-serif;
+  --font-size: 1.125rem; /* 18px */
+  --line-height: 1.6;
+  --measure: 70ch;
+  --heading-weight: 800;
+
+  --ink: #16130f;
+  --paper: #fbf8f2;
+  --surface: #ffffff;
+  --muted: #57514a;
+  --accent: #a4241c; /* traditional tattoo red: buttons, Verified rule, H1 bar */
+  --on-accent: #fbf8f2;
+  --link: #0d5c55;
+  --rule: #16130f;
+  --banner-bg: #16130f;
+  --banner-fg: #fbf8f2;
+  --focus: #0d5c55;
+
+  --border: 2px solid var(--rule);
+  --radius: 4px;
+  --accent-rule: 6px solid var(--accent);
+  --gap: 1.25rem;
+  --page: 72rem;
+}

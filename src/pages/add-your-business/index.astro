@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../../site.config';
+import { price } from '../../lib/copy';
+import { DAYS } from '../../lib/types';
+import { DAY_LABELS } from '../../lib/core';
+
+// The Worker fills in ?listing= and ?tier= and the Turnstile site key with HTMLRewriter,
+// so this page ships no JavaScript of its own.
+const e = site.entity;
+---
+<Base title={`Add or update a ${e.one} listing | ${site.name}`} description={`Send a new ${e.one} or a correction. Basic listings are free; Verified is ${price}.`} path="/add-your-business/" crumbs={[{ name: 'Home', url: '/' }, { name: 'Add or update a listing', url: '/add-your-business/' }]}>
+  <script slot="head" src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <p>Not sure which plan? <a href="/listing-plans/">Compare Basic and Verified</a>.</p>
+  <h1>Add or update a {e.one}</h1>
+  <p id="update-note" class="disclosure" hidden>You are sending an update for <strong id="update-name">this listing</strong>.</p>
+
+  <form method="post" action="/add-your-business/">
+    <input type="hidden" name="listing" value="" />
+    <fieldset>
+      <legend>Choose a listing</legend>
+      <div class="tier-cards">
+        <label class="tier-card"><input type="radio" name="tier" value="basic" checked /><strong>Basic (free)<span>Anyone can send a new {e.one} or a correction.</span></strong></label>
+        <label class="tier-card"><input type="radio" name="tier" value="verified" /><strong>Verified ({price})<span>Owners and staff only. We check the {site.credential.name} first.</span></strong></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>The {e.one}</legend>
+      <label for="f-name">Business name</label>
+      <input id="f-name" name="name" type="text" required maxlength="120" autocomplete="organization" />
+      <label for="f-street">Street address</label>
+      <input id="f-street" name="street" type="text" required maxlength="200" autocomplete="address-line1" />
+      <label for="f-city">City</label>
+      <input id="f-city" name="city" type="text" required maxlength="80" autocomplete="address-level2" />
+      <label for="f-region">State</label>
+      <input id="f-region" name="region" type="text" required maxlength="40" autocomplete="address-level1" />
+      <label for="f-postal">ZIP code</label>
+      <input id="f-postal" name="postalCode" type="text" required maxlength="12" autocomplete="postal-code" />
+      <label for="f-phone">Phone</label>
+      <input id="f-phone" name="phone" type="tel" maxlength="30" />
+      <label for="f-website">Website</label>
+      <input id="f-website" name="website" type="url" maxlength="300" placeholder="https://" />
+      <label for="f-sameas">Social links <span class="hint">(one per line)</span></label>
+      <textarea id="f-sameas" name="sameAs" maxlength="1000"></textarea>
+      <label for="f-desc">Short description <span class="hint">(up to 150 words, facts only)</span></label>
+      <textarea id="f-desc" name="description" maxlength="1200"></textarea>
+    </fieldset>
+
+    <details>
+      <summary>More details (optional)</summary>
+      <fieldset>
+        <legend>Opening hours <span class="hint">(like 11:00-19:00, or closed)</span></legend>
+        {DAYS.map((d) => (<><label for={`f-h-${d}`}>{DAY_LABELS[d]}</label><input id={`f-h-${d}`} name={`hours_${d}`} type="text" maxlength="40" /></>))}
+      </fieldset>
+      {site.attributes.map((a) =>
+        a.type === 'multi' ? (
+          <fieldset>
+            <legend>{a.label}</legend>
+            {Object.entries(a.options).map(([k, label]) => (
+              <label class="check"><input type="checkbox" name={a.key} value={k} />{label}</label>
+            ))}
+          </fieldset>
+        ) : a.type === 'bool' ? (
+          <><label for={`f-${a.key}`}>{a.label}</label>
+          <select id={`f-${a.key}`} name={a.key}><option value="">Not sure</option><option value="yes">Yes</option><option value="no">No</option></select></>
+        ) : (
+          <><label for={`f-${a.key}`}>{a.label}</label><input id={`f-${a.key}`} name={a.key} type="number" min="0" max={a.max ?? 1000000} inputmode="numeric" /></>
+        ),
+      )}
+    </details>
+
+    <fieldset>
+      <legend>About you <span class="hint">(never published)</span></legend>
+      <label for="f-sname">Your name</label>
+      <input id="f-sname" name="submitterName" type="text" required maxlength="100" autocomplete="name" />
+      <label for="f-semail">Your email</label>
+      <input id="f-semail" name="submitterEmail" type="email" required maxlength="200" autocomplete="email" />
+      <label for="f-rel">Your relationship to the business</label>
+      <select id="f-rel" name="relationship" required>
+        <option value="owner">Owner</option>
+        <option value="staff">Staff</option>
+        <option value="customer">Customer or visitor</option>
+      </select>
+      <label class="check"><input type="checkbox" name="consent" value="yes" required />I agree that the business details I send may be published, and that you may email me about this listing.</label>
+    </fieldset>
+
+    <div class="hp" aria-hidden="true">
+      <label for="f-hp">Leave this empty</label>
+      <input id="f-hp" name="fax_number" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+    <div class="cf-turnstile" data-sitekey=""></div>
+    <p class="muted">Customers’ corrections are always sent as Basic.</p>
+    <div class="btns"><button class="btn btn-primary" type="submit">Send listing details</button></div>
+  </form>
+</Base>

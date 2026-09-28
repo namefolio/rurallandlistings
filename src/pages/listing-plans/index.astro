@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faqs from '../../components/Faqs.astro';
+import { site } from '../../../site.config';
+import { basicBullets, howToSteps, payLabel, payLink, plansFaqs, plansIntro, price, verifiedBullets } from '../../lib/copy';
+import { faqPage } from '../../lib/jsonld';
+
+const e = site.entity;
+---
+<Base
+  title={`List your ${e.one}: Basic or Verified | ${site.name}`}
+  description={`Every ${e.one} can have a free Basic listing. Verified (${price}) adds a ${site.credential.name} check, owner confirmation and a place above Basic listings.`}
+  path="/listing-plans/"
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Listing plans', url: '/listing-plans/' }]}
+  jsonld={faqPage(plansFaqs)}
+>
+  <h1>List your {e.one}: Basic or Verified</h1>
+  <p class="lead">{plansIntro}</p>
+
+  <div class="plans">
+    <section class="plan" aria-labelledby="plan-basic">
+      <h2 id="plan-basic">Basic</h2>
+      <p class="price">Free</p>
+      <ul>{basicBullets.map((b) => <li>{b}</li>)}</ul>
+    </section>
+    <section class="plan is-verified" aria-labelledby="plan-verified">
+      <h2 id="plan-verified">Verified</h2>
+      <p class="price">{price}</p>
+      <ul>{verifiedBullets.map((b) => <li>{b}</li>)}</ul>
+    </section>
+  </div>
+
+  <h2>How to get a Verified listing</h2>
+  <ol>{howToSteps.map((s) => <li>{s}</li>)}</ol>
+
+  <div class="btns">
+    <a class="btn btn-primary" href="/add-your-business/?tier=verified">Send your {e.one}’s details</a>
+    <a class="btn btn-secondary" href={payLink}>{payLabel}</a>
+  </div>
+
+  <Faqs faqs={plansFaqs} />
+</Base>

@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Faqs from '../components/Faqs.astro';
+import { site } from '../../site.config';
+import { loadAll, termPages } from '../lib/data';
+import { homeGraph, faqPage } from '../lib/jsonld';
+import { price } from '../lib/copy';
+
+const { listings, regions } = await loadAll();
+const terms = await termPages();
+const faqs = site.homeFaqs;
+---
+<Base title={site.titles.home} description={site.titles.homeDescription} path="/" banner jsonld={[...homeGraph(), ...faqPage(faqs)]}>
+  <h1>{site.titles.homeH1}</h1>
+  <p class="lead">{site.tagline} {listings.length} listings, each showing the date it was last checked.</p>
+
+  <section aria-labelledby="by-region">
+    <h2 id="by-region">Browse by {site.regionNoun}</h2>
+    {regions.length === 0 && <p>No listings yet. <a href="/add-your-business/">Add a {site.entity.one}</a>.</p>}
+    <ul class="tiles">
+      {regions.map((r) => <li><a href={r.url}>{r.name} ({r.listings.length})</a></li>)}
+    </ul>
+    {regions.map((r) => (
+      <>
+        <h3>{r.name}</h3>
+        <ul class="inline-list">{r.cities.map((c) => <li><a href={c.url}>{site.entity.Many} in {c.name}</a></li>)}</ul>
+      </>
+    ))}
+  </section>
+
+  {terms.length > 0 && (
+    <section aria-labelledby="by-category">
+      <h2 id="by-category">Browse by style and service</h2>
+      <ul class="tiles">{terms.map((t) => <li><a href={t.url}>{t.title}</a></li>)}</ul>
+    </section>
+  )}
+
+  <section aria-labelledby="how">
+    <h2 id="how">How listings work</h2>
+    <p>Every {site.entity.one} can have a free Basic listing, built from public sources or a submission and dated when last updated. Verified listings ({price}) are paid: we check the {site.credential.name} and confirm the details with the owner, then show them first. <a href="/listing-plans/">Compare listing plans</a>.</p>
+  </section>
+
+  <Faqs faqs={faqs} />
+</Base>

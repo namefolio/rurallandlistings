@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../../site.config';
+import { aboutListings } from '../../lib/copy';
+const e = site.entity;
+---
+<Base title={`About ${site.name} and how listings are sourced`} description={`Who runs ${site.name}, where listing details come from, and what Basic and Verified listings mean.`} path="/about/" crumbs={[{ name: 'Home', url: '/' }, { name: 'About', url: '/about/' }]}>
+  <h1>About {site.name}</h1>
+  <p class="lead">{site.name} is an independent directory of {e.many}, run by {site.owner}. It is not owned by, or paid by, any {e.one} for anything except the Verified listing plan described below.</p>
+  <h2>Where listings come from</h2>
+  <p>Details come from each {e.one}’s own public website and social pages, and from submissions sent with our form. We record the source and the date each listing was last checked or changed, and show that date on the page. We do not publish ratings or reviews, and we never invent hours or prices: when a fact is unknown the listing says “Not listed”.</p>
+  <p>To fix a mistake, use <a href="/add-your-business/">the add or update form</a>. Closed {e.many} are removed.</p>
+  <h2 id="listings">Basic and Verified listings</h2>
+  {aboutListings.map((p) => <p>{p}</p>)}
+  <p>See <a href="/listing-plans/">listing plans</a> for prices and how the check works.</p>
+</Base>
