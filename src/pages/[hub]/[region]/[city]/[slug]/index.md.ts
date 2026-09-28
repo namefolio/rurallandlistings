@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
-import { listingPaths } from '../../../../../lib/pages';
-import { listingMd, mdResponse } from '../../../../../lib/markdown';
+import { landPaths, listingPaths } from '../../../../../lib/pages';
+import { landMd, listingMd, mdResponse } from '../../../../../lib/markdown';
 
-export const getStaticPaths = listingPaths;
-export const GET: APIRoute = ({ props }) => mdResponse(listingMd(props.listing, props.faqs, props.nearby));
+export const getStaticPaths = async () => [...(await listingPaths()), ...(await landPaths())];
+export const GET: APIRoute = ({ props }) =>
+  mdResponse(props.kind === 'land' ? landMd(props.land, props.faqs, props.nearby, props.agent) : listingMd(props.listing, props.faqs, props.nearby));

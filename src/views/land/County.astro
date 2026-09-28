@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import LandList from '../../components/LandList.astro';
+import Faqs from '../../components/Faqs.astro';
+import { site } from '../../../site.config';
+import { loadAll } from '../../lib/data';
+import { faqPage, landItemList } from '../../lib/jsonld';
+import type { County, LandRegion } from '../../lib/land';
+import type { Faq } from '../../lib/types';
+
+const { region, county, intro, nearbyCounties, noindex, faqs } = Astro.props as { region: LandRegion; county: County; intro: string; nearbyCounties: County[]; noindex: boolean; faqs: Faq[] };
+const c = site.classifieds;
+const place = `${county.name}, ${region.code}`;
+const agentRegion = (await loadAll()).regions.find((r) => r.slug === region.slug);
+---
+<Base
+  title={c.titles.county(county.name, region.code)}
+  description={c.titles.countyDescription(county.name, region.code, county.listings.length)}
+  path={county.url}
+  noindex={noindex}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url: `/${c.hub}/` }, { name: region.name, url: region.url }, { name: county.name, url: county.url }]}
+  jsonld={[landItemList(`Land for sale in ${place}`, county.listings), ...faqPage(faqs)]}
+>
+  <h1>{c.titles.countyH1(county.name, region.code)}</h1>
+  {intro.split('\n\n').map((p, i) => <p class:list={{ lead: i === 0 }}>{p}</p>)}
+  <LandList listings={county.listings} heading={`${county.listings.length} ${county.listings.length === 1 ? c.entity.one : c.entity.many} in ${place}`} />
+  <Faqs faqs={faqs} />
+  {nearbyCounties.length > 0 && (
+    <section aria-labelledby="nearby">
+      <h2 id="nearby">Land for sale in nearby counties</h2>
+      <ul class="inline-list">{nearbyCounties.map((k) => <li><a href={k.url}>{k.name}, {k.regionSlug === region.slug ? region.code : site.regions[k.regionSlug]?.code}</a></li>)}</ul>
+    </section>
+  )}
+  {agentRegion && <p><a href={agentRegion.url}>{site.entity.Many} in {region.name}</a></p>}
+</Base>

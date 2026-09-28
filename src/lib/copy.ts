@@ -9,15 +9,15 @@ export const payLabel = payIsMailto ? 'Email us to pay' : 'Pay now';
 export const payEmail = payIsMailto ? payLink.slice('mailto:'.length).split('?')[0] : '';
 
 /** Payment link with the business name as a reference, where the provider supports it. */
-export function payLinkFor(name: string): string {
-  if (payIsMailto) return `${payLink}?subject=${encodeURIComponent(`Verified listing: ${name}`)}`;
+export function payLinkFor(name: string, link = payLink, label = 'Verified listing'): string {
+  if (link.startsWith('mailto:')) return `${link}?subject=${encodeURIComponent(`${label}: ${name}`)}`;
   try {
-    const u = new URL(payLink);
+    const u = new URL(link);
     // Stripe Payment Links accept client_reference_id (letters, digits, - and _ only).
     if (u.hostname.endsWith('stripe.com')) u.searchParams.set('client_reference_id', name.replace(/[^A-Za-z0-9_-]+/g, '-').slice(0, 200));
     return u.toString();
   } catch {
-    return payLink;
+    return link;
   }
 }
 
@@ -26,13 +26,40 @@ export const credentialCheck = `we check the ${site.credential.name} with ${site
 export const disclosure = 'Verified listings are paid, checked and shown first.';
 export const disclosureLinkText = 'Listing plans';
 
-export const footerLine = `${site.name} is an independent directory. Basic listings are free. Verified listings are paid, ${site.credential.checked}, labeled and shown first. No ratings, reviews or referral fees.`;
+const k = site.classifieds;
+export const classifiedPrice = PLACEHOLDERS.classifiedPrice;
+export const classifiedPayLink = PLACEHOLDERS.classifiedPaymentLink;
+export const classifiedPayIsMailto = classifiedPayLink.startsWith('mailto:');
+export const classifiedPayLabel = classifiedPayIsMailto ? 'Email us to pay' : 'Pay now';
+export const classifiedPayEmail = classifiedPayIsMailto ? classifiedPayLink.slice('mailto:'.length).split('?')[0] : '';
+export const classifiedTerm = `${classifiedPrice} for ${k.days} days`;
+export const classifiedPayFor = (title: string) => payLinkFor(title, classifiedPayLink, `${k.entity.One}`);
+
+/** Shown on every classified page and list: what a paid ad is, and what we don't check. */
+export const adNotice = `${k.entity.Many} are paid ads written by the seller (${classifiedTerm}). We review each ad before it goes live, but we do not inspect land or check title, boundaries or access.`;
+export const buyerAdvice = 'Before you buy, ask for a survey, a title search and proof of legal access, and check zoning, easements and flood maps with the county.';
+
+export const footerLine = `${site.name} is independent. ${k.entity.Many} are paid ads from sellers (${classifiedTerm}). Basic ${e.one} listings are free. Verified ${e.one} listings are paid, ${site.credential.checked}, labeled and shown first. No ratings, reviews or referral fees.`;
+
+export const sellSteps = [
+  `Send the details with the form: acreage, asking price, county, what the land has, and how buyers should reach you.`,
+  classifiedPayIsMailto ? `Pay ${classifiedPrice}: email ${classifiedPayEmail} and we’ll send an invoice.` : `Pay ${classifiedPrice} with the payment link.`,
+  `We review the ad and publish it, usually within a couple of days. It runs for ${k.days} days from the day it goes live.`,
+  `Buyers contact you directly by phone or email. We take no commission. To keep it up longer, renew for another ${classifiedPrice}; when it sells, tell us and we take it down.`,
+];
+
+export const sellFaqs = [
+  { q: `How much does it cost to list land?`, a: `${classifiedPrice} for ${k.days} days. There is no commission and no fee when it sells.` },
+  { q: 'Who can list?', a: `Owners and agents. If you are an agent, you can also add a free Basic ${e.one} listing, or a Verified one for ${price}.` },
+  { q: 'What happens after 30 days?', a: `The ad comes down on the next daily rebuild after its end date. Renew it for another ${classifiedPrice} with the form on your listing.` },
+  { q: 'Can I add photos?', a: 'Add up to five links to your own photos, survey or map (for example a shared album). We do not host uploads.' },
+];
 
 export const plansIntro = `Every ${e.one} can have a free Basic listing. Verified is paid: ${credentialCheck}, then label the listing Verified and show it first in its city and category lists. Verified is never a rating, and payment never changes the facts we publish.`;
 
 export const basicBullets = [
   `Core facts: address, phone, website, hours`,
-  `Styles, services, walk-in policy and shop minimum`,
+  site.basicFacts,
   `Listed on its city, ${site.regionNoun} and category pages`,
   `Update it any time with the form`,
 ];
@@ -42,7 +69,7 @@ export const verifiedBullets = [
   `${site.credential.name[0].toUpperCase()}${site.credential.name.slice(1)} check plus owner confirmation`,
   'The Verified label everywhere the listing appears',
   'Shown first, above Basic listings',
-  `Your own description and booking link, rechecked at each renewal`,
+  `Your own description and contact link, rechecked at each renewal`,
 ];
 
 export const howToSteps = [

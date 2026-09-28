@@ -1,0 +1,26 @@
+---
+// Land category pages ("hunting land for sale"), only with 3+ live listings.
+import Base from '../../layouts/Base.astro';
+import LandList from '../../components/LandList.astro';
+import { site } from '../../../site.config';
+import { landCategoryPages, type LandCategoryPage } from '../../lib/data';
+import { landItemList } from '../../lib/jsonld';
+
+export async function getStaticPaths() {
+  return (await landCategoryPages()).map((page) => ({ params: { category: page.slug }, props: { page } }));
+}
+const { page } = Astro.props as { page: LandCategoryPage };
+const c = site.classifieds;
+const lower = page.title[0] + page.title.slice(1).toLowerCase();
+---
+<Base
+  title={c.titles.category(page.title)}
+  description={c.titles.categoryDescription(page.noun, page.listings.length)}
+  path={page.url}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url: `/${c.hub}/` }, { name: page.title, url: page.url }]}
+  jsonld={[landItemList(page.title, page.listings)]}
+>
+  <h1>{lower} {site.countryPhrase}</h1>
+  <p class="lead">{c.titles.categoryDescription(page.noun, page.listings.length)}</p>
+  <LandList listings={page.listings} heading={`${page.listings.length} ${c.entity.many}`} />
+</Base>

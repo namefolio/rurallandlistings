@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faqs from '../../components/Faqs.astro';
+import { site } from '../../../site.config';
+import { adNotice, classifiedPrice, classifiedTerm, sellFaqs, sellSteps } from '../../lib/copy';
+import { faqPage } from '../../lib/jsonld';
+
+// The Worker fills in ?listing= (renewal or change) and the Turnstile site key with HTMLRewriter,
+// so this page ships no JavaScript of its own.
+const c = site.classifieds;
+const states = Object.values(site.regions).filter((r) => r.code).sort((a, b) => a.name.localeCompare(b.name));
+---
+<Base title={`Sell your land: ${classifiedTerm} | ${site.name}`} description={`List rural land for sale by owner or agent for ${classifiedTerm}. Buyers contact you directly; no commission.`} path="/sell-your-land/" crumbs={[{ name: 'Home', url: '/' }, { name: 'Sell your land', url: '/sell-your-land/' }]} jsonld={faqPage(sellFaqs)}>
+  <script slot="head" src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <h1>Sell your land: {classifiedTerm}</h1>
+  <p class="lead">Owners and agents can list rural land here. You write the ad, buyers contact you directly, and we take no commission.</p>
+  <p class="disclosure">{adNotice}</p>
+
+  <h2>How it works</h2>
+  <ol>{sellSteps.map((s) => <li>{s}</li>)}</ol>
+  <p class="muted">Agents: you can also add a free listing for your agency. <a href="/listing-plans/">Agent listing plans</a>.</p>
+
+  <h2 id="form">Send your land listing</h2>
+  <p id="update-note" class="disclosure" hidden>You are renewing or changing <strong id="update-name">this listing</strong>. Fill in only what changes.</p>
+  <form method="post" action="/sell-your-land/">
+    <input type="hidden" name="listing" value="" />
+    <fieldset>
+      <legend>What are you sending?</legend>
+      <div class="tier-cards">
+        <label class="tier-card"><input type="radio" name="request" value="new" checked /><strong>New listing ({classifiedPrice})<span>Runs {c.days} days from the day it goes live.</span></strong></label>
+        <label class="tier-card"><input type="radio" name="request" value="renew" disabled /><strong>Renew ({classifiedPrice})<span>Another {c.days} days. Use the link on your listing.</span></strong></label>
+        <label class="tier-card"><input type="radio" name="request" value="change" disabled /><strong>Change only (free)<span>Fix details while the ad is running.</span></strong></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>The land</legend>
+      <label for="l-title">Headline <span class="hint">(like “40 wooded acres with creek near Townsville”)</span></label>
+      <input id="l-title" name="title" type="text" required data-new-only minlength="5" maxlength="90" />
+      <label for="l-region">State</label>
+      <select id="l-region" name="region" required data-new-only>
+        <option value="">Choose a state</option>
+        {states.map((s) => <option value={s.code}>{s.name}</option>)}
+      </select>
+      <label for="l-county">County <span class="hint">(like “Wharton County”)</span></label>
+      <input id="l-county" name="county" type="text" required data-new-only maxlength="60" />
+      <label for="l-town">Nearest town</label>
+      <input id="l-town" name="nearestTown" type="text" maxlength="60" />
+      <label for="l-zip">ZIP code</label>
+      <input id="l-zip" name="postalCode" type="text" maxlength="10" inputmode="numeric" autocomplete="postal-code" />
+      <label for="l-acres">Acres</label>
+      <input id="l-acres" name="acres" type="text" required data-new-only maxlength="20" inputmode="decimal" />
+      <label for="l-price">Asking price in dollars <span class="hint">(leave empty for “price on request”)</span></label>
+      <input id="l-price" name="price" type="text" maxlength="20" inputmode="numeric" />
+      <label for="l-summary">Describe the land <span class="hint">(up to about 300 words: terrain, access, water, utilities, what it’s good for)</span></label>
+      <textarea id="l-summary" name="summary" required data-new-only minlength="40" maxlength="2000"></textarea>
+      <label for="l-links">Links to photos, a survey or a map <span class="hint">(up to 5, one per line)</span></label>
+      <textarea id="l-links" name="links" maxlength="1500"></textarea>
+    </fieldset>
+
+    <details>
+      <summary>What the land has (optional)</summary>
+      {c.attributes.map((a) =>
+        a.type === 'multi' ? (
+          <fieldset>
+            <legend>{a.label}</legend>
+            {Object.entries(a.options).map(([k, label]) => <label class="check"><input type="checkbox" name={a.key} value={k} />{label}</label>)}
+          </fieldset>
+        ) : a.type === 'bool' ? (
+          <><label for={`l-${a.key}`}>{a.label}</label>
+          <select id={`l-${a.key}`} name={a.key}><option value="">Not sure</option><option value="yes">Yes</option><option value="no">No</option></select></>
+        ) : (
+          <><label for={`l-${a.key}`}>{a.label} <span class="hint">(dollars)</span></label><input id={`l-${a.key}`} name={a.key} type="number" min="0" max={a.max ?? 1000000} inputmode="numeric" /></>
+        ),
+      )}
+    </details>
+
+    <fieldset>
+      <legend>How buyers reach you <span class="hint">(published on the ad)</span></legend>
+      <label for="l-stype">You are</label>
+      <select id="l-stype" name="sellerType">
+        <option value="owner">The owner</option>
+        <option value="agent">A land agent for the owner</option>
+      </select>
+      <label for="l-sname">Name to show</label>
+      <input id="l-sname" name="sellerName" type="text" required data-new-only maxlength="100" />
+      <label for="l-sphone">Phone <span class="hint">(phone or email, or both)</span></label>
+      <input id="l-sphone" name="sellerPhone" type="tel" maxlength="30" />
+      <label for="l-semail">Email</label>
+      <input id="l-semail" name="sellerEmail" type="email" maxlength="200" />
+    </fieldset>
+
+    <fieldset>
+      <legend>About you <span class="hint">(never published)</span></legend>
+      <label for="l-name">Your name</label>
+      <input id="l-name" name="submitterName" type="text" required maxlength="100" autocomplete="name" />
+      <label for="l-email">Your email, for the invoice</label>
+      <input id="l-email" name="submitterEmail" type="email" required maxlength="200" autocomplete="email" />
+      <label class="check"><input type="checkbox" name="consent" value="yes" required />I own this land or am authorized to sell it, the details are accurate, and they may be published.</label>
+    </fieldset>
+
+    <div class="hp" aria-hidden="true">
+      <label for="l-hp">Leave this empty</label>
+      <input id="l-hp" name="fax_number" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+    <div class="cf-turnstile" data-sitekey=""></div>
+    <div class="btns"><button class="btn btn-primary" type="submit">Send land listing</button></div>
+  </form>
+
+  <Faqs faqs={sellFaqs} />
+</Base>

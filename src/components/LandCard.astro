@@ -1,0 +1,15 @@
+---
+import { site } from '../../site.config';
+import { fmtDate } from '../lib/core';
+import type { Land } from '../lib/types';
+interface Props { land: Land }
+const { land: l } = Astro.props;
+const c = site.classifieds;
+---
+<li class="card land-card">
+  <p class="card-price">{c.priceText(l)}</p>
+  <h3><a href={l.url}>{l.title}</a></h3>
+  <p class="muted">{l.location.county}, {l.location.region}{l.location.nearestTown ? ` · near ${l.location.nearestTown}` : ''}</p>
+  <ul>{c.cardFacts(l).map((f) => <li>{f}</li>)}</ul>
+  <p class="muted small">Listed {fmtDate(l.postedOn)}</p>
+</li>

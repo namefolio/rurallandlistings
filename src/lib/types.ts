@@ -60,3 +60,44 @@ export interface Faq {
   q: string;
   a: string;
 }
+
+// ---- Classifieds (land for sale): paid ads that run a fixed number of days ----
+
+export interface LandData {
+  title: string;
+  slug: string;
+  status: 'published' | 'sold' | 'withdrawn';
+  demo?: boolean;
+  /** `county` is the display name ("Wharton County"); `region` the state code. */
+  location: { county: string; region: string; nearestTown?: string; postalCode?: string };
+  /** Approximate centre of the land, never a boundary. */
+  lat: number;
+  lng: number;
+  acres: number;
+  /** Asking price in whole dollars; absent means "price on request". */
+  price?: number;
+  seller: { type: 'owner' | 'agent'; name: string; phone?: string; email?: string; agentSlug?: string };
+  /** The seller's own description of the land. */
+  summary: string;
+  /** Seller's links: photos, survey, maps. */
+  links: string[];
+  attributes: Record<string, unknown>;
+  postedOn: Date;
+  expiresOn: Date;
+  lastUpdated: Date;
+  source: string;
+}
+
+export interface Land extends LandData {
+  regionSlug: string;
+  countySlug: string;
+  url: string;
+}
+
+/** A land category page (e.g. "hunting land for sale"), built only with 3+ live listings. */
+export interface LandCategory {
+  slug: string;
+  title: string;
+  noun: string;
+  test: (l: LandData) => boolean;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Demo Land Agent 2",
+  "slug": "demo-land-agent-2",
+  "status": "published",
+  "tier": "basic",
+  "demo": true,
+  "address": {
+    "street": "200 Example Street",
+    "city": "Brenham",
+    "region": "TX",
+    "postalCode": "77833"
+  },
+  "lat": 30.1702,
+  "lng": -96.4011,
+  "phone": "(979) 555-0102",
+  "website": "https://example.com/",
+  "sameAs": [],
+  "hours": {
+    "mon": "09:00-17:00",
+    "tue": "09:00-17:00",
+    "wed": "09:00-17:00",
+    "thu": "09:00-17:00",
+    "fri": "09:00-17:00",
+    "sat": "closed",
+    "sun": "closed"
+  },
+  "summary": "Demo Land Agent 2 is a placeholder listing used to preview the site. It is not a real agent or brokerage.",
+  "attributes": {
+    "specialties": [
+      "timberland",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "lastUpdated": "2026-09-28",
+  "source": "Demo data, not a real business"
+}

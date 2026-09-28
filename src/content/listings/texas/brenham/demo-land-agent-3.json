@@ -1,0 +1,27 @@
+{
+  "name": "Demo Land Agent 3",
+  "slug": "demo-land-agent-3",
+  "status": "published",
+  "tier": "basic",
+  "demo": true,
+  "address": {
+    "street": "300 Example Street",
+    "city": "Brenham",
+    "region": "TX",
+    "postalCode": "77833"
+  },
+  "lat": 30.1633,
+  "lng": -96.3902,
+  "phone": "(979) 555-0103",
+  "website": "https://example.com/",
+  "sameAs": [],
+  "summary": "Demo Land Agent 3 is a placeholder listing used to preview the site. It is not a real agent or brokerage.",
+  "attributes": {
+    "specialties": [
+      "lots-homesites"
+    ],
+    "worksWithSellers": true
+  },
+  "lastUpdated": "2026-09-28",
+  "source": "Demo data, not a real business"
+}

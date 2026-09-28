@@ -1,67 +1,9 @@
 ---
-import Base from '../../../../../layouts/Base.astro';
-import Faqs from '../../../../../components/Faqs.astro';
-import { site } from '../../../../../../site.config';
-import { listingPaths } from '../../../../../lib/pages';
-import { business, faqPage } from '../../../../../lib/jsonld';
-import { factRows, fmtDate, hoursRows, mapsUrl, type City, type Region } from '../../../../../lib/core';
-import type { Faq, Listing } from '../../../../../lib/types';
+import AgentListing from '../../../../../views/agents/Listing.astro';
+import LandListing from '../../../../../views/land/Listing.astro';
+import { landPaths, listingPaths } from '../../../../../lib/pages';
 
-export const getStaticPaths = listingPaths;
-const { listing: l, region, city, nearby, faqs } = Astro.props as { listing: Listing; region: Region; city: City; nearby: Listing[]; faqs: Faq[] };
-const verified = l.effectiveTier === 'verified';
-const update = `/add-your-business/?listing=${l.slug}`;
+export const getStaticPaths = async () => [...(await listingPaths()), ...(await landPaths())];
+const props = Astro.props;
 ---
-<Base
-  title={site.titles.listing(l.name, l.address.city, region.code)}
-  description={site.titles.listingDescription(l.name, l.address.city, region.code, site.cardFacts(l).slice(0, 3))}
-  path={l.url}
-  crumbs={[{ name: 'Home', url: '/' }, { name: region.name, url: region.url }, { name: city.name, url: city.url }, { name: l.name, url: l.url }]}
-  jsonld={[business(l), ...faqPage(faqs)]}
->
-  {verified && <p class="badge">Verified</p>}
-  <h1>{l.name}</h1>
-  <p class="lead">{l.summary}</p>
-  {verified && l.description && (
-    <section aria-labelledby="owner">
-      <h2 id="owner">From the owner</h2>
-      <p>{l.description}</p>
-    </section>
-  )}
-
-  <h2>Details</h2>
-  <table>
-    <tbody>
-      <tr><th scope="row">Address</th><td>{l.address.street}, {l.address.city}, {l.address.region} {l.address.postalCode}</td></tr>
-      <tr><th scope="row">Phone</th><td>{l.phone ? <a href={`tel:${l.phone.replace(/[^+\d]/g, '')}`}>{l.phone}</a> : 'Not listed'}</td></tr>
-      <tr><th scope="row">Website</th><td>{l.website ? <a href={l.website} rel="nofollow">{new URL(l.website).hostname.replace(/^www\./, '')}</a> : 'Not listed'}</td></tr>
-      {verified && l.bookingUrl && <tr><th scope="row">Booking</th><td><a href={l.bookingUrl} rel="nofollow">Book with {l.name}</a></td></tr>}
-      {factRows(l).map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}
-      <tr><th scope="row">Other links</th><td>{l.sameAs.length ? l.sameAs.map((u, i) => <>{i > 0 && ', '}<a href={u} rel="nofollow">{new URL(u).hostname.replace(/^www\./, '')}</a></>) : 'None listed'}</td></tr>
-    </tbody>
-  </table>
-  <p><a href={mapsUrl(l)} rel="nofollow">Open {l.name} in Google Maps</a></p>
-
-  <h2>Opening hours</h2>
-  <table>
-    <tbody>{hoursRows(l).map(([d, h]) => <tr><th scope="row">{d}</th><td>{h}</td></tr>)}</tbody>
-  </table>
-  <p class="muted">Hours change. Check with the {site.entity.one} before you travel.</p>
-
-  <Faqs faqs={faqs} />
-
-  {nearby.length > 0 && (
-    <section aria-labelledby="nearby">
-      <h2 id="nearby">Nearby {site.entity.many}</h2>
-      <ul>{nearby.map((n) => <li><a href={n.url}>{n.name}</a>, {n.address.city}</li>)}</ul>
-      <p><a href={city.url}>All {site.entity.many} in {city.name}</a></p>
-    </section>
-  )}
-
-  <p class="muted">Last updated {fmtDate(l.lastUpdated)}.</p>
-  {verified ? (
-    <p>Verified: details confirmed by the owner. <a href={update}>Update this listing</a></p>
-  ) : (
-    <p>Is this your business? <a href={update}>Get it Verified or send a correction</a></p>
-  )}
-</Base>
+{props.kind === 'land' ? <LandListing {...props} /> : <AgentListing {...props} />}

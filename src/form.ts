@@ -2,7 +2,7 @@
 import { z } from 'zod';
 import { site } from '../site.config';
 import { HOURS_RE } from './lib/schema';
-import { DAYS } from './lib/types';
+import { DAYS, type AttributeDef } from './lib/types';
 
 export interface Outgoing { from: string; to: string; replyTo: string; subject: string; text: string }
 export interface FormDeps {
@@ -13,9 +13,9 @@ export interface FormDeps {
   today?: Date;
 }
 
-const text = (max: number) => z.string().trim().max(max);
-const optText = (max: number) => text(max).transform((v) => v || null);
-const optUrl = z.string().trim().max(300).transform((v, ctx) => {
+export const text = (max: number) => z.string().trim().max(max);
+export const optText = (max: number) => text(max).transform((v) => v || null);
+export const optUrl = z.string().trim().max(300).transform((v, ctx) => {
   if (!v) return null;
   try {
     const u = new URL(v);
@@ -24,7 +24,7 @@ const optUrl = z.string().trim().max(300).transform((v, ctx) => {
   ctx.addIssue({ code: 'custom', message: 'bad url' });
   return z.NEVER;
 });
-const noNewlines = (s: string) => !/[\r\n]/.test(s);
+export const noNewlines = (s: string) => !/[\r\n]/.test(s);
 
 export const formSchema = z.object({
   tier: z.enum(['basic', 'verified']).default('basic'),
@@ -44,20 +44,12 @@ export const formSchema = z.object({
   consent: z.literal('yes'),
 });
 
-const slugify = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
+export const slugify = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
 
-/** Turns form fields into a listing-shaped object. Unknown values are null; tier is always basic. */
-export function toListing(f: z.infer<typeof formSchema>, raw: FormData, today: Date) {
-  const hours: Record<string, string | null> = {};
-  const odd: string[] = [];
-  for (const d of DAYS) {
-    const v = String(raw.get(`hours_${d}`) ?? '').trim().toLowerCase().replace(/\s+/g, '').slice(0, 40);
-    if (!v) hours[d] = null;
-    else if (HOURS_RE.test(v)) hours[d] = v;
-    else { hours[d] = null; odd.push(`${d}: ${v}`); }
-  }
+/** Reads the niche attribute fields from a form. Unknown or unset values are null. */
+export function readAttributes(raw: FormData, defs: AttributeDef[]): Record<string, unknown> {
   const attributes: Record<string, unknown> = {};
-  for (const a of site.attributes) {
+  for (const a of defs) {
     if (a.type === 'multi') {
       const vals = raw.getAll(a.key).map(String).filter((v) => v in a.options);
       attributes[a.key] = vals.length ? [...new Set(vals)] : null;
@@ -69,6 +61,20 @@ export function toListing(f: z.infer<typeof formSchema>, raw: FormData, today: D
       attributes[a.key] = raw.get(a.key) && Number.isInteger(n) && n >= 0 && n <= (a.max ?? 1e6) ? n : null;
     }
   }
+  return attributes;
+}
+
+/** Turns form fields into a listing-shaped object. Unknown values are null; tier is always basic. */
+export function toListing(f: z.infer<typeof formSchema>, raw: FormData, today: Date) {
+  const hours: Record<string, string | null> = {};
+  const odd: string[] = [];
+  for (const d of DAYS) {
+    const v = String(raw.get(`hours_${d}`) ?? '').trim().toLowerCase().replace(/\s+/g, '').slice(0, 40);
+    if (!v) hours[d] = null;
+    else if (HOURS_RE.test(v)) hours[d] = v;
+    else { hours[d] = null; odd.push(`${d}: ${v}`); }
+  }
+  const attributes = readAttributes(raw, site.attributes);
   const sameAs = f.sameAs.split(/\s+/).filter((u) => /^https?:\/\/\S+$/.test(u)).slice(0, 10);
   return {
     listing: {

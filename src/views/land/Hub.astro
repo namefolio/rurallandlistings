@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../../site.config';
+import { loadLand } from '../../lib/data';
+import { adNotice, classifiedTerm } from '../../lib/copy';
+
+const c = site.classifieds;
+const { regions, land } = await loadLand();
+const url = `/${c.hub}/`;
+---
+<Base title={c.titles.hub} description={c.titles.hubDescription(land.length)} path={url} noindex={land.length < 3} crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url }]}>
+  <h1>Rural land for sale by {site.regionNoun}</h1>
+  <p class="lead">{land.length} {land.length === 1 ? c.entity.one : c.entity.many} from owners and agents, grouped by {site.regionNoun} and {c.placeNoun}.</p>
+  <p class="disclosure">{adNotice}</p>
+  {regions.length === 0 && <p>No land is listed right now. <a href="/sell-your-land/">Sell your land here for {classifiedTerm}</a>.</p>}
+  {regions.map((r) => (
+    <section>
+      <h2><a href={r.url}>Land for sale in {r.name}</a></h2>
+      <ul class="inline-list">{r.counties.map((k) => <li><a href={k.url}>{k.name} ({k.listings.length})</a></li>)}</ul>
+    </section>
+  ))}
+</Base>

@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import ListingList from '../../components/ListingList.astro';
+import BestFor from '../../components/BestFor.astro';
+import { site } from '../../../site.config';
+import { itemList } from '../../lib/jsonld';
+import type { Region } from '../../lib/core';
+
+const { region, intro, noindex } = Astro.props as { region: Region; intro: string; noindex: boolean };
+const hubUrl = `/${site.hub}/`;
+---
+<Base
+  title={site.titles.region(region.name, region.listings.length)}
+  description={site.titles.regionDescription(region.name, region.listings.length, region.cities.length)}
+  path={region.url}
+  noindex={noindex}
+  crumbs={[{ name: 'Home', url: '/' }, { name: site.entity.Many, url: hubUrl }, { name: region.name, url: region.url }]}
+  jsonld={[itemList(`${site.entity.Many} in ${region.name}`, region.listings)]}
+>
+  <h1>{site.entity.Many} in {region.name}</h1>
+  <p class="lead">{intro}</p>
+  <h2>Cities</h2>
+  <ul class="tiles">{region.cities.map((c) => <li><a href={c.url}>{c.name} ({c.listings.length})</a></li>)}</ul>
+  <ListingList listings={region.listings} heading={`All ${site.entity.many} in ${region.name}`} showCity />
+  <BestFor listings={region.listings} place={region.name} />
+</Base>

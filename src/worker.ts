@@ -1,7 +1,8 @@
-// Handles only the form. Everything else is served straight from static assets (see wrangler.jsonc).
+// Handles only the two forms (agents, land) and their pay pages. Everything else is served straight from static assets (see wrangler.jsonc).
 import { EmailMessage } from 'cloudflare:email';
-import { handleSubmission, rawEmail } from './form';
-import { payLinkFor } from './lib/copy';
+import { handleSubmission, rawEmail, type FormDeps } from './form';
+import { handleLandSubmission } from './land-form';
+import { classifiedPayFor, payLinkFor } from './lib/copy';
 
 interface Env {
   ASSETS: Fetcher;
@@ -49,6 +50,43 @@ async function formPage(request: Request, env: Env) {
     .transform(page);
 }
 
+/** Fills the sell form for a renewal or change of ?listing={slug}; otherwise it stays a new listing. */
+async function sellPage(request: Request, env: Env) {
+  const url = new URL(request.url);
+  const page = await env.ASSETS.fetch(request);
+  const slug = url.searchParams.get('listing') ?? '';
+  let title = '';
+  if (/^[a-z0-9-]{1,120}$/.test(slug)) {
+    const data = (await (await env.ASSETS.fetch(new URL('/data/land.json', url))).json()) as { listings: { slug: string; title: string }[] };
+    title = data.listings.find((l) => l.slug === slug)?.title ?? '';
+  }
+  const rw = new HTMLRewriter().on('.cf-turnstile', { element: (e) => { e.setAttribute('data-sitekey', env.TURNSTILE_SITE_KEY ?? ''); } });
+  if (!title) return rw.transform(page);
+  return rw
+    .on('input[name="listing"]', { element: (e) => { e.setAttribute('value', slug); } })
+    .on('#update-note', { element: (e) => { e.removeAttribute('hidden'); } })
+    .on('#update-name', { element: (e) => { e.setInnerContent(title); } })
+    .on('input[name="title"]', { element: (e) => { e.setAttribute('value', title); } })
+    .on('[data-new-only]', { element: (e) => { e.removeAttribute('required'); } })
+    .on('input[name="request"]', {
+      element: (e) => {
+        const v = e.getAttribute('value');
+        if (v === 'new') { e.removeAttribute('checked'); e.setAttribute('disabled', ''); }
+        else e.removeAttribute('disabled');
+        if (v === 'renew') e.setAttribute('checked', '');
+      },
+    })
+    .transform(page);
+}
+
+/** Adds the land listing's title to the payment link as a reference. */
+async function sellThanks(request: Request, env: Env) {
+  const ref = (new URL(request.url).searchParams.get('ref') ?? '').slice(0, 120);
+  const page = await env.ASSETS.fetch(request);
+  if (!ref) return page;
+  return new HTMLRewriter().on('#pay', { element: (e) => { e.setAttribute('href', classifiedPayFor(ref)); } }).transform(page);
+}
+
 /** Adds the business name to the payment link as a reference. */
 async function thanksVerified(request: Request, env: Env) {
   const ref = (new URL(request.url).searchParams.get('ref') ?? '').slice(0, 120);
@@ -60,17 +98,20 @@ async function thanksVerified(request: Request, env: Env) {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(request.url);
-    if (pathname === '/add-your-business/' && request.method === 'POST') {
-      return handleSubmission(request, {
-        verifyTurnstile: (token, ip) => verifyTurnstile(env.TURNSTILE_SECRET, token, ip),
-        send: async (m) => {
-          await env.SUBMISSIONS.send(new EmailMessage(m.from, m.to, rawEmail(m, crypto.randomUUID())));
-        },
-        to: env.SUBMISSIONS_TO,
-        from: env.FORM_FROM,
-      });
-    }
-    if (pathname === '/add-your-business/' && (request.method === 'GET' || request.method === 'HEAD')) return formPage(request, env);
+    const deps: FormDeps = {
+      verifyTurnstile: (token, ip) => verifyTurnstile(env.TURNSTILE_SECRET, token, ip),
+      send: async (m) => {
+        await env.SUBMISSIONS.send(new EmailMessage(m.from, m.to, rawEmail(m, crypto.randomUUID())));
+      },
+      to: env.SUBMISSIONS_TO,
+      from: env.FORM_FROM,
+    };
+    const read = request.method === 'GET' || request.method === 'HEAD';
+    if (pathname === '/add-your-business/' && request.method === 'POST') return handleSubmission(request, deps);
+    if (pathname === '/sell-your-land/' && request.method === 'POST') return handleLandSubmission(request, deps);
+    if (pathname === '/sell-your-land/' && read) return sellPage(request, env);
+    if (pathname === '/sell-your-land/thanks/') return sellThanks(request, env);
+    if (pathname === '/add-your-business/' && read) return formPage(request, env);
     if (pathname === '/add-your-business/thanks-verified/') return thanksVerified(request, env);
     return env.ASSETS.fetch(request);
   },

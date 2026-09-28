@@ -1,7 +1,8 @@
 import { getCollection, getEntry } from 'astro:content';
 import { site } from '../../site.config';
 import { enrich, groupRegions, sortListings, termLabel, type Region } from './core';
-import type { Listing } from './types';
+import { enrichLand, groupLand, isLive, sortLand, type LandRegion } from './land';
+import type { Land, LandCategory, Listing } from './types';
 
 /** Demo listings appear in dev and in `npm run build:demo`, never in the production build. */
 export const INCLUDE_DEMO = import.meta.env.DEV || import.meta.env.PUBLIC_INCLUDE_DEMO === '1';
@@ -47,4 +48,34 @@ export async function termPages(): Promise<TermPage[]> {
     }
   }
   return pages;
+}
+
+let landCache: Promise<{ land: Land[]; regions: LandRegion[] }> | undefined;
+
+/** Live classifieds only: published, inside their paid period, and not demo in production. */
+export function loadLand() {
+  return (landCache ??= (async () => {
+    const entries = await getCollection('land');
+    const seen = new Map<string, string>();
+    const land: Land[] = [];
+    for (const e of entries) {
+      const other = seen.get(e.data.slug);
+      if (other) throw new Error(`Duplicate land slug "${e.data.slug}" in ${e.id} and ${other}`);
+      seen.set(e.data.slug, e.id);
+      if (!isLive(e.data, BUILD_DATE)) continue;
+      if (e.data.demo && !INCLUDE_DEMO) continue;
+      land.push(enrichLand(e.id, e.data));
+    }
+    return { land: sortLand(land), regions: groupLand(land) };
+  })());
+}
+
+export interface LandCategoryPage extends Omit<LandCategory, 'test'> { url: string; listings: Land[] }
+
+/** Land category pages exist only with 3+ live listings. */
+export async function landCategoryPages(): Promise<LandCategoryPage[]> {
+  const { land } = await loadLand();
+  return site.classifieds.categories
+    .map(({ test, ...c }) => ({ ...c, url: `/${c.slug}/`, listings: land.filter(test) }))
+    .filter((p) => p.listings.length >= 3);
 }

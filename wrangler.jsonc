@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tattoostudioguide",
+  "name": "rurallandlistings",
   "main": "src/worker.ts",
   "compatibility_date": "2026-09-01",
   "workers_dev": true,
@@ -10,14 +10,14 @@
     "binding": "ASSETS",
     "html_handling": "force-trailing-slash",
     "not_found_handling": "404-page",
-    // The Worker runs only for the form and the Verified thanks page; everything else is static.
-    "run_worker_first": ["/add-your-business/", "/add-your-business/thanks-verified/"]
+    // The Worker runs only for the two forms and their pay pages; everything else is static.
+    "run_worker_first": ["/add-your-business/", "/add-your-business/thanks-verified/", "/sell-your-land/", "/sell-your-land/thanks/"]
   },
   // Email Routing must be enabled on the domain and the destination verified.
   "send_email": [{ "name": "SUBMISSIONS", "destination_address": "hello@namefolio.co" }],
   "vars": {
     "SUBMISSIONS_TO": "hello@namefolio.co",
-    "FORM_FROM": "submissions@tattoostudioguide.com",
+    "FORM_FROM": "submissions@rurallandlistings.com",
     "TURNSTILE_SITE_KEY": ""
   }
   // Secret: TURNSTILE_SECRET (wrangler secret put TURNSTILE_SECRET). Local dev uses .dev.vars with test keys.

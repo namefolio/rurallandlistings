@@ -1,13 +1,13 @@
 // Pure listing logic: tiers, ordering, grouping, nearby. No Astro imports so tests can use it directly.
 import { site } from '../../site.config';
-import type { Day, Listing, ListingData, Tier } from './types';
+import type { AttributeDef, Day, Listing, ListingData, Tier } from './types';
 import { DAYS } from './types';
 
 export const DAY_LABELS: Record<Day, string> = { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' };
 const SCHEMA_DAYS: Record<Day, string> = { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' };
 
 /** Start of the given day in UTC, so a listing verified "until 2026-10-01" is still Verified on that day. */
-const day = (d: Date) => Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+export const day = (d: Date) => Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
 
 /** Verified only while paid and in date; everything else renders as Basic. */
 export function effectiveTier(l: Pick<ListingData, 'tier' | 'verifiedUntil'>, today: Date): Tier {
@@ -106,8 +106,8 @@ export function termLabel(attribute: string, term: string): string {
 }
 
 /** Facts table rows: same labels on every listing, "Not listed" when unknown. */
-export function factRows(l: ListingData): [string, string][] {
-  return site.attributes.map((a) => {
+export function factRows(l: Pick<ListingData, 'attributes'>, defs: AttributeDef[] = site.attributes): [string, string][] {
+  return defs.map((a) => {
     const v = l.attributes[a.key];
     if (v === undefined || (Array.isArray(v) && !v.length)) return [a.label, 'Not listed'];
     if (a.type === 'multi') return [a.label, (v as string[]).map((k) => a.options[k] ?? k).join(', ')];

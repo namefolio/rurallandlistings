@@ -7,7 +7,7 @@ import { footerLine } from '../lib/copy';
 interface Props {
   title: string;
   description: string;
-  /** Path with trailing slash, e.g. "/tattoo-shops/texas/". */
+  /** Path with trailing slash, e.g. "/{hub}/{region}/". */
   path: string;
   noindex?: boolean;
   jsonld?: object[];
@@ -38,7 +38,7 @@ const forSale = PLACEHOLDERS.forSaleContact;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex,follow" />}
-    <link rel="preload" href="/fonts/atkinson-hyperlegible-next.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {md && <link rel="alternate" type="text/markdown" href={md} title="Markdown version" />}
     <meta property="og:type" content="website" />
@@ -47,7 +47,7 @@ const forSale = PLACEHOLDERS.forSaleContact;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={site.ogLocale} />
-    <meta name="theme-color" content="#16130f" />
+    <meta name="theme-color" content={site.themeColor} />
     {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o).replace(/</g, '\\u003c')} />)}
     <slot name="head" />
   </head>
@@ -61,8 +61,7 @@ const forSale = PLACEHOLDERS.forSaleContact;
         <a class="logo" href="/">{site.name}</a>
         <nav aria-label="Main">
           <ul>
-            <li><a href={`/${site.hub}/`}>Browse by {site.regionNoun}</a></li>
-            <li><a href="/add-your-business/">Add a listing</a></li>
+            {site.nav.map((n) => <li><a href={n.url}>{n.label}</a></li>)}
           </ul>
         </nav>
       </div>
@@ -82,6 +81,7 @@ const forSale = PLACEHOLDERS.forSaleContact;
         <ul class="footer-links">
           <li><a href="/about/">About and sources</a></li>
           <li><a href="/privacy/">Privacy</a></li>
+          <li><a href="/sell-your-land/">Sell your land</a></li>
           <li><a href="/add-your-business/">Add or update a listing</a></li>
           <li><a href="/listing-plans/">Listing plans</a></li>
           <li><a href="/llms.txt">llms.txt</a></li>

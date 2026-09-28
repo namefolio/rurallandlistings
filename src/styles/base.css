@@ -12,7 +12,7 @@ body {
 }
 h1, h2, h3 { font-weight: var(--heading-weight); line-height: 1.2; margin: 1.6em 0 0.5em; }
 h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); margin-top: 0.4em; }
-h1::after { content: ''; display: block; width: 4rem; height: 6px; background: var(--accent); margin-top: 0.4em; }
+h1::after { content: ''; display: block; width: 4rem; height: var(--h1-rule, 6px); background: var(--accent); margin-top: 0.4em; }
 h2 { font-size: 1.5rem; }
 h3 { font-size: 1.2rem; }
 p, li, dd { max-width: var(--measure); }
@@ -36,6 +36,7 @@ a:hover { text-decoration-thickness: 2px; }
 main { padding-bottom: 3rem; }
 .lead { color: var(--muted); font-size: 1.2rem; }
 .muted { color: var(--muted); }
+.small { font-size: 1rem; }
 .disclosure { border-left: var(--accent-rule); padding: 0.25rem 0 0.25rem 0.75rem; }
 
 .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 0 0.5rem; padding: 0; margin: 1rem 0 0; font-size: 1rem; }
@@ -54,10 +55,17 @@ main { padding-bottom: 3rem; }
 .card h3 a { color: var(--ink); }
 .card p { margin: 0; }
 .card ul { margin: 0; padding-left: 1.1rem; }
+.card-price { font-size: 1.35rem; font-weight: var(--heading-weight); color: var(--accent); }
+.land-card h3 { font-size: 1.1rem; }
+.price-line { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; align-items: baseline; font-size: 1.2rem; margin: 0.5rem 0; }
+.price-line strong { font-size: 1.75rem; color: var(--accent); }
+.contact { border: var(--border); border-left: var(--accent-rule); border-radius: var(--radius); background: var(--surface); padding: 0 1.25rem 0.5rem; margin: 1.5rem 0; max-width: 44rem; }
+.contact h2 { margin-top: 0.75rem; }
+.contact a { display: inline-flex; min-height: 44px; align-items: center; }
 .badge { display: inline-block; align-self: flex-start; font-size: 0.875rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; background: var(--accent); color: var(--on-accent); padding: 0.1rem 0.5rem; border-radius: var(--radius); }
 
 table { border-collapse: collapse; width: 100%; max-width: 44rem; }
-th, td { text-align: left; vertical-align: top; padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: 1px solid var(--rule); }
+th, td { text-align: left; vertical-align: top; padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: var(--border); }
 th { width: 40%; font-weight: 700; }
 
 .cols { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); }

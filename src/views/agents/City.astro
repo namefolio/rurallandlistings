@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import ListingList from '../../components/ListingList.astro';
+import BestFor from '../../components/BestFor.astro';
+import Faqs from '../../components/Faqs.astro';
+import { site } from '../../../site.config';
+import { faqPage, itemList } from '../../lib/jsonld';
+import type { City, Region } from '../../lib/core';
+import type { Faq } from '../../lib/types';
+
+const { region, city, intro, nearbyCities, noindex, faqs } = Astro.props as { region: Region; city: City; intro: string; nearbyCities: City[]; noindex: boolean; faqs: Faq[] };
+const place = `${city.name}, ${region.code}`;
+---
+<Base
+  title={site.titles.city(city.name, region.code)}
+  description={site.titles.cityDescription(city.name, region.code, city.listings.length)}
+  path={city.url}
+  noindex={noindex}
+  crumbs={[{ name: 'Home', url: '/' }, { name: region.name, url: region.url }, { name: city.name, url: city.url }]}
+  jsonld={[itemList(`${site.entity.Many} in ${place}`, city.listings), ...faqPage(faqs)]}
+>
+  <h1>{site.titles.cityH1(city.name, region.code)}</h1>
+  {intro.split('\n\n').map((p, i) => <p class:list={{ lead: i === 0 }}>{p}</p>)}
+  <ListingList listings={city.listings} heading={`${city.listings.length} ${city.listings.length === 1 ? site.entity.one : site.entity.many} in ${place}`} />
+  <BestFor listings={city.listings} place={place} />
+  <Faqs faqs={faqs} />
+  {nearbyCities.length > 0 && (
+    <section aria-labelledby="nearby">
+      <h2 id="nearby">Nearby cities</h2>
+      <ul class="inline-list">{nearbyCities.map((c) => <li><a href={c.url}>{site.entity.Many} in {c.name}</a></li>)}</ul>
+    </section>
+  )}
+</Base>

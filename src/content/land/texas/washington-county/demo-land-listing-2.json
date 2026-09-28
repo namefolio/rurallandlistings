@@ -1,0 +1,38 @@
+{
+  "title": "Demo Land Listing 2",
+  "slug": "demo-land-listing-2",
+  "status": "published",
+  "demo": true,
+  "location": {
+    "county": "Washington County",
+    "region": "TX",
+    "nearestTown": "Brenham"
+  },
+  "lat": 30.28,
+  "lng": -96.33,
+  "acres": 118,
+  "price": 885000,
+  "seller": {
+    "type": "owner",
+    "name": "Demo Seller 2",
+    "email": "seller2@example.com"
+  },
+  "summary": "Demo Land Listing 2 is a placeholder ad used to preview the site. It is not real land for sale.\n\nA real ad would describe the terrain, access, water, utilities and what the land is good for, in the seller's own words.",
+  "links": [],
+  "attributes": {
+    "landTypes": [
+      "hunting",
+      "timber"
+    ],
+    "ownerFinancing": true,
+    "publicRoadAccess": false,
+    "powerAvailable": false,
+    "well": false,
+    "surfaceWater": true,
+    "surveyed": true
+  },
+  "postedOn": "2026-09-27",
+  "expiresOn": "2026-10-27",
+  "lastUpdated": "2026-09-27",
+  "source": "Demo data, not a real listing"
+}

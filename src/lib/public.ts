@@ -1,6 +1,6 @@
 import { site } from '../../site.config';
 import { isoDate } from './core';
-import type { Listing } from './types';
+import type { Land, Listing } from './types';
 
 /** The public record of a listing: what the page shows, nothing more. */
 export const publicListing = (l: Listing) => ({
@@ -27,3 +27,25 @@ export const publicListing = (l: Listing) => ({
 });
 
 export const json = (data: unknown) => new Response(JSON.stringify(data, null, 2), { headers: { 'Content-Type': 'application/json; charset=utf-8' } });
+
+/** The public record of a land classified: what the page shows, nothing more. */
+export const publicLand = (l: Land) => ({
+  title: l.title,
+  slug: l.slug,
+  url: new URL(l.url, site.url).href,
+  region: l.regionSlug,
+  county: l.countySlug,
+  location: l.location,
+  lat: l.lat,
+  lng: l.lng,
+  acres: l.acres,
+  price: l.price ?? null,
+  seller: { type: l.seller.type, name: l.seller.name, phone: l.seller.phone ?? null, email: l.seller.email ?? null, agentSlug: l.seller.agentSlug ?? null },
+  summary: l.summary,
+  links: l.links,
+  attributes: l.attributes,
+  postedOn: isoDate(l.postedOn),
+  expiresOn: isoDate(l.expiresOn),
+  lastUpdated: isoDate(l.lastUpdated),
+  source: l.source,
+});

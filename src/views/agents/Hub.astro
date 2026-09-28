@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../../site.config';
+import { loadAll } from '../../lib/data';
+
+const { regions, listings } = await loadAll();
+const title = `${site.entity.ManyTitle} by ${site.regionNoun[0].toUpperCase()}${site.regionNoun.slice(1)} | ${site.name}`;
+---
+<Base title={title} description={`Browse ${listings.length} ${site.entity.many} by ${site.regionNoun} and city.`} path={`/${site.hub}/`} noindex={listings.length < 3} crumbs={[{ name: 'Home', url: '/' }, { name: site.entity.Many, url: `/${site.hub}/` }]}>
+  <h1>{site.entity.Many} by {site.regionNoun}</h1>
+  {regions.map((r) => (
+    <section>
+      <h2><a href={r.url}>{r.name}</a></h2>
+      <ul class="inline-list">{r.cities.map((c) => <li><a href={c.url}>{c.name} ({c.listings.length})</a></li>)}</ul>
+    </section>
+  ))}
+</Base>

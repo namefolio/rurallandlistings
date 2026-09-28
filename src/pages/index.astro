@@ -1,43 +1,70 @@
 ---
 import Base from '../layouts/Base.astro';
 import Faqs from '../components/Faqs.astro';
+import LandCard from '../components/LandCard.astro';
 import { site } from '../../site.config';
-import { loadAll, termPages } from '../lib/data';
+import { landCategoryPages, loadAll, loadLand, termPages } from '../lib/data';
 import { homeGraph, faqPage } from '../lib/jsonld';
-import { price } from '../lib/copy';
+import { adNotice, classifiedTerm, price } from '../lib/copy';
 
-const { listings, regions } = await loadAll();
-const terms = await termPages();
+const c = site.classifieds;
+const { land, regions: landRegions } = await loadLand();
+const { listings: agents, regions: agentRegions } = await loadAll();
+const categories = await landCategoryPages();
+const specialties = await termPages();
 const faqs = site.homeFaqs;
+const latest = land.slice(0, 6);
 ---
 <Base title={site.titles.home} description={site.titles.homeDescription} path="/" banner jsonld={[...homeGraph(), ...faqPage(faqs)]}>
   <h1>{site.titles.homeH1}</h1>
-  <p class="lead">{site.tagline} {listings.length} listings, each showing the date it was last checked.</p>
+  <p class="lead">{site.tagline} {land.length} {land.length === 1 ? c.entity.one : c.entity.many} and {agents.length} {agents.length === 1 ? site.entity.one : site.entity.many} listed.</p>
+  <div class="btns">
+    <a class="btn btn-primary" href="/sell-your-land/">Sell your land: {classifiedTerm}</a>
+    <a class="btn btn-secondary" href={`/${site.hub}/`}>Find a {site.entity.one}</a>
+  </div>
 
-  <section aria-labelledby="by-region">
-    <h2 id="by-region">Browse by {site.regionNoun}</h2>
-    {regions.length === 0 && <p>No listings yet. <a href="/add-your-business/">Add a {site.entity.one}</a>.</p>}
+  <section aria-labelledby="by-state">
+    <h2 id="by-state">Land for sale by {site.regionNoun}</h2>
+    {landRegions.length === 0 && <p>No land is listed right now. <a href="/sell-your-land/">List yours for {classifiedTerm}</a>.</p>}
     <ul class="tiles">
-      {regions.map((r) => <li><a href={r.url}>{r.name} ({r.listings.length})</a></li>)}
+      {landRegions.map((r) => <li><a href={r.url}>{r.name} ({r.listings.length})</a></li>)}
     </ul>
-    {regions.map((r) => (
+    {landRegions.map((r) => (
       <>
         <h3>{r.name}</h3>
-        <ul class="inline-list">{r.cities.map((c) => <li><a href={c.url}>{site.entity.Many} in {c.name}</a></li>)}</ul>
+        <ul class="inline-list">{r.counties.map((k) => <li><a href={k.url}>Land for sale in {k.name}</a></li>)}</ul>
       </>
     ))}
   </section>
 
-  {terms.length > 0 && (
-    <section aria-labelledby="by-category">
-      <h2 id="by-category">Browse by style and service</h2>
-      <ul class="tiles">{terms.map((t) => <li><a href={t.url}>{t.title}</a></li>)}</ul>
+  {categories.length > 0 && (
+    <section aria-labelledby="by-type">
+      <h2 id="by-type">Browse by type</h2>
+      <ul class="tiles">{categories.map((p) => <li><a href={p.url}>{p.title}</a></li>)}</ul>
     </section>
   )}
 
-  <section aria-labelledby="how">
-    <h2 id="how">How listings work</h2>
-    <p>Every {site.entity.one} can have a free Basic listing, built from public sources or a submission and dated when last updated. Verified listings ({price}) are paid: we check the {site.credential.name} and confirm the details with the owner, then show them first. <a href="/listing-plans/">Compare listing plans</a>.</p>
+  {latest.length > 0 && (
+    <section aria-labelledby="latest">
+      <h2 id="latest">Newest land listings</h2>
+      <p class="disclosure">{adNotice}</p>
+      <ul class="grid">{latest.map((l) => <LandCard land={l} />)}</ul>
+      <p><a href={`/${c.hub}/`}>All land for sale</a></p>
+    </section>
+  )}
+
+  <section aria-labelledby="agents">
+    <h2 id="agents">{site.entity.Many} by {site.regionNoun}</h2>
+    <p>Brokers and agents who sell farms, ranches, timber and hunting land. Every {site.entity.one} can have a free Basic listing; Verified listings ({price}) are paid and license-checked, and shown first. <a href="/listing-plans/">Listing plans for agents</a>.</p>
+    {agentRegions.length === 0 ? <p>No agents are listed yet. <a href="/add-your-business/">Add your agency</a>.</p> : (
+      <ul class="tiles">{agentRegions.map((r) => <li><a href={r.url}>{site.entity.Many} in {r.name}</a></li>)}</ul>
+    )}
+    {specialties.length > 0 && <ul class="inline-list">{specialties.map((t) => <li><a href={t.url}>{t.title}</a></li>)}</ul>}
+  </section>
+
+  <section aria-labelledby="sell">
+    <h2 id="sell">Selling land?</h2>
+    <p>List it for {classifiedTerm}. You write the ad, buyers contact you directly, and there is no commission. <a href="/sell-your-land/">How it works</a>.</p>
   </section>
 
   <Faqs faqs={faqs} />

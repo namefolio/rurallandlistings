@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faqs from '../../components/Faqs.astro';
+import { site } from '../../../site.config';
+import { fmtDate } from '../../lib/core';
+import { adNotice, buyerAdvice } from '../../lib/copy';
+import { faqPage, landListing } from '../../lib/jsonld';
+import { landFactRows, landMapsUrl, type County, type LandRegion } from '../../lib/land';
+import type { Faq, Land, Listing } from '../../lib/types';
+
+const { land: l, region, county, agent, nearby, faqs } = Astro.props as { land: Land; region: LandRegion; county: County; agent?: Listing; nearby: Land[]; faqs: Faq[] };
+const c = site.classifieds;
+const perAcre = c.perAcreText(l);
+const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
+---
+<Base
+  title={c.titles.listing(l.title, county.name, region.code)}
+  description={c.titles.listingDescription(l.title, county.name, region.code, [c.priceText(l), ...c.cardFacts(l)].slice(0, 4))}
+  path={l.url}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url: `/${c.hub}/` }, { name: region.name, url: region.url }, { name: county.name, url: county.url }, { name: l.title, url: l.url }]}
+  jsonld={[landListing(l), ...faqPage(faqs)]}
+>
+  <h1>{l.title}</h1>
+  <p class="price-line"><strong>{c.priceText(l)}</strong><span>{c.acresText(l.acres)}</span>{perAcre && <span>{perAcre}</span>}</p>
+  <p class="muted">{county.name}, {region.name}{l.location.nearestTown ? `, near ${l.location.nearestTown}` : ''}</p>
+
+  <h2>From the seller</h2>
+  {l.summary.split(/\n\n+/).map((p) => <p>{p}</p>)}
+
+  <section class="contact" aria-labelledby="contact">
+    <h2 id="contact">Contact the seller</h2>
+    <p><strong>{l.seller.name}</strong>, {l.seller.type === 'owner' ? 'the owner' : agent ? <>land agent (<a href={agent.url}>see their agent listing</a>)</> : 'land agent'}</p>
+    <ul>
+      {l.seller.phone && <li>Phone: <a href={`tel:${l.seller.phone.replace(/[^+\d]/g, '')}`}>{l.seller.phone}</a></li>}
+      {l.seller.email && <li>Email: <a href={`mailto:${l.seller.email}?subject=${encodeURIComponent(`${l.title} (${site.domain})`)}`}>{l.seller.email}</a></li>}
+    </ul>
+  </section>
+
+  <h2>Details</h2>
+  <table>
+    <tbody>
+      <tr><th scope="row">Acres</th><td>{c.acresText(l.acres)}</td></tr>
+      <tr><th scope="row">Asking price</th><td>{c.priceText(l)}</td></tr>
+      <tr><th scope="row">Price per acre</th><td>{perAcre ?? 'Not listed'}</td></tr>
+      <tr><th scope="row">County</th><td>{county.name}, {region.code}</td></tr>
+      <tr><th scope="row">Nearest town</th><td>{l.location.nearestTown ?? 'Not listed'}</td></tr>
+      {landFactRows(l).map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}
+      <tr><th scope="row">Seller’s links</th><td>{l.links.length ? l.links.map((u, i) => <>{i > 0 && ', '}<a href={u} rel="nofollow ugc">{host(u)}</a></>) : 'None listed'}</td></tr>
+    </tbody>
+  </table>
+  <p><a href={landMapsUrl(l)} rel="nofollow">See the approximate location on Google Maps</a></p>
+  <p class="disclosure">{adNotice} {buyerAdvice}</p>
+
+  <Faqs faqs={faqs} />
+
+  {nearby.length > 0 && (
+    <section aria-labelledby="nearby">
+      <h2 id="nearby">Nearby land for sale</h2>
+      <ul>{nearby.map((n) => <li><a href={n.url}>{n.title}</a>, {n.location.county}, {n.location.region}</li>)}</ul>
+      <p><a href={county.url}>All land for sale in {county.name}</a></p>
+    </section>
+  )}
+
+  <p class="muted">Listed {fmtDate(l.postedOn)}. This ad runs until {fmtDate(l.expiresOn)}. Last updated {fmtDate(l.lastUpdated)}.</p>
+  <p>Is this your listing? <a href={`/sell-your-land/?listing=${l.slug}`}>Renew it or send a change</a></p>
+</Base>

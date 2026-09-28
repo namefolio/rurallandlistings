@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import LandList from '../../components/LandList.astro';
+import { site } from '../../../site.config';
+import { landItemList } from '../../lib/jsonld';
+import type { LandRegion } from '../../lib/land';
+
+const { region, intro, noindex } = Astro.props as { region: LandRegion; intro: string; noindex: boolean };
+const c = site.classifieds;
+const hubUrl = `/${c.hub}/`;
+---
+<Base
+  title={c.titles.region(region.name, region.listings.length)}
+  description={c.titles.regionDescription(region.name, region.listings.length, region.counties.length)}
+  path={region.url}
+  noindex={noindex}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url: hubUrl }, { name: region.name, url: region.url }]}
+  jsonld={[landItemList(`Land for sale in ${region.name}`, region.listings)]}
+>
+  <h1>{c.titles.regionH1(region.name)}</h1>
+  {intro.split('\n\n').map((p, i) => <p class:list={{ lead: i === 0 }}>{p}</p>)}
+  <h2>Counties</h2>
+  <ul class="tiles">{region.counties.map((k) => <li><a href={k.url}>{k.name} ({k.listings.length})</a></li>)}</ul>
+  <LandList listings={region.listings} heading={`All land for sale in ${region.name}`} />
+</Base>

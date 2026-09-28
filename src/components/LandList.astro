@@ -1,0 +1,12 @@
+---
+import LandCard from './LandCard.astro';
+import { adNotice } from '../lib/copy';
+import type { Land } from '../lib/types';
+interface Props { listings: Land[]; heading: string }
+const { listings, heading } = Astro.props;
+---
+<h2>{heading}</h2>
+<p class="disclosure">{adNotice} Newest first. <a href="/sell-your-land/">How land listings work</a></p>
+<ul class="grid">
+  {listings.map((l) => <LandCard land={l} />)}
+</ul>

@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { existsSync, readFileSync } from 'node:fs';
 
-const SITE = 'https://tattoostudioguide.com'; // keep in sync with site.config.ts
+const SITE = 'https://rurallandlistings.com'; // keep in sync with site.config.ts
 
 /** The sitemap runs after pages are written, so leave out any page that marked itself noindex. */
 const isIndexable = (/** @type {string} */ page) => {

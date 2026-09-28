@@ -1,7 +1,7 @@
 {
-  "name": "tattoostudioguide",
+  "name": "rurallandlistings",
   "version": "1.0.0",
-  "description": "TattooStudioGuide.com: static directory of US tattoo shops",
+  "description": "RuralLandListings.com: rural land for sale classifieds and land agent directory",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
