@@ -1,64 +1,72 @@
-# Brief: TattooStudioGuide.com
+# Brief: RuralLandListings.com
 
-Market: **United States** (confirmed by the owner, 2026-09-28). Audience: adults choosing a tattoo shop in their city, usually by style and by whether the shop takes walk-ins.
+Market: **United States** (.com, "rural land" is US usage). Audience: (1) buyers looking for acreage, farms, ranches, hunting land and homesites by state and county; (2) owners and agents selling rural land; (3) buyers and sellers looking for a land agent.
+
+Ben's product decision (2026-09-28): a classifieds site, not only a directory. Two paid products: a **$49 land listing that runs 30 days**, and a **$149 business listing for land agents**.
+
+## Products and tiers (defaults we chose, confirm or change)
+
+| Product | Price | How it works |
+|---|---|---|
+| Land for sale (classified) | $49 for 30 days | Paid only. Seller writes the ad; goes live after payment and a review; `expiresOn` = 30 days after going live; the daily rebuild removes it after that. Renew for another $49. Newest first, no paid placement, never tiered. |
+| Land agent, Basic | Free | Directory listing from public sources or a submission. |
+| Land agent, Verified | $149 **a year** (term is our default) | The spec's Verified tier: license check + agent confirmation, label, shown first. |
+
+Why this split: agents keep the spec's free Basic + paid Verified model (so the agent directory fills from public data), and land ads are paid-only because a free land ad would be unmoderated classifieds. "Verified" is used only for agents; land ads are called "land listings" and say plainly that they are paid ads written by the seller and that we do not inspect land or check title.
+
+## Launch values to confirm
+
+All in `site.config.ts` (`PLACEHOLDERS`), copied from Ben's other directory sites because none were given:
+- For-sale contact: `https://www.domainmarket.com/`
+- Submissions inbox: `hello@namefolio.co` (also `wrangler.jsonc`)
+- Payment: both products invoiced by email (`mailto:hello@namefolio.co`); swap in Stripe Payment Links when ready
+- Verified term: "a year"
 
 ## Keywords → page types
 
-Domain words: tattoo, studio, guide, .com (US market confirmed by owner).
+No search volumes were available; none are claimed.
 
 | Cluster | Examples | Page type |
 |---|---|---|
-| Place | tattoo shops in {city} {ST}, tattoo shops near me, tattoo {city} | City page `/tattoo-shops/{state}/{city}/` |
-| State | tattoo shops in {state} | State page `/tattoo-shops/{state}/` |
-| Walk-in / urgency | walk in tattoo shops {city}, tattoo shops open now | "Walk-ins" best-for section on city pages; `/services/walk-ins/` |
-| Style | fine line tattoo {city}, traditional, realism, blackwork, Japanese | `/styles/{style}/` (only with 3+ listings) |
-| Named shop | {shop name} {city} | Listing page `/tattoo-shops/{state}/{city}/{slug}/` |
-| Questions | cost, minimum, deposit, age/ID, walk-ins | FAQs on listing, city and home pages |
+| State | land for sale in {state}, {state} acreage for sale | `/land-for-sale/{state}/` |
+| County | land for sale {county} county {ST} | `/land-for-sale/{state}/{county}/` (the place level land buyers use) |
+| Land type | hunting land for sale, farmland for sale, ranches for sale, timberland, recreational, waterfront | `/{type}-for-sale/` (only with 3+ live ads) |
+| Terms | owner financed land for sale | `/owner-financed-land/` (3+ ads) |
+| Parcel | {acres} acres {town} | Land listing page |
+| Sell | sell land by owner, list land for sale | `/sell-your-land/` |
+| Agents | land agent / land broker {city}, farm and ranch realtor, ALC | `/land-agents/{state}/{city}/`, `/land-agents-for/{specialty}/` |
 
-Evidence (no search volumes were available; none are claimed):
-- **Entity noun "tattoo shop".** Yelp's US category and search pages use "Tattoo Shops" (yelp.com search for Houston, Denver, Bozeman, Saint Paul); US listicles use "tattoo shops" (do303.com "Denver's Top Tattoo Shops"); many US shops call themselves "tattoo shop" (ritualtattoogallery.com, nyctattooshop.com). "Studio" is the brand word, so titles pair them: "Tattoo Shops & Studios in {City}, {ST}".
-- **Location modifiers:** "near me" and "in {city}, {ST}" forms dominate Yelp and shop pages; the city is the level people choose at; state is the hub level. Neighborhoods are left for later, when big cities have enough listings.
-- **Walk-ins matter:** Yelp has dedicated "Tattoo Shops Walk Ins" pages per city; many shops lead with "Walk-ins welcome" (livebytheswordtattoo.com, rabblerousertattoo.com, chitowntattoo.com).
-- **Styles:** US shops advertise fine line, traditional, realism, blackwork etc. (noregrets.tattoo, tatship.com style lists).
-- **Common questions** (shop FAQ pages, e.g. clubtattoo.com/pages/faqs, bayinktattoo.com/faq, sortra.com on deposits): how much does it cost / shop minimum, deposit, walk-ins or appointment, ID and age (18+, some allow 16+ with parental consent by state), cover-ups, bring your own design, aftercare.
-- **Who ranks now** (Houston TX = large, Denver CO = mid, Bozeman MT = small): Yelp everywhere; editorial listicles (Westword, do303) in Denver; shop sites and Facebook pages in Bozeman. Gaps: listicles give no hours, walk-in policy, minimums or license info (do303 checked); Yelp mixes ratings with ads. Nobody states when details were last checked.
-- **Credential:** US tattoo shops are licensed by the state or local health department, and several states publish a free lookup (Texas DSHS public license search; Florida DOH establishment licensing; Minnesota MDH body art licenses). Check wording: "we check the shop's tattoo establishment license with the state or local health department that issues it, and confirm the details with the owner".
-- **schema.org type:** `TattooParlor`.
+Evidence:
+- **Who ranks:** LandWatch organises by state and by type (e.g. "United States Farms and Ranches for Sale", "California Land for Sale", landwatch.com); Land.com/Lands of America lead with "Ranches, Farms, and Land for Sale Near Me" (land.com). Comparison pieces list LandWatch, Land.com, LandSearch, Zillow, Facebook Marketplace and Craigslist as the channels (jerezland.com, reonomy.com, iqcalculators.com). Gap we fill: a cheap flat-fee, owner-friendly ad with the facts buyers ask about in a fixed table, plus a dated, disclosed agent directory; no ratings.
+- **Buyer questions** (LandSearch "Questions You Should Ask When Buying Land"; AgWest Farm Credit land buying checklist; AgSouth Farm Credit; Land.com network): owner financing, buildable, survey, utilities/well/septic and perc test, zoning, HOA, road access, water features, mineral/water/timber rights, liens and deed restrictions, flood zone, easements, taxes. These became the land attributes, card facts and FAQs.
+- **Agent credential:** real estate licenses are public in every state via the state commission lookup (ARELLO license verification, arello.org/arello.com; e.g. Alabama REC license search, Louisiana REC "Verify License"). Check wording: "we check the agent's real estate license with the state real estate commission's public license lookup, and confirm the details with the agent". The REALTORS® Land Institute's **Accredited Land Consultant (ALC)** designation is the land-specific credential and has a public "Find a Land Consultant" search (rliland.com; nar.realtor), so it is an attribute, not the Verified check.
+- **schema.org:** agents `RealEstateAgent`; land ads `RealEstateListing` with an `Offer` (price, `validThrough` = `expiresOn`). No rating markup; nothing claims verification.
 
-## URLs and entity
+## Entities, URLs, attributes
 
-- Entity noun: tattoo shop / tattoo shops. Hub segment: `tattoo-shops`. Region = US state (slug `texas`), city slug `houston`. Titles use the two-letter state code.
-- Taxonomies: `styles` (fine-line, traditional, neo-traditional, realism, blackwork, japanese, black-and-grey, color, lettering, geometric, watercolor, portraits) and `services` (walk-ins, piercing, cover-ups, custom-designs, laser-removal).
+- Land ad: "land listing". Hub `land-for-sale`, `{state}/{county}/{slug}`. County is the display name in the file ("Washington County"), so parishes and boroughs work.
+- Agent: "land agent". Hub `land-agents`, `{state}/{city}/{slug}`.
+- Land attributes: land type (farmland, ranch, pasture, hunting, timber, recreational, homesite, waterfront, undeveloped), owner financing, public road access, electric, well, creek/pond/spring, septic or perc, surveyed, mineral rights, deed restrictions, mobile homes allowed, buildings, annual tax. Always shown as the seller's claims.
+- Land card facts: price (large), acres, price per acre, land type, owner financing, listed date.
+- Agent attributes: specialties (farms and ranches, hunting and recreational, timberland, lots and homesites, land auctions, development), works with buyers, works with sellers, ALC.
 
-## Listing attributes (schema)
+## Titles
 
-`styles[]`, `services[]` (walk-ins, piercing, cover-ups, custom-designs, laser-removal), `appointmentOnly` (bool), `minimumCharge` (USD number, only when the shop publishes it), `depositRequired` (bool), `minAge` (number, from the shop's own policy), `veganInk` (bool), `wheelchairAccessible` (bool), `cardsAccepted` (bool). Unknown = omitted, shown as "Not listed".
+- County: "Land for Sale in {County}, {ST}: Acreage, Farms & Hunting Land | RuralLandListings"
+- Land ad: "{Title}, {County} {ST} | Land for Sale"
+- Agent city: "Land Agents in {City}, {ST}: Farm, Ranch & Hunting Land Brokers | RuralLandListings"
+- Home: "Rural Land for Sale by Owner & Land Agents in the US | RuralLandListings"
 
-**Card facts (max 5):** top 3 styles · walk-ins yes/no · shop minimum · open Sundays · piercing.
+## Design
 
-## Title / meta templates
+- **Home layout:** location-led for land (state tiles, then counties), type tiles, newest ads, then agents by state, then "Selling land?", then FAQs. Primary button: "Sell your land: $49 for 30 days".
+- **Feel:** county plat map. Field-cream paper, 1px survey-line rules, 8px radius, no shadows, forest-green accent for price, buttons, Verified rule and the H1 rule; creek-blue links. The asking price is the largest thing on every land card and ad.
+- **Font:** Public Sans (variable, self-hosted WOFF2, OFL), 18px/1.6, 70ch.
+- **Contrast** (WCAG ratios): ink/paper 14.3, muted/paper 6.9, accent/paper 8.3, link/paper 7.2, cream-on-green buttons 9.1, banner 14.3, form borders (rule/paper) 4.3, focus ring 5.0.
 
-- Home: `Tattoo Shops & Studios in the US by City and Style | TattooStudioGuide` · "Find tattoo shops by state, city and style. Hours, walk-ins, shop minimums and how to book, with the date each listing was last checked."
-- State: `Tattoo Shops in {State}: {n} Studios by City | TattooStudioGuide`
-- City: `Tattoo Shops in {City}, {ST}: Walk-ins, Styles & Hours | TattooStudioGuide` · "{n} tattoo shops in {City}, {ST}. Compare styles, walk-in policy, shop minimums and opening hours."
-- Listing: `{Name}, {City} {ST}: Tattoo Shop Hours, Styles & Walk-ins`
-- Style: `{Style} Tattoo Shops in the US | TattooStudioGuide`
+## Other defaults
 
-## FAQs
-
-- Listing (from data only): Does {name} take walk-ins? What styles does {name} tattoo? What is the shop minimum? Is {name} open on Sundays? Does {name} do piercings?
-- City: How many tattoo shops are in {city}? Which take walk-ins? Which are open Sundays?
-- Home: How much does a tattoo cost? (we only show a shop's minimum when it publishes one) · Do I need ID? (shops set age policy; most require 18+ with photo ID) · What does Verified mean?
-
-## Design direction
-
-- **Home layout: location-led.** Order: H1 + one line → states with listings (city links under each) → "Browse by style" tiles → "Walk-in shops" line → how listings work (Basic / Verified, one paragraph) → FAQs.
-- **Feel:** flash-sheet print. Paper background, ink-black text, 2px ink borders, 4px corners, no shadows. **One accent treatment:** traditional-tattoo red used for a thick left rule (Verified cards, H1 underline bar) and primary buttons.
-- **Palette** (checked AA, see `src/theme.css`): ink `#16130f`, paper `#fbf8f2`, red `#a4241c`, teal `#0d5c55` (links), muted `#57514a`, rule `#16130f`. Banner: paper on ink.
-- **Font:** Atkinson Hyperlegible Next (variable WOFF2, self-hosted, OFL), 18px/1.6, 70ch measure; headings in the same family at weight 800.
-- **Density:** medium; cards as bordered boxes with the 3–5 facts in a definition list.
-
-## Defaults picked (no answer yet)
-
-- Listings: no CSV provided yet → 3 demo shops in Austin, TX (`demo: true`, excluded from production).
-- Placeholders in `site.config.ts` for the for-sale contact, submissions email, Verified price and payment link.
+- Land ads can hold up to 5 seller links (photos, survey, map); no uploads.
+- Map link uses an approximate point, labelled as not a boundary.
+- Changes during the paid period are free; renewals cost $49.
+- Demo data: 3 demo agents (Brenham, TX) and 3 demo land ads (Washington County, TX) marked `demo: true`; the demo ads end between 2026-10-26 and 2026-10-28 and then drop off like real ones. `npm run remove-demo` removes both.

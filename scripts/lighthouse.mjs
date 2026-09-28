@@ -1,4 +1,4 @@
-// Runs Lighthouse (mobile) on home, a city page, a listing page and the form of the built site. Fails below 100.
+// Runs Lighthouse (mobile) on home, an agent city and listing page, a land county and listing page, and both forms. Fails below 100.
 // Usage: npm run build:demo && npm run lighthouse   (CHROME_PATH overrides the browser)
 import { createServer } from 'node:http';
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
@@ -29,9 +29,14 @@ const first = data.listings[0];
 if (!first) { console.error('No listings in the build. Run npm run build:demo first.'); process.exit(1); }
 const listingPath = new URL(first.url).pathname;
 const cityPath = listingPath.split('/').slice(0, -2).join('/') + '/';
-const pages = { home: '/', city: cityPath, listing: listingPath, form: '/add-your-business/' };
-// The form loads Turnstile from Cloudflare, so only its Accessibility, Best Practices and SEO must be 100.
-const SKIP = { form: ['Performance'] };
+const pages = { home: '/', city: cityPath, listing: listingPath, form: '/add-your-business/', sell: '/sell-your-land/' };
+const land = JSON.parse(readFileSync(join(DIST, 'data/land.json'), 'utf8')).listings[0];
+if (land) {
+  pages.land = new URL(land.url).pathname;
+  pages.county = pages.land.split('/').slice(0, -2).join('/') + '/';
+} else console.log('No live land listings in the build; skipping land pages.');
+// The forms load Turnstile from Cloudflare, so only their Accessibility, Best Practices and SEO must be 100.
+const SKIP = { form: ['Performance'], sell: ['Performance'] };
 
 const chromePath = process.env.CHROME_PATH ?? ['/opt/pw-browsers/chromium-1194/chrome-linux/chrome'].find(existsSync);
 const chrome = await chromeLauncher.launch({ chromePath, chromeFlags: ['--headless=new', '--no-sandbox', '--disable-gpu'] });

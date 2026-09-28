@@ -25,5 +25,11 @@ for (const l of listings.filter((x) => x.tier === 'basic')) {
   if (/class="badge"|Verified: details confirmed/.test(html)) problems.push(`${l.url}: Basic listing shows Verified label`);
 }
 
+// Land ads are never tiered: no badge on any land page.
+for (const l of JSON.parse(readFileSync('dist/data/land.json', 'utf8')).listings) {
+  const html = readFileSync(join('dist', new URL(l.url).pathname, 'index.html'), 'utf8');
+  if (/class="badge"|Verified: details confirmed/.test(html)) problems.push(`${l.url}: land listing shows a Verified label`);
+}
+
 if (problems.length) { console.error(`Verified wording check failed:\n${problems.join('\n')}`); process.exit(1); }
 console.log(`Verified wording check passed (${all.length} files).`);
