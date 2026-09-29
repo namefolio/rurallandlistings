@@ -8,6 +8,7 @@ declare module 'cloudflare:email' {
   }
 }
 declare module "*?worker&url" { const src: string; export default src; }
+declare module "*.css?url" { const src: string; export default src; }
 
 /** Cloudflare Turnstile (explicit rendering), loaded from challenges.cloudflare.com. */
 interface Window {

@@ -8,11 +8,17 @@ let lib: Promise<ML> | undefined;
 
 function load(): Promise<ML> {
   return (lib ??= (async () => {
-    const [ml, worker] = await Promise.all([
+    const [ml, worker, css] = await Promise.all([
       import('maplibre-gl'),
       import('maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'),
-      import('maplibre-gl/dist/maplibre-gl.css'),
+      import('maplibre-gl/dist/maplibre-gl.css?url'),
     ]);
+    // Pages inline their own CSS, so the map's stylesheet is emitted as a file and linked on demand.
+    await new Promise<void>((ok) => {
+      const link = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: css.default });
+      link.onload = link.onerror = () => ok();
+      document.head.append(link);
+    });
     const m = ((ml as unknown as { default?: ML }).default ?? ml) as ML;
     m.setWorkerUrl(new URL(worker.default, location.href).href);
     return m;

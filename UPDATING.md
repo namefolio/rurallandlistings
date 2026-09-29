@@ -8,6 +8,7 @@ Two kinds of file. **Land agents**: `src/content/listings/{state}/{city}/{slug}.
 - **Renewal** (after payment): set `expiresOn` to 30 days after the later of today and the current `expiresOn`; apply any changed fields; update `lastUpdated`.
 - **Change**: apply changed fields only; leave `postedOn`/`expiresOn` alone.
 - **Sold or withdrawn**: set `status` to `"sold"` or `"withdrawn"`. Expired ads drop off on the next daily build; delete their files monthly.
+- **Photos** come as `photos: [{id, alt, kind, width, height}]` (uploaded to R2; the email has private review links valid 14 days). Look at them before publishing; remove any that are not of the land or show private information. Photos go public only when a published file lists them. `videoUrl` (YouTube/Vimeo) is optional. Keep `exactLocation: true` only if the seller ticked it; otherwise the map shows an area, never the point.
 - Never copy the submitter's private name or email into the file (only the seller contact they chose to publish). If the seller is a listed agent, set `seller.agentSlug`.
 
 ## Land agents: add, edit, remove
@@ -19,8 +20,13 @@ Two kinds of file. **Land agents**: `src/content/listings/{state}/{city}/{slug}.
 - `[… ] Land listing · …` emails: follow "Land for sale" above. `[… ] Basic|Verified request · …` emails: land agents.
 - Agent emails hold a listing-shaped JSON block; with an `Update:` subject, edit that slug. Never publish the submitter's name, email or relationship. Keep `tier: "basic"`, even for a Verified request, until the site owner says payment is received and ownership is confirmed.
 
+Agent profile fields: `brokerage`, `agentType` (agent, broker, auctioneer, consultant), public `email`, `photo` (one uploaded photo), `licenses: [{state, number}]`, `countiesServed: [{state, county}]`. Drop `null` values from the email's JSON.
+
 ## Upgrading an agent to Verified (only on the site owner's word)
-Set `tier: "verified"` and `verifiedUntil` one year from today (unless told otherwise), add the agent's `description` (≤150 words) and `bookingUrl`, set `lastUpdated`. Downgrade: `tier: "basic"`, remove those three fields.
+1. Look up each license in `licenses` with that state's real estate commission. Record only states whose license you found active.
+2. Set `tier: "verified"`, `verifiedUntil` one year from today (unless told otherwise), and `licenseCheck: { checkedOn: "<today>", states: ["TX", ...] }`. The build fails a Verified profile without `licenseCheck`; the profile shows those states and that date.
+3. Add the agent's `description` (≤150 words) and `bookingUrl`, set `lastUpdated`.
+Downgrade: `tier: "basic"`, remove `verifiedUntil`, `licenseCheck`, `description` and `bookingUrl`.
 
 ## Check, commit, push
 ```sh

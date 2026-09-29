@@ -360,7 +360,8 @@ main { padding-bottom: 4rem; display: block; }
 .gallery-count { position: absolute; right: 0.75rem; bottom: 0.75rem; display: inline-flex; align-items: center; gap: 0.4rem; min-height: 40px; padding: 0 0.85rem; background: var(--surface); border: 0; border-radius: var(--radius); box-shadow: var(--shadow); font: inherit; font-weight: 700; font-size: 0.875rem; cursor: pointer; }
 .gallery-count svg { width: 1rem; height: 1rem; }
 @media (min-width: 56rem) { .gallery.has-grid .gallery-nav { display: none; } }
-.gallery-empty { aspect-ratio: 3 / 1; min-height: 12rem; border-radius: var(--radius-l); overflow: hidden; margin-top: 0.75rem; }
+.gallery-empty { aspect-ratio: 16 / 9; width: 100%; border-radius: var(--radius-l); overflow: hidden; margin-top: 0.75rem; }
+@media (min-width: 40rem) { .gallery-empty { aspect-ratio: 3 / 1; } }
 .lightbox { width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgb(10 14 11 / 96%); color: #fff; }
 .lightbox::backdrop { background: rgb(10 14 11 / 90%); }
 .lightbox .gallery-track { height: 100%; background: transparent; border-radius: 0; }
@@ -611,3 +612,6 @@ dialog.modal h2 { margin: 0 0 0.5rem; font-size: 1.5rem; }
 .check-grid { display: grid; gap: 0 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); margin-top: 1rem; }
 .check-grid legend { grid-column: 1 / -1; }
 .hours-grid { display: grid; gap: 0 1rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
+.results-tools select { width: auto; }
+.link-arrow { white-space: nowrap; }
+.link-arrow svg { width: 1.1rem; height: 1.1rem; flex: none; }
