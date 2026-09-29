@@ -1,71 +1,146 @@
 ---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Base from '../layouts/Base.astro';
+import EmptyState from '../components/EmptyState.astro';
 import Faqs from '../components/Faqs.astro';
-import LandCard from '../components/LandCard.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Icon from '../components/Icon.astro';
+import LandList from '../components/LandList.astro';
+import SearchBar from '../components/SearchBar.astro';
+import Topo from '../components/Topo.astro';
+import ValueProp from '../components/ValueProp.astro';
 import { site } from '../../site.config';
-import { landCategoryPages, loadAll, loadLand, termPages } from '../lib/data';
-import { homeGraph, faqPage } from '../lib/jsonld';
-import { adNotice, classifiedTerm, price } from '../lib/copy';
+import { loadAll, loadLand, searchPlaces } from '../lib/data';
+import { faqPage, homeGraph } from '../lib/jsonld';
+import { classifiedPrice, licenseBadge, price } from '../lib/copy';
 
 const c = site.classifieds;
-const { land, regions: landRegions } = await loadLand();
-const { listings: agents, regions: agentRegions } = await loadAll();
-const categories = await landCategoryPages();
-const specialties = await termPages();
+const { land, regions } = await loadLand();
+const { listings: agents } = await loadAll();
+const places = await searchPlaces();
+const featured = land.slice(0, 6);
+const heroFiles = Object.entries(import.meta.glob<{ default: ImageMetadata }>('../assets/hero/*.{jpg,jpeg,png,webp,avif}', { eager: true })).sort(([a], [b]) => a.localeCompare(b));
+const hero = heroFiles[0]?.[1].default;
+const typeTiles: [string, string, Parameters<typeof Icon>[0]['name']][] = [
+  ['Farms', 'type=farmland', 'wheat'],
+  ['Ranches', 'type=ranch', 'fence'],
+  ['Hunting Land', 'type=hunting', 'deer'],
+  ['Timberland', 'type=timber', 'tree'],
+  ['Recreational Land', 'type=recreational', 'tent'],
+  ['Waterfront', 'type=waterfront', 'water'],
+  ['Owner Financing', 'f=financing', 'dollar'],
+  ['Homesites', 'type=homesite', 'home'],
+];
 const faqs = site.homeFaqs;
-const latest = land.slice(0, 6);
 ---
-<Base title={site.titles.home} description={site.titles.homeDescription} path="/" banner jsonld={[...homeGraph(), ...faqPage(faqs)]}>
-  <h1>{site.titles.homeH1}</h1>
-  <p class="lead">{site.tagline} {land.length} {land.length === 1 ? c.entity.one : c.entity.many} and {agents.length} {agents.length === 1 ? site.entity.one : site.entity.many} listed.</p>
-  <div class="btns">
-    <a class="btn btn-primary" href="/sell-your-land/">Sell your land: {classifiedTerm}</a>
-    <a class="btn btn-secondary" href={`/${site.hub}/`}>Find a {site.entity.one}</a>
-  </div>
-
-  <section aria-labelledby="by-state">
-    <h2 id="by-state">Land for sale by {site.regionNoun}</h2>
-    {landRegions.length === 0 && <p>No land is listed right now. <a href="/sell-your-land/">List yours for {classifiedTerm}</a>.</p>}
-    <ul class="tiles">
-      {landRegions.map((r) => <li><a href={r.url}>{r.name} ({r.listings.length})</a></li>)}
-    </ul>
-    {landRegions.map((r) => (
-      <>
-        <h3>{r.name}</h3>
-        <ul class="inline-list">{r.counties.map((k) => <li><a href={k.url}>Land for sale in {k.name}</a></li>)}</ul>
-      </>
-    ))}
+<Base title={site.titles.home} description={site.titles.homeDescription} path="/" jsonld={[...homeGraph(), ...faqPage(faqs)]}>
+  <section class="hero" aria-labelledby="hero-h">
+    {hero ? (
+      <div class="hero-bg"><Picture src={hero} alt={site.heroPhotoAlt} formats={['avif', 'webp']} widths={[640, 1024, 1600, 2400]} sizes="100vw" loading="eager" fetchpriority="high" /></div>
+    ) : <Topo />}
+    <div class="wrap">
+      <h1 id="hero-h">Find Land Worth Owning.</h1>
+      <p class="hero-sub">Farms, ranches, timberland, hunting properties and rural acreage listed by owners and land professionals.</p>
+      <SearchBar places={places} id="hero" />
+      <ul class="quick" aria-label="Quick filters">
+        {c.quickFilters.map((q) => <li><a href={`/${c.hub}/?${q.query}`}>{q.label}</a></li>)}
+      </ul>
+      <div class="hero-ctas">
+        <a class="btn btn-light btn-lg" href={`/${c.hub}/`}>Browse Land</a>
+        <a class="btn btn-outline-light btn-lg" href="/sell-your-land/">List Your Land — {classifiedPrice}</a>
+      </div>
+      <ul class="hero-note">
+        <li><Icon name="check" />No buyer fees</li>
+        <li><Icon name="check" />No seller commission</li>
+        <li><Icon name="check" />Contact sellers directly</li>
+      </ul>
+    </div>
   </section>
 
-  {categories.length > 0 && (
-    <section aria-labelledby="by-type">
-      <h2 id="by-type">Browse by type</h2>
-      <ul class="tiles">{categories.map((p) => <li><a href={p.url}>{p.title}</a></li>)}</ul>
-    </section>
-  )}
-
-  {latest.length > 0 && (
-    <section aria-labelledby="latest">
-      <h2 id="latest">Newest land listings</h2>
-      <p class="disclosure">{adNotice}</p>
-      <ul class="grid">{latest.map((l) => <LandCard land={l} />)}</ul>
-      <p><a href={`/${c.hub}/`}>All land for sale</a></p>
-    </section>
-  )}
-
-  <section aria-labelledby="agents">
-    <h2 id="agents">{site.entity.Many} by {site.regionNoun}</h2>
-    <p>Brokers and agents who sell farms, ranches, timber and hunting land. Every {site.entity.one} can have a free Basic listing; Verified listings ({price}) are paid and license-checked, and shown first. <a href="/listing-plans/">Listing plans for agents</a>.</p>
-    {agentRegions.length === 0 ? <p>No agents are listed yet. <a href="/add-your-business/">Add your agency</a>.</p> : (
-      <ul class="tiles">{agentRegions.map((r) => <li><a href={r.url}>{site.entity.Many} in {r.name}</a></li>)}</ul>
-    )}
-    {specialties.length > 0 && <ul class="inline-list">{specialties.map((t) => <li><a href={t.url}>{t.title}</a></li>)}</ul>}
+  <section class="section" aria-labelledby="featured">
+    <div class="wrap">
+      {featured.length > 0 ? (
+        <>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Newest listings</p>
+              <h2 id="featured">Featured Land</h2>
+            </div>
+            <a class="link-arrow" href={`/${c.hub}/`}>Browse all land <Icon name="arrow" /></a>
+          </div>
+          <LandList listings={featured} />
+        </>
+      ) : (
+        <>
+          <h2 id="featured" class="sr-only">Featured Land</h2>
+          <EmptyState title="Be among the first properties listed." text={`List your land for ${classifiedPrice} and reach buyers looking for rural property.`}>
+            <a class="btn btn-primary" href="/sell-your-land/">List Your Land</a>
+            <a class="btn btn-secondary" href="/how-it-works/">How it works</a>
+          </EmptyState>
+        </>
+      )}
+    </div>
   </section>
 
-  <section aria-labelledby="sell">
-    <h2 id="sell">Selling land?</h2>
-    <p>List it for {classifiedTerm}. You write the ad, buyers contact you directly, and there is no commission. <a href="/sell-your-land/">How it works</a>.</p>
+  <section class="section band" aria-labelledby="by-type">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Browse</p>
+          <h2 id="by-type">Land by type</h2>
+        </div>
+      </div>
+      <ul class="type-tiles">
+        {typeTiles.map(([label, q, icon]) => <li><a href={`/${c.hub}/?${q}`}><Icon name={icon} />{label}</a></li>)}
+      </ul>
+      {regions.length > 0 && (
+        <>
+          <h3>Land for sale by state</h3>
+          <ul class="tiles">{regions.map((r) => <li><a href={r.url}>{r.name}<small>{r.listings.length}</small></a></li>)}</ul>
+        </>
+      )}
+    </div>
   </section>
 
-  <Faqs faqs={faqs} />
+  <section class="section" aria-labelledby="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">How it works</p>
+          <h2 id="how">A direct marketplace for rural land</h2>
+          <p>Buyers and sellers deal with each other. We make the listing clear and easy to find.</p>
+        </div>
+        <a class="link-arrow" href="/how-it-works/">More on how it works <Icon name="arrow" /></a>
+      </div>
+      <HowItWorks />
+    </div>
+  </section>
+
+  <section class="section band-white">
+    <div class="wrap"><ValueProp /></div>
+  </section>
+
+  <section class="section" aria-labelledby="agents">
+    <div class="wrap cols-2">
+      <div>
+        <p class="eyebrow">Land agents</p>
+        <h2 id="agents">Work with a land professional</h2>
+        <p class="lead">Find agents and brokers who specialize in farms, ranches, timber and recreational land, by state, county and specialty.</p>
+        <div class="btns">
+          <a class="btn btn-primary" href={`/${site.hub}/`}>Find a Land Agent</a>
+          <a class="btn btn-secondary" href="/listing-plans/">Create an agent profile</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h3><span class="badge-verified"><Icon name="shield" />{licenseBadge}</span></h3>
+        <p>Agents can create a free Basic profile. Verified profiles ({price}) carry the {licenseBadge} badge: we look up the agent’s real estate license with the state commission’s public lookup and show which states were checked and when.</p>
+        <p class="muted small">{licenseBadge} is not a rating or endorsement. {agents.length > 0 ? '' : 'The directory is open for its first agents now.'}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" aria-label="Frequently asked questions">
+    <div class="wrap"><Faqs faqs={faqs} heading="Common questions" /></div>
+  </section>
 </Base>

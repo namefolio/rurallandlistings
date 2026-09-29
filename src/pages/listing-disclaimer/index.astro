@@ -1,0 +1,19 @@
+---
+import Prose from '../../layouts/Prose.astro';
+import { site } from '../../../site.config';
+import { buyerAdvice, marketplaceLine, notChecked } from '../../lib/copy';
+---
+<Prose title={`Listing Disclaimer | ${site.name}`} description="Listing information on RuralLandListings is provided by sellers and is not independently verified. What that means for buyers." path="/listing-disclaimer/" h1="Listing disclaimer">
+  <p class="lead">Property listings on {site.name} are advertisements written by sellers or their agents.</p>
+  <h2>Seller-provided information</h2>
+  <p>We review each listing before it goes live, but we do not inspect properties or search public records, and we do not independently verify the information sellers provide, including:</p>
+  <ul>{notChecked.map((x) => <li>{x}</li>)}</ul>
+  <p>Acreage, prices, features, photos, maps and approximate locations are shown as the seller provided them. Map locations are approximate and are not property boundaries.</p>
+  <h2>Do your own due diligence</h2>
+  <p>{buyerAdvice} That may include a title search and title insurance, a current survey, confirming legal and year-round access, checking zoning, permits, easements and flood maps with the county, testing water and soils, and confirming utilities, mineral rights and taxes. Consider working with a licensed real estate professional and an attorney.</p>
+  <h2>Not a brokerage</h2>
+  <p>{marketplaceLine} We are not a party to any sale and do not handle offers, deposits or closings.</p>
+  <h2>Agent profiles</h2>
+  <p>The License Verified badge means we checked the agent’s real estate license with the state’s public license lookup on the date shown. It is not a rating, review or endorsement.</p>
+  <p class="muted small">This page is general information, not legal advice.</p>
+</Prose>

@@ -1,0 +1,16 @@
+---
+import Prose from '../../layouts/Prose.astro';
+import { PLACEHOLDERS, site } from '../../../site.config';
+const email = PLACEHOLDERS.submissionsEmail;
+---
+<Prose title={`Contact ${site.name}`} description={`How to reach ${site.name} about a listing, a profile or the site.`} path="/contact/" h1="Contact us">
+  <p class="lead">Email <a href={`mailto:${email}`}>{email}</a>. We usually reply within two business days.</p>
+  <h2>Questions about a property?</h2>
+  <p>Contact the seller directly using the phone number or email on the listing. We are not involved in sales and cannot answer questions about a specific property.</p>
+  <h2>Your listing or profile</h2>
+  <ul>
+    <li>Change or renew a land listing: use the link at the bottom of your listing page.</li>
+    <li>Add or correct a land agent profile: <a href="/add-your-business/">use the agent form</a>.</li>
+    <li>Report a listing that looks wrong or misleading: email us with the listing link.</li>
+  </ul>
+</Prose>

@@ -22,6 +22,24 @@
     ],
     "worksWithSellers": true
   },
+  "brokerage": "Demo Land Brokerage 3",
+  "agentType": "agent",
+  "licenses": [
+    {
+      "state": "TX",
+      "number": "DEMO-003"
+    }
+  ],
+  "countiesServed": [
+    {
+      "state": "TX",
+      "county": "Washington County"
+    },
+    {
+      "state": "TX",
+      "county": "Austin County"
+    }
+  ],
   "lastUpdated": "2026-09-28",
   "source": "Demo data, not a real business"
 }

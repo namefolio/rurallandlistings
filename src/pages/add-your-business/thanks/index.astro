@@ -1,9 +1,8 @@
 ---
-import Base from '../../../layouts/Base.astro';
+import Prose from '../../../layouts/Prose.astro';
 import { site } from '../../../../site.config';
 ---
-<Base title={`Thanks, we have your listing details | ${site.name}`} description="Your listing details were sent." path="/add-your-business/thanks/" noindex markdown={false}>
-  <h1>Thanks, we have your details</h1>
-  <p>We check each submission before it goes live, usually within a few days. Basic listings are free.</p>
-  <p><a href="/">Back to the home page</a></p>
-</Base>
+<Prose title={`Thanks, we have your profile details | ${site.name}`} description="Your profile details were sent." path="/add-your-business/thanks/" h1="Thanks, we have your details" noindex crumbs={false}>
+  <p>We check each submission before it goes live, usually within a few days. Basic profiles are free.</p>
+  <p>Want the License Verified badge? <a href="/listing-plans/">See how Verified works</a>.</p>
+</Prose>

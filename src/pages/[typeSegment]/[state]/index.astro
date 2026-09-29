@@ -1,0 +1,38 @@
+---
+// /hunting-land/{state}/, /farmland/{state}/, /ranches/{state}/, /timberland/{state}/: only built for
+// states with a live listing of that type; noindex below 3 listings, like every other index page.
+import LandIndex from '../../../views/land/LandIndex.astro';
+import { site } from '../../../../site.config';
+import { INDEX_MIN } from '../../../lib/core';
+import { landCategoryPages, stateTypePages, type StateTypePage } from '../../../lib/data';
+import { landItemList } from '../../../lib/jsonld';
+
+export async function getStaticPaths() {
+  return (await stateTypePages()).map((page) => ({ params: { typeSegment: page.segment, state: page.region.slug }, props: { page } }));
+}
+const { page } = Astro.props as { page: StateTypePage };
+const c = site.classifieds;
+const r = page.region;
+const national = (await landCategoryPages()).find((p) => p.slug === page.national);
+const siblings = (await stateTypePages()).filter((p) => p.region.slug === r.slug && p.segment !== page.segment);
+const counties = r.counties.map((k) => ({ k, n: k.listings.filter((l) => page.listings.includes(l)).length })).filter((x) => x.n > 0);
+const acres = page.listings.reduce((s, l) => s + l.acres, 0);
+const title = `${page.title} in ${r.name}`;
+---
+<LandIndex
+  title={`${title}: ${page.listings.length} ${page.listings.length === 1 ? 'Listing' : 'Listings'} by County | ${site.name}`}
+  description={`${page.listings.length} ${page.noun} ${page.listings.length === 1 ? 'listing' : 'listings'} for sale in ${r.name}, ${c.acresText(acres)} in all. Price, acreage, price per acre and features; contact sellers directly.`}
+  h1={title}
+  intro={`${page.listings.length} ${page.listings.length === 1 ? 'listing' : 'listings'} of ${page.noun} for sale in ${r.name} from owners and land agents, covering ${c.acresText(acres)}. Compare asking price, acreage and price per acre, then contact the seller directly.`}
+  path={page.url}
+  noindex={page.listings.length < INDEX_MIN}
+  crumbs={[{ name: 'Home', url: '/' }, national ? { name: national.title, url: national.url } : { name: 'Land for sale', url: `/${c.hub}/` }, { name: r.name, url: page.url }]}
+  jsonld={[landItemList(title, page.listings)]}
+  listings={page.listings}
+  query={`state=${r.slug}&${page.query}`}
+  queryName={title}
+  related={[
+    { heading: `${page.title} by county in ${r.name}`, links: counties.map(({ k, n }) => ({ label: k.name, url: k.url, n })) },
+    { heading: `More land in ${r.name}`, links: [{ label: `All land for sale in ${r.name}`, url: r.url, n: r.listings.length }, ...siblings.map((s) => ({ label: s.title, url: s.url, n: s.listings.length }))] },
+  ]}
+/>

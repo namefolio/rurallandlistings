@@ -1,13 +1,12 @@
 ---
-import Base from '../../../layouts/Base.astro';
+import Prose from '../../../layouts/Prose.astro';
 import { site } from '../../../../site.config';
-import { payLabel, payLink, price } from '../../../lib/copy';
+import { licenseBadge, payLabel, payLink, price } from '../../../lib/copy';
 // The Worker rewrites #pay's href to add the business name as a payment reference.
 ---
-<Base title={`Thanks, your Verified request is in | ${site.name}`} description="Your Verified request was sent." path="/add-your-business/thanks-verified/" noindex markdown={false}>
-  <h1>Thanks, your Verified request is in</h1>
-  <p>We will add or update the listing as Basic now. Verified costs <strong>{price}</strong>.</p>
-  <p>Before the Verified label appears, we contact the owner to confirm they run the business, and check the {site.credential.name} with {site.credential.source}. If the check fails, we refund you and the listing stays Basic.</p>
-  <div class="btns"><a id="pay" class="btn btn-primary" href={payLink}>{payLabel}</a></div>
+<Prose title={`Thanks, your Verified request is in | ${site.name}`} description="Your Verified request was sent." path="/add-your-business/thanks-verified/" h1="Thanks, your Verified request is in" noindex crumbs={false}>
+  <p class="lead">We add or update your profile as Basic now. Verified costs <strong>{price}</strong>.</p>
+  <p>Before the {licenseBadge} badge appears, we look up your {site.credential.name} with {site.credential.source} and confirm the details with you. If the check fails, we refund you and the profile stays Basic.</p>
+  <div class="btns"><a id="pay" class="btn btn-primary btn-lg" href={payLink}>{payLabel}</a></div>
   <p><a href="/listing-plans/">How Verified works</a></p>
-</Base>
+</Prose>

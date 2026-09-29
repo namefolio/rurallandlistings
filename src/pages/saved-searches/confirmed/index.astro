@@ -1,0 +1,8 @@
+---
+import Prose from '../../../layouts/Prose.astro';
+import { site } from '../../../../site.config';
+---
+<Prose title={`Your land alerts are on | ${site.name}`} description="We will email you when new land matches your saved search, at most once a day. Every email has an unsubscribe link." path="/saved-searches/confirmed/" h1="Your land alerts are on" noindex crumbs={false}>
+  <p>We will email you when new land matches your saved search, at most once a day. Every email has an unsubscribe link.</p>
+  <div class="btns"><a class="btn btn-primary" href="/land-for-sale/">Search land</a><a class="btn btn-secondary" href="/saved-searches/">Saved searches</a></div>
+</Prose>

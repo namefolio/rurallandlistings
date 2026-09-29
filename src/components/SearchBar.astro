@@ -1,0 +1,39 @@
+---
+// The main land search: location, type, minimum acres, maximum price. A plain GET form to /land-for-sale/.
+import Icon from './Icon.astro';
+import { site } from '../../site.config';
+interface Props { places: string[]; id?: string }
+const { places, id = 'sb' } = Astro.props;
+const c = site.classifieds;
+const acres = [5, 10, 20, 40, 80, 160, 320, 640];
+const prices = [50_000, 100_000, 250_000, 500_000, 1_000_000, 2_000_000, 5_000_000];
+---
+<form class="searchbar" method="get" action={`/${c.hub}/`} role="search" aria-label="Search land for sale">
+  <div class="sb-field sb-loc">
+    <label for={`${id}-loc`}>State / County / Town</label>
+    <input id={`${id}-loc`} name="loc" type="search" list={`${id}-places`} placeholder="e.g. Texas or Pike County, PA" autocomplete="off" maxlength="80" />
+    <datalist id={`${id}-places`}>{places.map((p) => <option value={p} />)}</datalist>
+  </div>
+  <div class="sb-field">
+    <label for={`${id}-type`}>Property Type</label>
+    <select id={`${id}-type`} name="type">
+      <option value="">Any type</option>
+      {Object.entries(c.landTypes).map(([k, v]) => <option value={k}>{v}</option>)}
+    </select>
+  </div>
+  <div class="sb-field">
+    <label for={`${id}-acres`}>Min Acres</label>
+    <select id={`${id}-acres`} name="minAcres">
+      <option value="">Any</option>
+      {acres.map((a) => <option value={a}>{a}+ acres</option>)}
+    </select>
+  </div>
+  <div class="sb-field">
+    <label for={`${id}-price`}>Max Price</label>
+    <select id={`${id}-price`} name="maxPrice">
+      <option value="">Any</option>
+      {prices.map((p) => <option value={p}>{c.money(p)}</option>)}
+    </select>
+  </div>
+  <button class="btn btn-primary" type="submit"><Icon name="search" />Search</button>
+</form>

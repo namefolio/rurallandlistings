@@ -1,0 +1,20 @@
+---
+import Icon from './Icon.astro';
+import { buyerSteps, marketplaceLine, sellerSteps } from '../lib/copy';
+interface Props { level?: 'h2' | 'h3' }
+const { level = 'h3' } = Astro.props;
+const H = level;
+---
+<div class="hiw">
+  <div class="panel">
+    <p class="eyebrow">For buyers</p>
+    <H>Find land and talk to the seller</H>
+    <ol class="steps">{buyerSteps.map(([t, d]) => <li><strong>{t}</strong><span>{d}</span></li>)}</ol>
+  </div>
+  <div class="panel">
+    <p class="eyebrow">For sellers</p>
+    <H>List your land in minutes</H>
+    <ol class="steps">{sellerSteps.map(([t, d]) => <li><strong>{t}</strong><span>{d}</span></li>)}</ol>
+  </div>
+</div>
+<div class="notice hiw-note"><Icon name="info" /><p>{marketplaceLine} Listing information is provided by sellers and is not independently verified. <a href="/listing-disclaimer/">Read the listing disclaimer</a>.</p></div>

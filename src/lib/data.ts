@@ -1,7 +1,7 @@
 import { getCollection, getEntry } from 'astro:content';
 import { site } from '../../site.config';
-import { enrich, groupRegions, sortListings, termLabel, type Region } from './core';
-import { enrichLand, groupLand, isLive, sortLand, type LandRegion } from './land';
+import { enrich, groupRegions, regionName, sortListings, termLabel, type Region } from './core';
+import { enrichLand, groupLand, isLive, searchItem, sortLand, type LandRegion } from './land';
 import type { Land, LandCategory, Listing } from './types';
 
 /** Demo listings appear in dev and in `npm run build:demo`, never in the production build. */
@@ -78,4 +78,43 @@ export async function landCategoryPages(): Promise<LandCategoryPage[]> {
   return site.classifieds.categories
     .map(({ test, ...c }) => ({ ...c, url: `/${c.slug}/`, listings: land.filter(test) }))
     .filter((p) => p.listings.length >= 3);
+}
+
+// ---- Search and SEO helpers ----
+
+/** Location suggestions for the search box: live states, counties and towns first, then every state. */
+export async function searchPlaces(): Promise<string[]> {
+  const { land } = await loadLand();
+  const live = new Set<string>();
+  for (const l of land) {
+    live.add(regionName(l.regionSlug));
+    live.add(`${l.location.county}, ${l.location.region}`);
+    if (l.location.nearestTown) live.add(`${l.location.nearestTown}, ${l.location.region}`);
+  }
+  const states = Object.values(site.regions).filter((r) => r.code).map((r) => r.name).sort();
+  return [...live, ...states.filter((s) => !live.has(s))];
+}
+
+export async function searchItems() {
+  const { land } = await loadLand();
+  return land.map(searchItem);
+}
+
+export interface StateTypePage { segment: string; query: string; title: string; noun: string; national: string; region: LandRegion; url: string; listings: Land[] }
+
+/** /hunting-land/{state}/ and friends: only states with at least one live listing of that type. */
+export async function stateTypePages(): Promise<StateTypePage[]> {
+  const { regions } = await loadLand();
+  return site.classifieds.stateTypePages.flatMap(({ test, ...t }) =>
+    regions
+      .map((region) => ({ ...t, region, url: `/${t.segment}/${region.slug}/`, listings: region.listings.filter(test) }))
+      .filter((p) => p.listings.length > 0),
+  );
+}
+
+/** Photo ids used by anything published; the Worker serves only these (plus signed review links). */
+export async function publishedPhotoIds(): Promise<string[]> {
+  const { land } = await loadLand();
+  const { listings } = await loadAll();
+  return [...land.flatMap((l) => l.photos.map((p) => p.id)), ...listings.flatMap((l) => (l.photo ? [l.photo.id] : []))].sort();
 }

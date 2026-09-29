@@ -1,0 +1,27 @@
+---
+// "Save this search" dialog. Saving keeps the search on this device; email alerts are optional and
+// confirmed by a link (src/scripts/save-search.ts, Worker /api/saved-searches).
+import Icon from './Icon.astro';
+---
+<dialog class="modal" id="save-dialog" aria-labelledby="save-h">
+  <button class="modal-close" type="button" data-close aria-label="Close"><Icon name="close" /></button>
+  <form id="save-form" method="dialog">
+    <h2 id="save-h">Save this search</h2>
+    <p class="summary-box" id="save-summary"></p>
+    <label for="save-name">Name</label>
+    <input id="save-name" name="name" type="text" maxlength="80" required />
+    <label class="check"><input type="checkbox" id="save-alerts" name="alerts" />Email me when new matching land is listed</label>
+    <div id="save-email-wrap" hidden>
+      <label for="save-email">Email address</label>
+      <input id="save-email" name="email" type="email" maxlength="200" autocomplete="email" />
+      <p class="help">We send one email to confirm, then at most one email a day when new land matches. Every email has an unsubscribe link. No account needed.</p>
+      <div id="save-turnstile" class="cf-turnstile"></div>
+    </div>
+    <p class="form-msg" id="save-msg" role="status"></p>
+    <div class="btns">
+      <button class="btn btn-primary" type="submit" id="save-submit">Save search</button>
+      <a class="btn btn-ghost" href="/saved-searches/">View saved searches</a>
+    </div>
+  </form>
+</dialog>
+<script>import '../scripts/save-search';</script>

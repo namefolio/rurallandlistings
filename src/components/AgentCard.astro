@@ -1,0 +1,45 @@
+---
+// Land agent card for the directory, state and city pages.
+import Icon from './Icon.astro';
+import { site } from '../../site.config';
+import { licenseBadge } from '../lib/copy';
+import { photoUrl } from '../lib/photos';
+import { termLabel } from '../lib/core';
+import type { Listing } from '../lib/types';
+interface Props { listing: Listing; headingLevel?: 'h2' | 'h3' }
+const { listing: l, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+const verified = l.effectiveTier === 'verified';
+const specs = ((l.attributes.specialties as string[] | undefined) ?? []).map((k) => termLabel('specialties', k));
+const states = [...new Set([...(l.licenses ?? []).map((x) => x.state), l.address.region])];
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const initials = l.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+const counties = (l.countiesServed ?? []).map((c) => `${c.state}:${slug(c.county)}`);
+---
+<li
+  class="acard"
+  data-states={states.join(' ')}
+  data-counties={counties.join(' ')}
+  data-spec={((l.attributes.specialties as string[] | undefined) ?? []).join(' ')}
+  data-type={l.agentType ?? ''}
+  data-verified={verified ? '1' : '0'}
+>
+  <div class="acard-top">
+    {l.photo ? <img class="avatar" src={photoUrl(l.photo.id, 480)} alt="" width="64" height="64" loading="lazy" decoding="async" /> : <span class="avatar" aria-hidden="true">{initials}</span>}
+    <div>
+      <H><a href={l.url}>{l.name}</a></H>
+      {l.brokerage && <p class="acard-brokerage">{l.brokerage}</p>}
+      <div class="acard-meta">
+        <span>{l.agentType ? `${site.agentTypes[l.agentType]} · ` : ''}{l.address.city}, {l.address.region}</span>
+        {l.licenses?.length ? <span>Licensed in {states.join(', ')}</span> : null}
+        {l.countiesServed?.length ? <span>Serves {l.countiesServed.slice(0, 3).map((c) => c.county).join(', ')}{l.countiesServed.length > 3 ? ` +${l.countiesServed.length - 3} more` : ''}</span> : null}
+      </div>
+    </div>
+  </div>
+  {specs.length > 0 && <ul class="chips" aria-label="Specialties">{specs.map((s) => <li>{s}</li>)}</ul>}
+  <div class="acard-foot">
+    {verified ? <span class="badge-verified"><Icon name="shield" />{licenseBadge}</span> : <span class="badge-basic">Basic profile</span>}
+    <a class="btn btn-secondary btn-sm" href={`${l.url}#contact`}>Contact<span class="sr-only"> {l.name}</span></a>
+  </div>
+  {l.demo && <span class="lcard-flag">Demo</span>}
+</li>

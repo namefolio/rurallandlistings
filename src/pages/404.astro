@@ -1,9 +1,8 @@
 ---
-import Base from '../layouts/Base.astro';
+import Prose from '../layouts/Prose.astro';
 import { site } from '../../site.config';
 ---
-<Base title={`Page not found | ${site.name}`} description="This page does not exist." path="/404/" noindex markdown={false}>
-  <h1>Page not found</h1>
-  <p>This page does not exist, or the listing ended or was removed. Land ads come down after their paid period.</p>
-  <p><a href="/">Go to the home page</a>, <a href={`/${site.classifieds.hub}/`}>browse land for sale</a> or <a href={`/${site.hub}/`}>find a {site.entity.one}</a>.</p>
-</Base>
+<Prose title={`Page not found | ${site.name}`} description="This page does not exist." path="/404/" h1="Page not found" noindex crumbs={false}>
+  <p>This page does not exist, or the listing ended or was removed. Land listings come down after their {site.classifieds.days}-day period unless the seller renews.</p>
+  <div class="btns"><a class="btn btn-primary" href={`/${site.classifieds.hub}/`}>Browse land for sale</a><a class="btn btn-secondary" href={`/${site.hub}/`}>Find a land agent</a></div>
+</Prose>

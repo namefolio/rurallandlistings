@@ -1,0 +1,28 @@
+---
+// "List your land for $49": what a seller gets, with no promise of leads or sales.
+import Icon from './Icon.astro';
+import { site } from '../../site.config';
+import { classifiedPrice, sellerGets } from '../lib/copy';
+interface Props { cta?: boolean; headingId?: string }
+const { cta = true, headingId = 'list-49' } = Astro.props;
+const days = site.classifieds.days;
+---
+<div class="value">
+  <div>
+    <p class="eyebrow">For sellers</p>
+    <h2 id={headingId}>List Your Land for {classifiedPrice}</h2>
+    <p class="lead">One flat fee, {days} days on the site, and buyers contact you directly. No commission, no percentage of the sale, no buyer fee.</p>
+    <ul class="checks two">{sellerGets.map((g) => <li><Icon name="check" />{g}</li>)}</ul>
+  </div>
+  <div class="price-card">
+    <p class="amount">{classifiedPrice}</p>
+    <p class="per">for {days} days · one flat fee</p>
+    <ul class="checks">
+      <li><Icon name="check" />Renew for another {days} days any time</li>
+      <li><Icon name="check" />Free changes while it runs</li>
+      <li><Icon name="check" />Owners and agents welcome</li>
+    </ul>
+    {cta && <div class="btns"><a class="btn btn-primary btn-lg btn-block" href="/sell-your-land/#start">List Your Land</a></div>}
+    <p class="fine">Listing on {site.name} does not guarantee enquiries, traffic or a sale. Each listing is reviewed before it goes live.</p>
+  </div>
+</div>

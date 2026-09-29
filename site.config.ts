@@ -33,6 +33,14 @@ const specialties: Record<string, string> = {
   development: 'Development land',
 };
 
+/** Agent type filter on the directory (a single value on each profile). */
+const agentTypes: Record<string, string> = {
+  agent: 'Land agent',
+  broker: 'Broker',
+  auctioneer: 'Land auctioneer',
+  consultant: 'Land consultant',
+};
+
 const agentAttributes: AttributeDef[] = [
   { key: 'specialties', label: 'Specialties', type: 'multi', options: specialties },
   { key: 'worksWithBuyers', label: 'Works with buyers', type: 'bool' },
@@ -91,19 +99,25 @@ const landAttributes: AttributeDef[] = [
   { key: 'annualTaxes', label: 'Annual property tax', type: 'number', format: (n) => `$${n.toLocaleString('en-US')}`, max: 1_000_000 },
 ];
 
+/** Short labels for chips and card features. */
+const typeShort: Record<string, string> = {
+  farmland: 'Farmland', ranch: 'Ranch', pasture: 'Pasture', hunting: 'Hunting', timber: 'Timber',
+  recreational: 'Recreational', homesite: 'Homesite', waterfront: 'Waterfront', undeveloped: 'Undeveloped',
+};
+
 const money = (n: number) => `$${n.toLocaleString('en-US')}`;
 const acresText = (a: number) => `${a.toLocaleString('en-US', { maximumFractionDigits: 2 })} ${a === 1 ? 'acre' : 'acres'}`;
 const perAcre = (l: LandData) => (l.price && l.acres ? Math.round(l.price / l.acres) : undefined);
 const types = (l: LandData) => ((l.attributes.landTypes as string[] | undefined) ?? []).map((k) => landTypes[k] ?? k);
 
 const landCategories: LandCategory[] = [
-  { slug: 'hunting-land-for-sale', title: 'Hunting Land for Sale', noun: 'hunting land', test: (l) => has(l, 'landTypes', 'hunting') },
-  { slug: 'farmland-for-sale', title: 'Farmland for Sale', noun: 'farmland', test: (l) => has(l, 'landTypes', 'farmland') },
-  { slug: 'ranches-for-sale', title: 'Ranches for Sale', noun: 'ranch land', test: (l) => has(l, 'landTypes', 'ranch') },
-  { slug: 'timberland-for-sale', title: 'Timberland for Sale', noun: 'timberland', test: (l) => has(l, 'landTypes', 'timber') },
-  { slug: 'recreational-land-for-sale', title: 'Recreational Land for Sale', noun: 'recreational land', test: (l) => has(l, 'landTypes', 'recreational') },
-  { slug: 'waterfront-land-for-sale', title: 'Waterfront Land for Sale', noun: 'waterfront land', test: (l) => has(l, 'landTypes', 'waterfront') },
-  { slug: 'owner-financed-land', title: 'Owner Financed Land for Sale', noun: 'owner financed land', test: (l) => l.attributes.ownerFinancing === true },
+  { slug: 'hunting-land-for-sale', query: 'type=hunting', title: 'Hunting Land for Sale', noun: 'hunting land', test: (l) => has(l, 'landTypes', 'hunting') },
+  { slug: 'farmland-for-sale', query: 'type=farmland', title: 'Farmland for Sale', noun: 'farmland', test: (l) => has(l, 'landTypes', 'farmland') },
+  { slug: 'ranches-for-sale', query: 'type=ranch', title: 'Ranches for Sale', noun: 'ranch land', test: (l) => has(l, 'landTypes', 'ranch') },
+  { slug: 'timberland-for-sale', query: 'type=timber', title: 'Timberland for Sale', noun: 'timberland', test: (l) => has(l, 'landTypes', 'timber') },
+  { slug: 'recreational-land-for-sale', query: 'type=recreational', title: 'Recreational Land for Sale', noun: 'recreational land', test: (l) => has(l, 'landTypes', 'recreational') },
+  { slug: 'waterfront-land-for-sale', query: 'type=waterfront', title: 'Waterfront Land for Sale', noun: 'waterfront land', test: (l) => has(l, 'landTypes', 'waterfront') },
+  { slug: 'owner-financed-land', query: 'f=financing', title: 'Owner Financed Land for Sale', noun: 'owner financed land', test: (l) => l.attributes.ownerFinancing === true },
 ];
 
 export const site = {
@@ -120,12 +134,22 @@ export const site = {
   formFromEmail: 'submissions@rurallandlistings.com',
   themeColor: '#1f5130',
 
-  /** Header navigation. */
+  /** Header navigation. The "Sell your land" CTA is drawn separately as a button. */
   nav: [
-    { label: 'Land for sale', url: '/land-for-sale/' },
-    { label: 'Land agents', url: '/land-agents/' },
-    { label: 'Sell your land', url: '/sell-your-land/' },
+    { label: 'Browse Land', url: '/land-for-sale/' },
+    { label: 'Land Agents', url: '/land-agents/' },
+    { label: 'How It Works', url: '/how-it-works/' },
   ],
+  navSecondary: [
+    { label: 'About', url: '/about/' },
+    { label: 'FAQ', url: '/faq/' },
+    { label: 'Saved searches', url: '/saved-searches/' },
+  ],
+  /** Map tiles for search and property maps (MapLibre style URL). OpenFreeMap: free, no key, commercial use allowed. */
+  mapStyle: 'https://tiles.openfreemap.org/styles/positron',
+  mapStyleOrigin: 'https://tiles.openfreemap.org',
+  /** Alt text for the home-page hero photo in src/assets/hero/ (describe what it shows). */
+  heroPhotoAlt: 'Rural land at golden hour',
 
   // ---- Directory: land agents ----
   entity: { one: 'land agent', many: 'land agents', One: 'Land agent', Many: 'Land agents', ManyTitle: 'Land Agents' },
@@ -143,6 +167,7 @@ export const site = {
 
   regions: US_STATES as Record<string, { name: string; code?: string }>,
   attributes: agentAttributes,
+  agentTypes,
   taxonomies,
   bestFor,
 
@@ -188,8 +213,8 @@ export const site = {
   },
 
   titles: {
-    home: 'Rural Land for Sale by Owner & Land Agents in the US | RuralLandListings',
-    homeDescription: 'Rural land, farms, ranches and hunting land for sale by owners and agents, by state and county. Sell your land for $49 for 30 days.',
+    home: 'Rural Land for Sale: Farms, Ranches, Hunting Land & Acreage | RuralLandListings',
+    homeDescription: 'Find farms, ranches, timberland, hunting properties and rural acreage for sale by owners and land professionals. Contact sellers directly. List your land for $49.',
     homeH1: 'Rural land for sale',
     region: (name: string, n: number) => `Land Agents in ${name}: ${n} Rural Land Brokers by City | RuralLandListings`,
     regionDescription: (name: string, n: number, cities: number) => `${n} land agents and brokers in ${cities} ${cities === 1 ? 'city' : 'cities'} across ${name}. Specialties, license-checked Verified agents and contact details.`,
@@ -201,10 +226,13 @@ export const site = {
   },
 
   homeFaqs: [
-    { q: 'How much does it cost to list land for sale?', a: 'A land listing costs $49 and runs for 30 days. You write it, we review it before it goes live, and it comes down after 30 days unless you renew.' },
-    { q: 'Do you inspect the land or check title?', a: 'No. Land listings are ads written by the seller. Before you buy, ask for a survey, a title search and proof of legal access, and check zoning and flood maps with the county.' },
+    { q: 'Is RuralLandListings a real estate brokerage?', a: 'No. RuralLandListings is an online marketplace where owners and land professionals advertise land for sale. We do not represent buyers or sellers, negotiate, handle money for a sale or take a commission. Buyers contact sellers directly.' },
+    { q: 'How much does it cost to list land for sale?', a: 'A land listing costs $49 and runs for 30 days. There is no seller commission and no fee when the land sells. We review each listing before it goes live, and it comes down after 30 days unless you renew it.' },
+    { q: 'Do buyers pay anything?', a: 'No. Searching, saving searches, email alerts and contacting sellers are free, and there is no buyer fee.' },
+    { q: 'Is the listing information checked?', a: 'Listings are written by the seller. We review each one before it goes live for completeness and obvious problems, but we do not independently verify title, boundaries, legal access, zoning, utilities, flood status, mineral rights or taxes. Buyers should independently verify property information and conduct appropriate due diligence before purchasing.' },
     { q: 'What should I ask before buying rural land?', a: 'Common questions: Is there legal, year-round road access? Are power, a well or septic possible, and has a perc test been done? Is it surveyed? What zoning, easements or deed restrictions apply? Are mineral, water and timber rights included? Is it in a flood zone, and what are the annual taxes?' },
-    { q: 'What does Verified mean for a land agent?', a: 'Verified agent listings are paid. We check the agent’s real estate license with the state real estate commission’s public license lookup and confirm the details with the agent, then show the listing first. It is never a rating.' },
+    { q: 'What does “License Verified” mean for a land agent?', a: 'Verified agent profiles are paid ($149 a year). Before we show the License Verified badge we look up the agent’s real estate license with the state real estate commission’s public license lookup and confirm the details with the agent. The profile shows which states were checked and the date. It is not a rating, review or endorsement.' },
+    { q: 'Do I need an account?', a: 'No. You can browse, contact sellers and save searches without an account. Email alerts only need your email address, which you confirm with one click.' },
   ] as Faq[],
 
   // ---- Classifieds: land for sale ----
@@ -217,12 +245,59 @@ export const site = {
     schemaType: 'RealEstateListing',
     attributes: landAttributes,
     categories: landCategories,
+    landTypes,
+    typeShort,
+
+    /** Home-page quick filters: label and the /land-for-sale/ query they open. */
+    quickFilters: [
+      { label: 'Farms', query: 'type=farmland' },
+      { label: 'Ranches', query: 'type=ranch' },
+      { label: 'Hunting Land', query: 'type=hunting' },
+      { label: 'Timberland', query: 'type=timber' },
+      { label: 'Recreational Land', query: 'type=recreational' },
+      { label: 'Waterfront', query: 'type=waterfront' },
+      { label: 'Owner Financing', query: 'f=financing' },
+    ],
+
+    /** Search checkboxes (`f=` in the query). `types` match land types; `attr` matches a true attribute. */
+    featureFilters: [
+      { key: 'waterfront', label: 'Waterfront', types: ['waterfront'] },
+      { key: 'hunting', label: 'Hunting', types: ['hunting'] },
+      { key: 'timber', label: 'Timber', types: ['timber'] },
+      { key: 'agricultural', label: 'Agricultural', types: ['farmland', 'pasture', 'ranch'] },
+      { key: 'recreational', label: 'Recreational', types: ['recreational'] },
+      { key: 'financing', label: 'Owner financing', attr: 'ownerFinancing' },
+      { key: 'road', label: 'Road access', attr: 'publicRoadAccess' },
+      { key: 'electric', label: 'Electricity', attr: 'powerAvailable' },
+      { key: 'well', label: 'Well', attr: 'well' },
+      { key: 'septic', label: 'Septic', attr: 'septicOrPerc' },
+      { key: 'buildings', label: 'Buildings', attr: 'buildings' },
+    ] as { key: string; label: string; types?: string[]; attr?: string }[],
+
+    /** State-level type pages: /{segment}/{state}/, built only for states with a live listing of that type. */
+    stateTypePages: [
+      { segment: 'hunting-land', query: 'type=hunting', title: 'Hunting Land for Sale', noun: 'hunting land', national: 'hunting-land-for-sale', test: (l: LandData) => has(l, 'landTypes', 'hunting') },
+      { segment: 'farmland', query: 'type=farmland', title: 'Farmland for Sale', noun: 'farmland', national: 'farmland-for-sale', test: (l: LandData) => has(l, 'landTypes', 'farmland') },
+      { segment: 'ranches', query: 'type=ranch', title: 'Ranches for Sale', noun: 'ranch land', national: 'ranches-for-sale', test: (l: LandData) => has(l, 'landTypes', 'ranch') },
+      { segment: 'timberland', query: 'type=timber', title: 'Timberland for Sale', noun: 'timberland', national: 'timberland-for-sale', test: (l: LandData) => has(l, 'landTypes', 'timber') },
+    ],
+
+    /** Up to 4 short features for cards ("Timber · Hunting · Creek"). */
+    features(l: LandData): string[] {
+      const out = ((l.attributes.landTypes as string[] | undefined) ?? []).map((k) => typeShort[k] ?? k);
+      if (l.attributes.surfaceWater === true) out.push('Creek or pond');
+      if (l.attributes.ownerFinancing === true) out.push('Owner financing');
+      if (l.attributes.buildings === true) out.push('Buildings');
+      if (l.attributes.powerAvailable === true) out.push('Power');
+      return out.slice(0, 4);
+    },
 
     acresText,
     money,
     priceText: (l: LandData) => (l.price ? money(l.price) : 'Price on request'),
     perAcreText: (l: LandData) => (perAcre(l) ? `${money(perAcre(l) as number)} per acre` : undefined),
 
+    perAcre,
     cardFacts(l: LandData): string[] {
       const out = [acresText(l.acres)];
       const pa = perAcre(l);

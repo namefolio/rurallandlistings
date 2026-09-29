@@ -2,6 +2,7 @@
 import { site } from '../../site.config';
 import { day, distanceKm, factRows, regionCode, regionName } from './core';
 import type { Land, LandData } from './types';
+import type { SearchItem } from './search';
 
 const c = site.classifieds;
 
@@ -57,6 +58,34 @@ export const nearestLand = <T extends { lat: number; lng: number }>(from: { lat:
 export const landFactRows = (l: LandData) => factRows(l, c.attributes);
 
 /** The seller's approximate point on Google Maps (never a boundary). */
-export const landMapsUrl = (l: LandData) => `https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}`;
+export const landMapsUrl = (l: LandData) => { const p = publicPoint(l); return `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`; };
 
 export const landPlace = (l: Pick<Land, 'location'>) => `${l.location.county}, ${l.location.region}`;
+
+/** The point shown publicly: rounded to about a kilometre unless the seller chose to show the exact spot. */
+export const publicPoint = (l: Pick<LandData, 'lat' | 'lng' | 'exactLocation'>) =>
+  l.exactLocation ? { lat: l.lat, lng: l.lng } : { lat: Math.round(l.lat * 100) / 100, lng: Math.round(l.lng * 100) / 100 };
+
+/** A live listing as search sees it (see src/lib/search.ts). */
+export function searchItem(l: Land): SearchItem {
+  const pt = publicPoint(l);
+  return {
+    u: l.url,
+    t: l.title,
+    st: l.regionSlug,
+    sc: regionCode(l.regionSlug),
+    sn: regionName(l.regionSlug),
+    c: l.location.county,
+    cs: l.countySlug,
+    ...(l.location.nearestTown && { tw: l.location.nearestTown }),
+    ...(l.location.postalCode && { z: l.location.postalCode }),
+    a: l.acres,
+    ...(l.price && { p: l.price }),
+    ty: (l.attributes.landTypes as string[] | undefined) ?? [],
+    at: Object.entries(l.attributes).filter(([, v]) => v === true).map(([k]) => k),
+    lat: pt.lat,
+    lng: pt.lng,
+    d: l.postedOn.toISOString().slice(0, 10),
+    ...(l.photos[0] && { ph: l.photos[0].id }),
+  };
+}

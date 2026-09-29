@@ -1,12 +1,20 @@
 ---
-import Base from '../../../layouts/Base.astro';
+import Prose from '../../../layouts/Prose.astro';
+import Icon from '../../../components/Icon.astro';
 import { site } from '../../../../site.config';
-import { classifiedPayLabel, classifiedPayLink, classifiedPrice } from '../../../lib/copy';
+import { classifiedPayIsMailto, classifiedPayLabel, classifiedPayLink, classifiedPrice } from '../../../lib/copy';
 // The Worker rewrites #pay's href to add the listing title as a payment reference.
+const days = site.classifieds.days;
 ---
-<Base title={`Thanks, now pay to publish your land listing | ${site.name}`} description="Your land listing was sent." path="/sell-your-land/thanks/" noindex markdown={false}>
-  <h1>Thanks, your land listing is in</h1>
-  <p>It goes live once we have your payment of <strong>{classifiedPrice}</strong> and have reviewed the ad, usually within a couple of days. It then runs for {site.classifieds.days} days.</p>
-  <div class="btns"><a id="pay" class="btn btn-primary" href={classifiedPayLink}>{classifiedPayLabel}</a></div>
-  <p>We email you when it is live. <a href="/sell-your-land/">How land listings work</a></p>
-</Base>
+<Prose title={`Thanks, now pay to publish your land listing | ${site.name}`} description="Your land listing was sent." path="/sell-your-land/thanks/" h1="Your listing is in. One step left." noindex crumbs={false} eyebrow="Listing received">
+  <p class="lead">Pay <strong>{classifiedPrice}</strong> and we review your listing and publish it, usually within a couple of days. It then runs for {days} days.</p>
+  <div class="btns"><a id="pay" class="btn btn-primary btn-lg" href={classifiedPayLink}>{classifiedPayLabel} · {classifiedPrice}</a></div>
+  {classifiedPayIsMailto && <p class="muted">We send an invoice by email. Your listing goes live once it is paid.</p>}
+  <ol class="steps">
+    <li><strong>Pay {classifiedPrice}</strong><span>One flat fee. No commission.</span></li>
+    <li><strong>We review your listing</strong><span>We check it is complete and appropriate. We may email you with questions.</span></li>
+    <li><strong>It goes live for {days} days</strong><span>We email you the link. Buyers contact you directly.</span></li>
+  </ol>
+  <p class="notice"><Icon name="info" /><span>Keep the link on your listing page: it lets you send changes for free or renew for another {days} days.</span></p>
+</Prose>
+<script>try { localStorage.removeItem('rll:sell-draft'); } catch {}</script>

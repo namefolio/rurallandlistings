@@ -38,6 +38,30 @@
     "worksWithSellers": true,
     "accreditedLandConsultant": true
   },
+  "brokerage": "Demo Land Brokerage 1",
+  "agentType": "broker",
+  "licenses": [
+    {
+      "state": "TX",
+      "number": "DEMO-001"
+    }
+  ],
+  "countiesServed": [
+    {
+      "state": "TX",
+      "county": "Washington County"
+    },
+    {
+      "state": "TX",
+      "county": "Austin County"
+    }
+  ],
+  "licenseCheck": {
+    "checkedOn": "2026-09-28",
+    "states": [
+      "TX"
+    ]
+  },
   "lastUpdated": "2026-09-28",
   "source": "Demo data, not a real business"
 }

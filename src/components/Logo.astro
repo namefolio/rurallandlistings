@@ -1,0 +1,13 @@
+---
+// Brand mark: a parcel with contour lines. Decorative; the wordmark next to it carries the name.
+interface Props { light?: boolean }
+const { light = false } = Astro.props;
+const bg = light ? '#ffffff' : '#1f5130';
+const fg = light ? '#1f5130' : '#ffffff';
+---
+<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+  <rect width="32" height="32" rx="7" fill={bg} />
+  <path d="M5 22c4-3 7-1 10-3.5S20 13 27 14" fill="none" stroke={fg} stroke-width="2" stroke-linecap="round" />
+  <path d="M5 26c5-2.5 8-.5 11-2.5s6-4.5 11-4" fill="none" stroke={fg} stroke-width="2" stroke-linecap="round" opacity="0.65" />
+  <circle cx="22" cy="8.5" r="2.5" fill="#d9b27a" />
+</svg>

@@ -1,66 +1,167 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Faqs from '../../components/Faqs.astro';
+import Gallery from '../../components/Gallery.astro';
+import Icon from '../../components/Icon.astro';
+import LandList from '../../components/LandList.astro';
 import { site } from '../../../site.config';
 import { fmtDate } from '../../lib/core';
-import { adNotice, buyerAdvice } from '../../lib/copy';
+import { buyerAdvice, licenseBadge, marketplaceLine, notChecked } from '../../lib/copy';
 import { faqPage, landListing } from '../../lib/jsonld';
-import { landFactRows, landMapsUrl, type County, type LandRegion } from '../../lib/land';
+import { landMapsUrl, publicPoint, type County, type LandRegion } from '../../lib/land';
+import { photoUrl } from '../../lib/photos';
 import type { Faq, Land, Listing } from '../../lib/types';
 
 const { land: l, region, county, agent, nearby, faqs } = Astro.props as { land: Land; region: LandRegion; county: County; agent?: Listing; nearby: Land[]; faqs: Faq[] };
 const c = site.classifieds;
-const perAcre = c.perAcreText(l);
+const ppa = c.perAcre(l);
+const types = ((l.attributes.landTypes as string[] | undefined) ?? []).map((k) => c.landTypes[k] ?? k);
+const features = c.features(l);
+const place = `${county.name}, ${region.name}`;
 const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
+const yn = (key: string, yes = 'Yes', no = 'No') => {
+  const v = l.attributes[key];
+  return v === true ? yes : v === false ? no : undefined;
+};
+const taxes = typeof l.attributes.annualTaxes === 'number' ? `${c.money(l.attributes.annualTaxes as number)} a year` : undefined;
+const details: [string, string | undefined][] = [
+  ['Acres', c.acresText(l.acres)],
+  ['County', county.name],
+  ['State', region.name],
+  ['Nearest town', l.location.nearestTown],
+  ['Property type', types.join(', ') || undefined],
+  ['Road access', yn('publicRoadAccess', 'Public road access', 'No public road frontage')],
+  ['Electricity', yn('powerAvailable', 'Available', 'Not available')],
+  ['Well', yn('well')],
+  ['Septic', yn('septicOrPerc', 'Septic or passed perc test', 'No')],
+  ['Water', yn('surfaceWater', 'Creek, pond or spring', 'None')],
+  ['Survey', yn('surveyed', 'Surveyed', 'Not surveyed')],
+  ['Mineral rights', yn('mineralRights', 'Included', 'Not included')],
+  ['Restrictions', yn('deedRestrictions', 'Deed restrictions apply', 'None stated')],
+  ['Mobile homes', yn('mobileHomesAllowed', 'Allowed', 'Not allowed')],
+  ['Buildings', yn('buildings', 'Yes', 'None')],
+  ['Property taxes', taxes],
+  ['Owner financing', yn('ownerFinancing', 'Available', 'Not offered')],
+];
+const pt = publicPoint(l);
+const tel = l.seller.phone ? `tel:${l.seller.phone.replace(/[^+\d]/g, '')}` : undefined;
+const mail = l.seller.email ? `mailto:${l.seller.email}?subject=${encodeURIComponent(`${l.title} (${site.domain})`)}` : undefined;
+const sellerRole = l.seller.type === 'owner' ? 'Owner' : 'Listing agent';
+const verifiedAgent = agent?.effectiveTier === 'verified';
+const initials = l.seller.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+const video = l.videoUrl;
 ---
 <Base
   title={c.titles.listing(l.title, county.name, region.code)}
   description={c.titles.listingDescription(l.title, county.name, region.code, [c.priceText(l), ...c.cardFacts(l)].slice(0, 4))}
   path={l.url}
+  image={l.photos[0] ? photoUrl(l.photos[0].id, 1600) : undefined}
   crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url: `/${c.hub}/` }, { name: region.name, url: region.url }, { name: county.name, url: county.url }, { name: l.title, url: l.url }]}
   jsonld={[landListing(l), ...faqPage(faqs)]}
+  bodyClass="has-contact-bar"
 >
-  <h1>{l.title}</h1>
-  <p class="price-line"><strong>{c.priceText(l)}</strong><span>{c.acresText(l.acres)}</span>{perAcre && <span>{perAcre}</span>}</p>
-  <p class="muted">{county.name}, {region.name}{l.location.nearestTown ? `, near ${l.location.nearestTown}` : ''}</p>
+  <div class="wrap">
+    <Gallery photos={l.photos} title={l.title} />
 
-  <h2>From the seller</h2>
-  {l.summary.split(/\n\n+/).map((p) => <p>{p}</p>)}
+    <div class="prop-layout">
+      <article>
+        <header class="prop-title">
+          {l.demo && <p class="eyebrow">Demo listing: not a real property</p>}
+          <h1>{l.title}</h1>
+          <p class="prop-loc"><Icon name="pin" />{place}{l.location.nearestTown ? ` · near ${l.location.nearestTown}` : ''}</p>
+        </header>
+        <dl class="keyfacts">
+          <div class="is-price"><dt>Price</dt><dd>{c.priceText(l)}</dd></div>
+          <div><dt>Acres</dt><dd>{l.acres.toLocaleString('en-US', { maximumFractionDigits: 2 })}</dd></div>
+          <div><dt>Price per acre</dt><dd>{ppa ? c.money(ppa) : '—'}</dd></div>
+          <div><dt>Type</dt><dd>{types[0] ?? 'Land'}</dd></div>
+        </dl>
+        <div class="btns"><a class="btn btn-primary btn-lg" href="#contact">Contact Seller</a><button class="btn btn-secondary js-only-inline" type="button" data-share><Icon name="arrow" />Share</button></div>
 
-  <section class="contact" aria-labelledby="contact">
-    <h2 id="contact">Contact the seller</h2>
-    <p><strong>{l.seller.name}</strong>, {l.seller.type === 'owner' ? 'the owner' : agent ? <>land agent (<a href={agent.url}>see their agent listing</a>)</> : 'land agent'}</p>
-    <ul>
-      {l.seller.phone && <li>Phone: <a href={`tel:${l.seller.phone.replace(/[^+\d]/g, '')}`}>{l.seller.phone}</a></li>}
-      {l.seller.email && <li>Email: <a href={`mailto:${l.seller.email}?subject=${encodeURIComponent(`${l.title} (${site.domain})`)}`}>{l.seller.email}</a></li>}
-    </ul>
-  </section>
+        <section class="prop-section" aria-labelledby="overview">
+          <h2 id="overview">Property overview</h2>
+          {features.length > 0 && <ul class="chips">{features.map((f) => <li>{f}</li>)}</ul>}
+          <p>{c.acresText(l.acres)} of {types.length ? types.join(', ').toLowerCase() : 'land'} in {county.name}, {region.code}{l.location.nearestTown ? `, near ${l.location.nearestTown}` : ''}, offered {l.seller.type === 'owner' ? 'by the owner' : 'by a land agent'}{l.price ? ` at ${c.money(l.price)}` : ''}{ppa ? ` (about ${c.money(ppa)} per acre)` : ''}.</p>
+        </section>
 
-  <h2>Details</h2>
-  <table>
-    <tbody>
-      <tr><th scope="row">Acres</th><td>{c.acresText(l.acres)}</td></tr>
-      <tr><th scope="row">Asking price</th><td>{c.priceText(l)}</td></tr>
-      <tr><th scope="row">Price per acre</th><td>{perAcre ?? 'Not listed'}</td></tr>
-      <tr><th scope="row">County</th><td>{county.name}, {region.code}</td></tr>
-      <tr><th scope="row">Nearest town</th><td>{l.location.nearestTown ?? 'Not listed'}</td></tr>
-      {landFactRows(l).map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}
-      <tr><th scope="row">Seller’s links</th><td>{l.links.length ? l.links.map((u, i) => <>{i > 0 && ', '}<a href={u} rel="nofollow ugc">{host(u)}</a></>) : 'None listed'}</td></tr>
-    </tbody>
-  </table>
-  <p><a href={landMapsUrl(l)} rel="nofollow">See the approximate location on Google Maps</a></p>
-  <p class="disclosure">{adNotice} {buyerAdvice}</p>
+        <section class="prop-section prop-desc" aria-labelledby="desc">
+          <h2 id="desc">Description</h2>
+          {l.summary.split(/\n\n+/).map((p) => <p>{p}</p>)}
+          {video && <p><a class="link-arrow" href={video} rel="nofollow ugc noopener">Watch the seller’s video ({host(video)}) <Icon name="arrow" /></a></p>}
+          <p class="muted small">Description written by the seller.</p>
+        </section>
 
-  <Faqs faqs={faqs} />
+        <section class="prop-section" aria-labelledby="details">
+          <h2 id="details">Property details</h2>
+          <dl class="details-grid">
+            {details.map(([k, v]) => <div><dt>{k}</dt><dd class:list={{ unk: !v }}>{v ?? 'Not provided'}</dd></div>)}
+          </dl>
+          {l.links.length > 0 && <p class="small">Seller’s documents and links: {l.links.map((u, i) => <>{i > 0 && ', '}<a href={u} rel="nofollow ugc noopener">{host(u)}</a></>)}</p>}
+          <p class="muted small">Details as stated by the seller.</p>
+        </section>
 
-  {nearby.length > 0 && (
-    <section aria-labelledby="nearby">
-      <h2 id="nearby">Nearby land for sale</h2>
-      <ul>{nearby.map((n) => <li><a href={n.url}>{n.title}</a>, {n.location.county}, {n.location.region}</li>)}</ul>
-      <p><a href={county.url}>All land for sale in {county.name}</a></p>
-    </section>
-  )}
+        <section class="prop-section" aria-labelledby="location">
+          <h2 id="location">Location</h2>
+          <div class="map-box" data-point-map={JSON.stringify({ ...pt, exact: l.exactLocation === true })} data-style={site.mapStyle} role="region" aria-label={`Map of the approximate location in ${place}`}>
+            <p class="map-loading">Map loads when you scroll here.</p>
+          </div>
+          <p class="small">{l.exactLocation ? 'The seller chose to show the property’s location.' : `The shaded circle shows the general area in ${county.name}${l.location.nearestTown ? ` near ${l.location.nearestTown}` : ''}. It is approximate and is not the property boundary.`} <a href={landMapsUrl(l)} rel="nofollow noopener">Open in Google Maps</a></p>
+        </section>
 
-  <p class="muted">Listed {fmtDate(l.postedOn)}. This ad runs until {fmtDate(l.expiresOn)}. Last updated {fmtDate(l.lastUpdated)}.</p>
-  <p>Is this your listing? <a href={`/sell-your-land/?listing=${l.slug}`}>Renew it or send a change</a></p>
+        <section class="prop-section" aria-labelledby="seller-h">
+          <h2 id="seller-h">Seller</h2>
+          <p><strong>{l.seller.name}</strong> · {sellerRole}{agent && <> · <a href={agent.url}>View agent profile</a></>} {verifiedAgent && <span class="badge-verified"><Icon name="shield" />{licenseBadge}</span>}</p>
+          <p class="muted small">Contact the seller directly. {site.name} is not part of the sale and does not receive a commission.</p>
+        </section>
+
+        <section class="prop-section" aria-labelledby="dd-h">
+          <h2 id="dd-h">Due diligence</h2>
+          <details class="dd">
+            <summary>Information on this page is provided by the seller <Icon name="down" /></summary>
+            <div class="dd-body">
+              <p>{site.name} reviews listings before they go live, but does not independently verify:</p>
+              <ul>{notChecked.map((x) => <li>{x}</li>)}</ul>
+              <p>{buyerAdvice} Useful steps include a title search, a current survey, confirming legal and year-round access, checking zoning and flood maps with the county, and confirming utilities and taxes.</p>
+              <p class="muted small">{marketplaceLine} <a href="/listing-disclaimer/">Listing disclaimer</a></p>
+            </div>
+          </details>
+        </section>
+
+        <Faqs faqs={faqs} heading="Questions about this property" />
+
+        <p class="muted small">Listed {fmtDate(l.postedOn)} · Listing runs until {fmtDate(l.expiresOn)} · Updated {fmtDate(l.lastUpdated)}</p>
+        <p class="small">Is this your listing? <a href={`/sell-your-land/?listing=${l.slug}`}>Renew it or send a change</a></p>
+      </article>
+
+      <aside class="prop-aside" aria-label="Contact the seller">
+        <div class="contact-card" id="contact">
+          <h2>Contact the seller</h2>
+          <div class="seller">
+            <span class="avatar" aria-hidden="true">{initials}</span>
+            <div><p><strong>{l.seller.name}</strong></p><p class="muted small">{sellerRole}{verifiedAgent ? ` · ${licenseBadge}` : ''}</p></div>
+          </div>
+          {tel && <a class="btn btn-primary" href={tel}><Icon name="phone" />Call {l.seller.phone}</a>}
+          {mail && <a class={tel ? 'btn btn-secondary' : 'btn btn-primary'} href={mail}><Icon name="mail" />Email the seller</a>}
+          <p class="fine">Mention {site.name} when you get in touch. Buyers pay no fees. Verify all property information before you buy.</p>
+        </div>
+      </aside>
+    </div>
+
+    {nearby.length > 0 && (
+      <section class="section" aria-labelledby="nearby">
+        <div class="section-head">
+          <h2 id="nearby">Nearby land for sale</h2>
+          <a class="link-arrow" href={county.url}>All land in {county.name} <Icon name="arrow" /></a>
+        </div>
+        <LandList listings={nearby} />
+      </section>
+    )}
+  </div>
+
+  <div class="contact-bar">
+    <div class="cb-price"><strong>{c.priceText(l)}</strong><span>{c.acresText(l.acres)}</span></div>
+    {tel && <a class="btn btn-primary" href={tel}><Icon name="phone" />Call</a>}
+    {mail && <a class={tel ? 'btn btn-secondary' : 'btn btn-primary'} href={mail}><Icon name="mail" />Email</a>}
+  </div>
+  <script>import '../../scripts/property';</script>
 </Base>

@@ -1,22 +1,18 @@
 ---
-import Base from '../../layouts/Base.astro';
+import Prose from '../../layouts/Prose.astro';
 import { site } from '../../../site.config';
-import { aboutListings, adNotice, buyerAdvice, classifiedTerm } from '../../lib/copy';
+import { aboutListings, buyerAdvice, classifiedTerm, marketplaceLine } from '../../lib/copy';
 const e = site.entity;
 ---
-<Base title={`About ${site.name} and how listings are sourced`} description={`Who runs ${site.name}, how land ads and ${e.one} listings work, and what Basic and Verified mean.`} path="/about/" crumbs={[{ name: 'Home', url: '/' }, { name: 'About', url: '/about/' }]}>
-  <h1>About {site.name}</h1>
-  <p class="lead">{site.name} is an independent site for rural land for sale and the {e.many} who sell it, run by {site.owner}. It is not a brokerage, takes no commission, and is paid only for land ads and Verified {e.one} listings, as described below.</p>
-
-  <h2 id="land">Land for sale</h2>
-  <p>{adNotice} Each ad costs {classifiedTerm} and runs from the day it goes live; it is removed after its end date unless the seller renews it. Acreage, price and features are what the seller tells us. Ads are ordered newest first, and nobody can pay to appear higher.</p>
-  <p>{buyerAdvice}</p>
-  <p><a href="/sell-your-land/">Sell your land</a></p>
-
-  <h2>Where {e.one} listings come from</h2>
-  <p>Details come from each {e.one}’s own public website and profile pages, and from submissions sent with our form. We record the source and the date each listing was last checked or changed, and show that date on the page. We do not publish ratings or reviews: when a fact is unknown the listing says “Not listed”.</p>
-  <p>To fix a mistake, use <a href="/add-your-business/">the add or update form</a>. {e.Many} who stop trading are removed.</p>
-  <h2 id="listings">Basic and Verified {e.one} listings</h2>
+<Prose title={`About ${site.name}`} description={`Who runs ${site.name}, how land listings and ${e.one} profiles work, and how we make money.`} path="/about/" h1={`About ${site.name}`} lead={`${site.name} is an online marketplace for rural land: farms, ranches, timberland, hunting properties and acreage, listed by owners and land professionals.`}>
+  <h2>What we are, and what we are not</h2>
+  <p>{marketplaceLine} We do not negotiate, hold deposits, handle closings or take a commission. Buyers and sellers deal with each other directly.</p>
+  <h2>How we make money</h2>
+  <p>Sellers pay {classifiedTerm} per land listing. Land agents can pay for a Verified profile. Buyers pay nothing. Nobody can pay to change what a listing says or to rank higher than other land listings, which are shown newest first by default.</p>
+  <h2 id="land">Land listings</h2>
+  <p>Each listing is written by the seller and reviewed by us before it goes live. Acreage, price and features are what the seller tells us; we do not inspect land or check title, boundaries, access, zoning, utilities, flood status, mineral rights or taxes. {buyerAdvice}</p>
+  <h2 id="listings">Land agent profiles</h2>
+  <p>Profiles come from public sources (the agent’s own website and public pages) or from the agent. Every profile shows its source and when it was last updated. We do not publish ratings or reviews.</p>
   {aboutListings.map((p) => <p>{p}</p>)}
-  <p>See <a href="/listing-plans/">listing plans</a> for prices and how the check works.</p>
-</Base>
+  <p><a href="/listing-plans/">Agent profiles and pricing</a> · <a href="/contact/">Contact</a></p>
+</Prose>

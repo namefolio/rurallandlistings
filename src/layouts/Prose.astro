@@ -1,0 +1,16 @@
+---
+// Simple text pages (legal, about, thanks, errors): Base with a narrow column.
+import Base from './Base.astro';
+interface Props { title: string; description: string; path: string; h1: string; lead?: string; noindex?: boolean; crumbs?: boolean; eyebrow?: string; jsonld?: object[] }
+const { title, description, path, h1, lead, noindex = false, crumbs = true, eyebrow, jsonld } = Astro.props;
+---
+<Base title={title} description={description} path={path} noindex={noindex} markdown={false} jsonld={jsonld} crumbs={crumbs ? [{ name: 'Home', url: '/' }, { name: h1, url: path }] : undefined}>
+  <div class="wrap">
+    <div class="prose page-head">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1>{h1}</h1>
+      {lead && <p class="lead">{lead}</p>}
+      <slot />
+    </div>
+  </div>
+</Base>

@@ -1,8 +1,11 @@
 ---
 import '../theme.css';
 import '../styles/base.css';
+import Icon from '../components/Icon.astro';
+import Logo from '../components/Logo.astro';
 import { PLACEHOLDERS, site } from '../../site.config';
-import { footerLine } from '../lib/copy';
+import { classifiedPrice, footerLine } from '../lib/copy';
+import { INCLUDE_DEMO } from '../lib/data';
 
 interface Props {
   title: string;
@@ -14,9 +17,11 @@ interface Props {
   crumbs?: { name: string; url: string }[];
   /** Markdown twin; defaults to {path}index.md. Set false for pages without one. */
   markdown?: string | false;
-  banner?: boolean;
+  /** Open Graph image (absolute or site path). */
+  image?: string;
+  bodyClass?: string;
 }
-const { title, description, path, noindex = false, jsonld = [], crumbs, markdown, banner = false } = Astro.props;
+const { title, description, path, noindex = false, jsonld = [], crumbs, markdown, image, bodyClass } = Astro.props;
 const canonical = new URL(path, site.url).href;
 const md = markdown === false ? undefined : (markdown ?? `${path}index.md`);
 const ld = [...jsonld];
@@ -27,18 +32,27 @@ if (crumbs?.length) {
     itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.url, site.url).href })),
   });
 }
+const current = (url: string) => (path === url || (url !== '/' && path.startsWith(url)) ? 'page' : undefined);
+const sell = `Sell Your Land — ${classifiedPrice}`;
 const forSale = PLACEHOLDERS.forSaleContact;
+const footerCols = [
+  { title: 'Buyers', links: [['Browse Land', '/land-for-sale/'], ['Saved searches', '/saved-searches/'], ['How It Works', '/how-it-works/'], ['FAQ', '/faq/']] },
+  { title: 'Sellers & agents', links: [['Sell Your Land', '/sell-your-land/'], ['Land Agents', '/land-agents/'], ['For land agents', '/listing-plans/'], ['Create an agent profile', '/add-your-business/']] },
+  { title: 'Company', links: [['About', '/about/'], ['Contact', '/contact/'], ['Terms', '/terms/'], ['Privacy', '/privacy/'], ['Listing Disclaimer', '/listing-disclaimer/']] },
+];
 ---
 <!doctype html>
 <html lang={site.lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="preload" href="/fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/source-serif-4.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {md && <link rel="alternate" type="text/markdown" href={md} title="Markdown version" />}
     <meta property="og:type" content="website" />
@@ -47,46 +61,68 @@ const forSale = PLACEHOLDERS.forSaleContact;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={site.ogLocale} />
+    {image && <meta property="og:image" content={new URL(image, site.url).href} />}
+    {image && <meta name="twitter:card" content="summary_large_image" />}
     <meta name="theme-color" content={site.themeColor} />
     {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o).replace(/</g, '\\u003c')} />)}
     <slot name="head" />
   </head>
-  <body>
+  <body class={bodyClass}>
     <a class="skip" href="#main">Skip to content</a>
-    {banner && (
-      <div class="banner">This domain is for sale. <a href={forSale}>Contact the owner</a></div>
-    )}
+    {INCLUDE_DEMO && <div class="demo-banner" role="note">Preview build: listings and agents marked “Demo” are placeholders, not real properties or people.</div>}
     <header class="site-header">
       <div class="wrap">
-        <a class="logo" href="/">{site.name}</a>
-        <nav aria-label="Main">
-          <ul>
-            {site.nav.map((n) => <li><a href={n.url}>{n.label}</a></li>)}
+        <a class="brand" href="/" aria-label={`${site.name} home`}><Logo /><span>RuralLand<b>Listings</b></span></a>
+        <nav class="nav" aria-label="Main">
+          <ul class="nav-links">
+            {site.nav.map((n) => <li><a href={n.url} aria-current={current(n.url)}>{n.label}</a></li>)}
           </ul>
+          <a class="btn btn-primary btn-sm nav-cta" href="/sell-your-land/">{sell}</a>
+          <details class="menu">
+            <summary aria-label="Menu"><Icon name="menu" /></summary>
+            <div class="menu-panel">
+              <ul>
+                {site.nav.map((n) => <li><a href={n.url} aria-current={current(n.url)}>{n.label}</a></li>)}
+              </ul>
+              <ul class="menu-secondary">
+                {site.navSecondary.map((n) => <li><a href={n.url}>{n.label}</a></li>)}
+              </ul>
+              <a class="btn btn-primary" href="/sell-your-land/">{sell}</a>
+            </div>
+          </details>
         </nav>
       </div>
     </header>
-    <main id="main" class="wrap">
+    <main id="main">
       {crumbs?.length && (
-        <nav class="crumbs" aria-label="Breadcrumb">
-          <ol>
-            {crumbs.map((c, i) => (i === crumbs.length - 1 ? <li aria-current="page">{c.name}</li> : <li><a href={c.url}>{c.name}</a></li>))}
-          </ol>
-        </nav>
+        <div class="wrap">
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <ol>
+              {crumbs.map((c, i) => (i === crumbs.length - 1 ? <li aria-current="page">{c.name}</li> : <li><a href={c.url}>{c.name}</a></li>))}
+            </ol>
+          </nav>
+        </div>
       )}
       <slot />
     </main>
     <footer class="site-footer">
       <div class="wrap">
-        <ul class="footer-links">
-          <li><a href="/about/">About and sources</a></li>
-          <li><a href="/privacy/">Privacy</a></li>
-          <li><a href="/sell-your-land/">Sell your land</a></li>
-          <li><a href="/add-your-business/">Add or update a listing</a></li>
-          <li><a href="/listing-plans/">Listing plans</a></li>
-          <li><a href="/llms.txt">llms.txt</a></li>
-        </ul>
-        <p class="muted">{footerLine}</p>
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand" href="/"><Logo light /><span>RuralLand<b>Listings</b></span></a>
+            <p>Farms, ranches, timberland, hunting properties and rural acreage, listed by owners and land professionals. No buyer fees. No seller commission.</p>
+          </div>
+          {footerCols.map((col) => (
+            <nav aria-label={col.title}>
+              <h2>{col.title}</h2>
+              <ul>{col.links.map(([label, url]) => <li><a href={url}>{label}</a></li>)}</ul>
+            </nav>
+          ))}
+        </div>
+        <div class="footer-legal">
+          <p>{footerLine}</p>
+          <p>© {new Date().getFullYear()} {site.name}. <span class="forsale">The {site.domain} domain is for sale: <a href={forSale}>contact the owner</a>.</span> <a href="/llms.txt">llms.txt</a></p>
+        </div>
       </div>
     </footer>
   </body>

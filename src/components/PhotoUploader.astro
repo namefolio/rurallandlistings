@@ -1,0 +1,33 @@
+---
+// Photo uploads for the land form (src/scripts/uploader.ts): resized in the browser, stored in R2.
+import Icon from './Icon.astro';
+import { PHOTO_KIND_LABELS } from '../lib/photos';
+interface Props { max?: number; checklist?: boolean }
+const { max = 25, checklist = true } = Astro.props;
+const recommended = ['aerial', 'access', 'terrain', 'feature', 'water', 'buildings', 'boundary'];
+---
+<div class="uploader" data-uploader data-max={max}>
+  <noscript><p class="notice">Photo uploads need JavaScript. You can send links to your photos below instead.</p></noscript>
+  <div class="js-only">
+    <label class="drop" data-drop>
+      <Icon name="upload" />
+      <strong>Add photos</strong>
+      <span class="muted small">Drag photos here or tap to choose. JPG, PNG, WebP or HEIC from your phone. Up to {max}.</span>
+      <input type="file" accept="image/*" multiple data-file aria-describedby="upload-help" />
+    </label>
+    <p class="help" id="upload-help">We resize photos automatically for fast pages. The first photo is your cover. Photos are private until your listing is published.</p>
+    <div class="upload-check" data-upload-check hidden></div>
+    <p class="form-msg" data-upload-msg role="status"></p>
+    <ul class="photo-list" data-list aria-label="Your photos"></ul>
+    {checklist && (
+      <div class="tip">
+        <h3>Recommended photos</h3>
+        <ol class="checklist" data-checklist>
+          {recommended.map((k) => <li data-kind={k}>{PHOTO_KIND_LABELS[k]}</li>)}
+        </ol>
+        <p class="help">Tag each photo with what it shows; the list ticks off as you go.</p>
+      </div>
+    )}
+    <template data-kinds>{Object.entries(PHOTO_KIND_LABELS).map(([k, v]) => <option value={k}>{v}</option>)}</template>
+  </div>
+</div>

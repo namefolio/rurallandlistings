@@ -1,6 +1,11 @@
 import { site } from '../../site.config';
 import { isoDate } from './core';
-import type { Land, Listing } from './types';
+import { publicPoint } from './land';
+import { PHOTO_WIDTHS, photoUrl } from './photos';
+import type { Land, Listing, Photo } from './types';
+
+const abs = (p: string) => new URL(p, site.url).href;
+const publicPhoto = (p: Photo) => ({ alt: p.alt, kind: p.kind ?? null, width: p.width, height: p.height, urls: Object.fromEntries(PHOTO_WIDTHS.map((w) => [w, abs(photoUrl(p.id, w))])) });
 
 /** The public record of a listing: what the page shows, nothing more. */
 export const publicListing = (l: Listing) => ({
@@ -22,6 +27,13 @@ export const publicListing = (l: Listing) => ({
   description: l.effectiveTier === 'verified' ? (l.description ?? null) : null,
   bookingUrl: l.effectiveTier === 'verified' ? (l.bookingUrl ?? null) : null,
   attributes: l.attributes,
+  brokerage: l.brokerage ?? null,
+  agentType: l.agentType ?? null,
+  email: l.email ?? null,
+  photo: l.photo ? publicPhoto(l.photo) : null,
+  licenses: l.licenses ?? [],
+  countiesServed: l.countiesServed ?? [],
+  licenseCheck: l.effectiveTier === 'verified' && l.licenseCheck ? { checkedOn: isoDate(l.licenseCheck.checkedOn), states: l.licenseCheck.states } : null,
   lastUpdated: isoDate(l.lastUpdated),
   source: l.source,
 });
@@ -36,13 +48,15 @@ export const publicLand = (l: Land) => ({
   region: l.regionSlug,
   county: l.countySlug,
   location: l.location,
-  lat: l.lat,
-  lng: l.lng,
+  ...publicPoint(l),
+  exactLocation: l.exactLocation === true,
   acres: l.acres,
   price: l.price ?? null,
   seller: { type: l.seller.type, name: l.seller.name, phone: l.seller.phone ?? null, email: l.seller.email ?? null, agentSlug: l.seller.agentSlug ?? null },
   summary: l.summary,
   links: l.links,
+  photos: l.photos.map(publicPhoto),
+  videoUrl: l.videoUrl ?? null,
   attributes: l.attributes,
   postedOn: isoDate(l.postedOn),
   expiresOn: isoDate(l.expiresOn),

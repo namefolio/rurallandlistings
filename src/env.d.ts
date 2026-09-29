@@ -7,3 +7,4 @@ declare module 'cloudflare:email' {
     readonly to: string;
   }
 }
+declare module "*?worker&url" { const src: string; export default src; }

@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import { site } from '../../../site.config';
+---
+<Base title={`Saved searches | ${site.name}`} description="Your saved land searches on this device." path="/saved-searches/" noindex markdown={false} crumbs={[{ name: 'Home', url: '/' }, { name: 'Saved searches', url: '/saved-searches/' }]}>
+  <div class="wrap">
+    <div class="page-head">
+      <h1>Saved searches</h1>
+      <p class="lead">Searches you saved on this device. No account needed. Email alerts, if you asked for them, are managed from the links in the emails.</p>
+    </div>
+    <ul class="saved-list" id="saved-list"></ul>
+    <div id="saved-empty" hidden>
+      <EmptyState title="No saved searches yet" text="Search for land, then choose “Save this search” to keep it here and optionally get an email when new land matches." icon="bookmark">
+        <a class="btn btn-primary" href={`/${site.classifieds.hub}/`}>Search land</a>
+      </EmptyState>
+    </div>
+    <noscript><p>Saved searches need JavaScript.</p></noscript>
+  </div>
+  <script>import '../../scripts/save-search';</script>
+</Base>

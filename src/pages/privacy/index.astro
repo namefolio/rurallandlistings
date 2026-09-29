@@ -1,16 +1,17 @@
 ---
-import Base from '../../layouts/Base.astro';
+import Prose from '../../layouts/Prose.astro';
 import { site } from '../../../site.config';
 ---
-<Base title={`Privacy | ${site.name}`} description={`What ${site.name} collects: no cookies, no analytics, and form submissions sent by email only.`} path="/privacy/" crumbs={[{ name: 'Home', url: '/' }, { name: 'Privacy', url: '/privacy/' }]}>
-  <h1>Privacy</h1>
-  <p class="lead">{site.name} sets no cookies and runs no analytics or advertising scripts.</p>
-  <h2>Our forms</h2>
-  <p>When you send a form, your answers are emailed to us and not stored on this website. We use your own name and email only to reply, and to invoice you for a land ad or Verified listing. They are never published.</p>
-  <p>On a land ad, the seller name, phone and email you enter under “How buyers reach you” are published on the ad so buyers can contact you, and are removed when the ad ends. On a land agent listing, only the business details you send may appear.</p>
-  <p>The forms use Cloudflare Turnstile to block spam, which may process your IP address and browser details under Cloudflare’s privacy policy.</p>
-  <h2>Hosting</h2>
-  <p>The site is hosted on Cloudflare, which processes standard request logs to deliver pages and stop abuse.</p>
-  <h2>Contact</h2>
-  <p>To have a submission or ad deleted, use <a href="/sell-your-land/">the land form</a> or <a href="/add-your-business/">the agent form</a> and say so in the description.</p>
-</Base>
+<Prose title={`Privacy | ${site.name}`} description={`What ${site.name} collects: no tracking cookies or analytics, form submissions by email, optional saved-search alerts.`} path="/privacy/" h1="Privacy" lead={`${site.name} sets no tracking cookies and runs no analytics or advertising scripts.`}>
+  <h2>Forms</h2>
+  <p>When you send a listing or profile form, your answers are emailed to us. We use your own name and email only to reply and to invoice you. They are never published.</p>
+  <p>On a land listing, the seller name, phone and email you enter under “How buyers reach you” are published so buyers can contact you, and are removed when the listing ends.</p>
+  <h2>Photos</h2>
+  <p>Photos you upload are stored with Cloudflare R2. They are private until your listing is published, and are only shown on the site while it runs.</p>
+  <h2>Saved searches and alerts</h2>
+  <p>Saved searches are stored in your browser only. If you ask for email alerts, we store your email address, the search and when we last emailed you, and use them only to send the alerts. Every alert has a one-click unsubscribe link, which deletes that record. Sign-ups that are not confirmed within 7 days are deleted.</p>
+  <h2>Security checks and hosting</h2>
+  <p>Forms use Cloudflare Turnstile to block spam, which may process your IP address and browser details under Cloudflare’s privacy policy. Maps load tiles from OpenFreeMap. The site is hosted on Cloudflare, which keeps standard request logs to deliver pages and stop abuse.</p>
+  <h2>Deleting your data</h2>
+  <p>To have a submission, listing or alert deleted, <a href="/contact/">contact us</a>.</p>
+</Prose>

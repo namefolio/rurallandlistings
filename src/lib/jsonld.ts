@@ -1,5 +1,7 @@
 import { site } from '../../site.config';
 import { isoDate, openingHoursSpec } from './core';
+import { publicPoint } from './land';
+import { photoUrl } from './photos';
 import type { Faq, Land, Listing } from './types';
 
 const abs = (p: string) => new URL(p, site.url).href;
@@ -27,6 +29,9 @@ export const business = (l: Listing) => ({
   address: { '@type': 'PostalAddress', streetAddress: l.address.street, addressLocality: l.address.city, addressRegion: l.address.region, postalCode: l.address.postalCode, addressCountry: 'US' },
   geo: { '@type': 'GeoCoordinates', latitude: l.lat, longitude: l.lng },
   ...(l.phone && { telephone: l.phone }),
+  ...(l.email && { email: l.email }),
+  ...(l.photo && { image: abs(photoUrl(l.photo.id, 480)) }),
+  ...(l.countiesServed?.length && { areaServed: l.countiesServed.map((c) => ({ '@type': 'AdministrativeArea', name: `${c.county}, ${c.state}` })) }),
   ...(l.sameAs.length && { sameAs: l.sameAs }),
   ...(l.hours && { openingHoursSpecification: openingHoursSpec(l) }),
   dateModified: isoDate(l.lastUpdated),
@@ -60,8 +65,9 @@ export const landListing = (l: Land) => ({
     '@type': 'Place',
     name: `${l.location.county}, ${l.location.region}`,
     address: { '@type': 'PostalAddress', ...(l.location.nearestTown && { addressLocality: l.location.nearestTown }), addressRegion: l.location.region, ...(l.location.postalCode && { postalCode: l.location.postalCode }), addressCountry: 'US' },
-    geo: { '@type': 'GeoCoordinates', latitude: l.lat, longitude: l.lng },
+    geo: { '@type': 'GeoCoordinates', latitude: publicPoint(l).lat, longitude: publicPoint(l).lng },
   },
+  ...(l.photos.length && { image: l.photos.slice(0, 10).map((p) => abs(photoUrl(p.id, 1600))) }),
   offers: {
     '@type': 'Offer',
     ...(l.price && { price: l.price, priceCurrency: site.currency }),

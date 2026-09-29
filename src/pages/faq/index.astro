@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import Faqs from '../../components/Faqs.astro';
+import { site } from '../../../site.config';
+import { plansFaqs, sellFaqs } from '../../lib/copy';
+import { faqPage } from '../../lib/jsonld';
+const all = [...site.homeFaqs, ...sellFaqs, ...plansFaqs];
+---
+<Base title={`FAQ: Buying, Selling and Listing Land | ${site.name}`} description="Answers about listing land for $49, contacting sellers, what is and is not verified, saved searches and land agent profiles." path="/faq/" markdown={false} crumbs={[{ name: 'Home', url: '/' }, { name: 'FAQ', url: '/faq/' }]} jsonld={faqPage(all)}>
+  <div class="wrap">
+    <div class="page-head"><h1>Frequently asked questions</h1></div>
+    <Faqs faqs={site.homeFaqs} heading="Buying land and using the site" id="faq-buy" />
+    <Faqs faqs={sellFaqs} heading="Selling land" id="faq-sell" />
+    <Faqs faqs={plansFaqs} heading="Land agent profiles" id="faq-agents" />
+    <p class="section">More questions? <a href="/contact/">Contact us</a>.</p>
+  </div>
+</Base>
