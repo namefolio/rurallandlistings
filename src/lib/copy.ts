@@ -23,8 +23,8 @@ export function payLinkFor(name: string, link = payLink, label = 'Verified listi
 
 export const credentialCheck = `we check the ${site.credential.name} with ${site.credential.source}, and confirm the details with the owner`;
 
-export const disclosure = 'Verified listings are paid, checked and shown first.';
-export const disclosureLinkText = 'Listing plans';
+export const disclosure = 'License Verified profiles are paid and shown first. The badge means we checked a license; it is not a rating.';
+export const disclosureLinkText = 'Agent profiles';
 
 const k = site.classifieds;
 export const classifiedPrice = PLACEHOLDERS.classifiedPrice;

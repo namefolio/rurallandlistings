@@ -110,7 +110,8 @@ const video = l.videoUrl;
 
         <section class="prop-section" aria-labelledby="seller-h">
           <h2 id="seller-h">Seller</h2>
-          <p><strong>{l.seller.name}</strong> · {sellerRole}{agent && <> · <a href={agent.url}>View agent profile</a></>} {verifiedAgent && <span class="badge-verified"><Icon name="shield" />{licenseBadge}</span>}</p>
+          <p><strong>{l.seller.name}</strong> · {sellerRole}{agent && <> · <a href={agent.url}>View agent profile</a></>}</p>
+          {verifiedAgent && <p class="muted small">This agent’s profile is {licenseBadge}: we checked their real estate license. That check is about the agent, not this property.</p>}
           <p class="muted small">Contact the seller directly. {site.name} is not part of the sale and does not receive a commission.</p>
         </section>
 
@@ -142,7 +143,7 @@ const video = l.videoUrl;
           </div>
           {tel && <a class="btn btn-primary" href={tel}><Icon name="phone" />Call {l.seller.phone}</a>}
           {mail && <a class={tel ? 'btn btn-secondary' : 'btn btn-primary'} href={mail}><Icon name="mail" />Email the seller</a>}
-          <p class="fine">Mention {site.name} when you get in touch. Buyers pay no fees. Verify all property information before you buy.</p>
+          <p class="fine">Mention {site.name} when you get in touch. Buyers pay no fees. Check the property information yourself before you buy.</p>
         </div>
       </aside>
     </div>

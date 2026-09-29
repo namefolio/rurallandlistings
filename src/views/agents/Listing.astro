@@ -49,14 +49,14 @@ const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
         {verified && l.description && <p>{l.description}</p>}
 
         {checked ? (
-          <section class="verify-box" aria-labelledby="verified">
-            <h2 id="verified"><Icon name="shield" />What “{licenseBadge}” means here</h2>
+          <section class="verify-box" aria-labelledby="license-check">
+            <h2 id="license-check"><Icon name="shield" />What “{licenseBadge}” means here</h2>
             <p>On {fmtDate(checked.checkedOn)} we checked this agent’s {site.credential.name} for {checked.states.map(stateName).join(', ')} using {site.credential.source}, and confirmed the details with the agent.</p>
             <p class="muted">It is not a rating, review or endorsement, and it does not cover other states, the agent’s listings or the properties they sell. <a href="/listing-plans/#license-verified">How we check</a></p>
           </section>
         ) : (
-          <section class="verify-box verify-basic" aria-labelledby="verified">
-            <h2 id="verified">Basic profile</h2>
+          <section class="verify-box verify-basic" aria-labelledby="license-check">
+            <h2 id="license-check">Basic profile</h2>
             <p>This profile was provided by the agent. We have not checked their {site.credential.name}. You can look it up with the state’s real estate commission before you work with them.</p>
           </section>
         )}
