@@ -6,10 +6,6 @@ export interface PhotoRecord { id: string; alt: string; kind: string; width: num
 interface Item extends PhotoRecord { key: string; status: 'processing' | 'uploading' | 'done' | 'error'; done: number; preview: string; error?: string }
 export interface UploaderState { session: string; photos: PhotoRecord[] }
 
-declare global {
-  interface Window { turnstile?: { render: (el: HTMLElement, o: Record<string, unknown>) => string; reset: (id?: string) => void; remove: (id: string) => void } }
-}
-
 const hex = (n: number) => [...crypto.getRandomValues(new Uint8Array(n))].map((b) => b.toString(16).padStart(2, '0')).join('');
 const MIN_WIDTH = 400;
 
@@ -87,7 +83,7 @@ export class Uploader {
     if (this.session && this.sessionValid(this.session)) return Promise.resolve(this.session);
     return (this.sessionReady ??= (async () => {
       const cfg = (await (await fetch('/api/config')).json()) as { turnstileSiteKey?: string; uploads?: boolean };
-      if (!cfg.uploads || !cfg.turnstileSiteKey) throw new Error('Photo uploads are not available right now. Add links to your photos below instead.');
+      if (!cfg.uploads || !cfg.turnstileSiteKey) throw new Error('Photo uploads are not available right now. Please try again later.');
       const box = this.root.querySelector<HTMLElement>('[data-upload-check]')!;
       box.hidden = false;
       for (let i = 0; i < 100 && !window.turnstile; i++) await new Promise((r) => setTimeout(r, 100));

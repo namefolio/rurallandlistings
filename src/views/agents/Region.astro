@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ListingList from '../../components/ListingList.astro';
+import AgentList from '../../components/AgentList.astro';
 import BestFor from '../../components/BestFor.astro';
 import { site } from '../../../site.config';
 import { itemList } from '../../lib/jsonld';
@@ -14,13 +14,15 @@ const hubUrl = `/${site.hub}/`;
   description={site.titles.regionDescription(region.name, region.listings.length, region.cities.length)}
   path={region.url}
   noindex={noindex}
-  crumbs={[{ name: 'Home', url: '/' }, { name: site.entity.Many, url: hubUrl }, { name: region.name, url: region.url }]}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land agents', url: hubUrl }, { name: region.name, url: region.url }]}
   jsonld={[itemList(`${site.entity.Many} in ${region.name}`, region.listings)]}
 >
-  <h1>{site.entity.Many} in {region.name}</h1>
-  <p class="lead">{intro}</p>
-  <h2>Cities</h2>
-  <ul class="tiles">{region.cities.map((c) => <li><a href={c.url}>{c.name} ({c.listings.length})</a></li>)}</ul>
-  <ListingList listings={region.listings} heading={`All ${site.entity.many} in ${region.name}`} showCity />
-  <BestFor listings={region.listings} place={region.name} />
+  <div class="wrap">
+    <h1>Land agents in {region.name}</h1>
+    <p class="lead">{intro}</p>
+    <ul class="tiles">{region.cities.map((c) => <li><a href={c.url}>{c.name} ({c.listings.length})</a></li>)}</ul>
+    <h2>All land agents in {region.name}</h2>
+    <AgentList listings={region.listings} />
+    <BestFor listings={region.listings} place={region.name} />
+  </div>
 </Base>

@@ -8,3 +8,13 @@ declare module 'cloudflare:email' {
   }
 }
 declare module "*?worker&url" { const src: string; export default src; }
+
+/** Cloudflare Turnstile (explicit rendering), loaded from challenges.cloudflare.com. */
+interface Window {
+  turnstile?: {
+    render: (el: HTMLElement, o: Record<string, unknown>) => string;
+    getResponse: (id?: string) => string | undefined;
+    reset: (id?: string) => void;
+    remove: (id: string) => void;
+  };
+}

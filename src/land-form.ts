@@ -2,29 +2,9 @@
 // the Worker injects Turnstile and email sending, so tests can too.
 import { z } from 'zod';
 import { PLACEHOLDERS, site } from '../site.config';
-import { noNewlines, optText, optUrl, readAttributes, slugify, text, type FormDeps } from './form';
-import { PHOTO_KINDS } from './lib/types';
+import { noNewlines, optText, optUrl, photosField, readAttributes, slugify, text, type FormDeps } from './form';
 
-export interface LandFormDeps extends FormDeps {
-  /** Checks the upload session token and that every photo id belongs to it and was uploaded. */
-  checkUploads?: (sessionToken: string, ids: string[]) => Promise<boolean>;
-}
-
-const formPhoto = z.object({
-  id: z.string().regex(/^[a-f0-9]{16}\/[a-f0-9]{12}$/),
-  alt: z.string().trim().max(160).default(''),
-  kind: z.enum(PHOTO_KINDS).optional().catch(undefined),
-  width: z.number().int().min(100).max(10000),
-  height: z.number().int().min(100).max(10000),
-});
-const photosField = z.string().max(20000).default('[]').transform((v, ctx) => {
-  try {
-    const r = z.array(formPhoto).max(25).safeParse(JSON.parse(v || '[]'));
-    if (r.success) return r.data;
-  } catch {}
-  ctx.addIssue({ code: 'custom', message: 'bad photos' });
-  return z.NEVER;
-});
+export type LandFormDeps = FormDeps;
 
 const c = site.classifieds;
 const PAGE = '/sell-your-land/';
@@ -50,11 +30,11 @@ export const landFormSchema = z
     price: optNumber(1_000_000_000, true),
     summary: text(2000).default(''),
     links: text(1500).default(''),
-    photos: photosField,
+    photos: photosField(),
     uploadSession: z.string().trim().max(200).default(''),
     videoUrl: optUrl.default(''),
     exactLocation: z.enum(['yes', '']).default('').transform((v) => v === 'yes'),
-    locationHint: optText(160),
+    locationHint: text(160).default('').transform((v) => v || null),
     sellerType: z.enum(['owner', 'agent']).default('owner'),
     sellerName: text(100).refine(noNewlines).default(''),
     sellerPhone: optText(30),

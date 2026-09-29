@@ -17,10 +17,6 @@ const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as 
 let query = '';
 let widget: string | undefined;
 
-declare global {
-  interface Window { turnstile?: { render: (el: HTMLElement, o: { sitekey: string; theme?: string }) => string; getResponse: (id?: string) => string | undefined; reset: (id?: string) => void } }
-}
-
 function labels(): Labels {
   const el = document.getElementById('search-data');
   if (el) return (JSON.parse(el.textContent!) as { labels: Labels }).labels;

@@ -32,7 +32,7 @@ describe('land form handler', () => {
     expect(sent[0].subject).toBe('[rurallandlistings.com] Land listing · New: 40 wooded acres with creek');
     expect(sent[0].text.split('\n')[0]).toMatch(/^Wait for the site owner to confirm the \$49 payment\. Then add this land listing .* expiresOn 30 days later\.$/);
     const l = jsonBlock(sent[0].text);
-    expect(Object.keys(l)).toEqual(['title', 'slug', 'status', 'location', 'lat', 'lng', 'acres', 'price', 'seller', 'summary', 'links', 'attributes', 'postedOn', 'expiresOn', 'lastUpdated', 'source']);
+    expect(Object.keys(l)).toEqual(['title', 'slug', 'status', 'location', 'lat', 'lng', 'acres', 'price', 'seller', 'summary', 'links', 'photos', 'videoUrl', 'exactLocation', 'attributes', 'postedOn', 'expiresOn', 'lastUpdated', 'source']);
     expect(l).toMatchObject({ slug: '40-wooded-acres-with-creek', acres: 40, price: 320000, postedOn: null, expiresOn: null, source: 'submission', links: ['https://photos.example/album'] });
     expect(l.seller).toEqual({ type: 'owner', name: 'Pat Seller', phone: '(979) 555-0199', email: null, agentSlug: null });
     expect(l.attributes).toMatchObject({ landTypes: ['hunting'], ownerFinancing: true, well: false, annualTaxes: 450, surveyed: null });

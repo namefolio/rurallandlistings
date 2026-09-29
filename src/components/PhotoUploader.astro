@@ -2,20 +2,20 @@
 // Photo uploads for the land form (src/scripts/uploader.ts): resized in the browser, stored in R2.
 import Icon from './Icon.astro';
 import { PHOTO_KIND_LABELS } from '../lib/photos';
-interface Props { max?: number; checklist?: boolean }
-const { max = 25, checklist = true } = Astro.props;
+interface Props { max?: number; checklist?: boolean; label?: string; help?: string }
+const { max = 25, checklist = true, label = 'Add photos', help = 'We resize photos automatically for fast pages. The first photo is your cover. Photos are private until your listing is published.' } = Astro.props;
 const recommended = ['aerial', 'access', 'terrain', 'feature', 'water', 'buildings', 'boundary'];
 ---
-<div class="uploader" data-uploader data-max={max}>
-  <noscript><p class="notice">Photo uploads need JavaScript. You can send links to your photos below instead.</p></noscript>
+<div class:list={["uploader", { "uploader-single": max === 1 }]} data-uploader data-max={max}>
+  <noscript><p class="notice">Photo uploads need JavaScript.{max > 1 && ' You can send links to your photos below instead.'}</p></noscript>
   <div class="js-only">
     <label class="drop" data-drop>
       <Icon name="upload" />
-      <strong>Add photos</strong>
-      <span class="muted small">Drag photos here or tap to choose. JPG, PNG, WebP or HEIC from your phone. Up to {max}.</span>
+      <strong>{label}</strong>
+      <span class="muted small">{max === 1 ? 'Drag a photo here or tap to choose. JPG, PNG or WebP.' : `Drag photos here or tap to choose. JPG, PNG, WebP or HEIC from your phone. Up to ${max}.`}</span>
       <input type="file" accept="image/*" multiple data-file aria-describedby="upload-help" />
     </label>
-    <p class="help" id="upload-help">We resize photos automatically for fast pages. The first photo is your cover. Photos are private until your listing is published.</p>
+    <p class="help" id="upload-help">{help}</p>
     <div class="upload-check" data-upload-check hidden></div>
     <p class="form-msg" data-upload-msg role="status"></p>
     <ul class="photo-list" data-list aria-label="Your photos"></ul>

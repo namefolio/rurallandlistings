@@ -2,7 +2,7 @@
 import { z } from 'zod';
 import { site } from '../site.config';
 import { HOURS_RE } from './lib/schema';
-import { DAYS, type AttributeDef } from './lib/types';
+import { DAYS, PHOTO_KINDS, type AttributeDef } from './lib/types';
 
 export interface Outgoing { from: string; to: string; replyTo: string; subject: string; text: string }
 export interface FormDeps {
@@ -11,6 +11,8 @@ export interface FormDeps {
   to: string;
   from: string;
   today?: Date;
+  /** Checks the upload session token and that every photo id belongs to it and was uploaded. */
+  checkUploads?: (sessionToken: string, ids: string[]) => Promise<boolean>;
 }
 
 export const text = (max: number) => z.string().trim().max(max);
@@ -26,6 +28,23 @@ export const optUrl = z.string().trim().max(300).transform((v, ctx) => {
 });
 export const noNewlines = (s: string) => !/[\r\n]/.test(s);
 
+export const formPhoto = z.object({
+  id: z.string().regex(/^[a-f0-9]{16}\/[a-f0-9]{12}$/),
+  alt: z.string().trim().max(160).default(''),
+  kind: z.enum(PHOTO_KINDS).optional().catch(undefined),
+  width: z.number().int().min(100).max(10000),
+  height: z.number().int().min(100).max(10000),
+});
+export const photosField = (max = 25) => z.string().max(20000).default('[]').transform((v, ctx) => {
+  try {
+    const r = z.array(formPhoto).max(max).safeParse(JSON.parse(v || '[]'));
+    if (r.success) return r.data;
+  } catch {}
+  ctx.addIssue({ code: 'custom', message: 'bad photos' });
+  return z.NEVER;
+});
+
+
 export const formSchema = z.object({
   tier: z.enum(['basic', 'verified']).default('basic'),
   listing: z.string().trim().max(120).regex(/^([a-z0-9]+(-[a-z0-9]+)*)?$/).default(''),
@@ -38,6 +57,13 @@ export const formSchema = z.object({
   website: optUrl,
   sameAs: text(1000).default(''),
   description: optText(1200),
+  brokerage: text(120).default('').transform((v) => v || null),
+  agentType: z.enum(['agent', 'broker', 'auctioneer', 'consultant', '']).default('').transform((v) => v || null),
+  email: z.union([z.literal(''), z.email().max(200)]).default('').transform((v) => v || null),
+  licenses: text(1000).default(''),
+  countiesServed: text(2000).default(''),
+  photos: photosField(1),
+  uploadSession: z.string().trim().max(200).default(''),
   submitterName: text(100).min(1).refine(noNewlines),
   submitterEmail: z.email().max(200).refine(noNewlines),
   relationship: z.enum(['owner', 'staff', 'customer']),
@@ -62,6 +88,32 @@ export function readAttributes(raw: FormData, defs: AttributeDef[]): Record<stri
     }
   }
   return attributes;
+}
+
+/** "TX 123456" per line → [{state, number}]. Lines without a two-letter state code are dropped. */
+export function parseLicenses(v: string) {
+  const out = new Map<string, { state: string; number?: string }>();
+  for (const line of v.split(/\r?\n/)) {
+    const m = /^\s*([A-Za-z]{2})\b[\s:#,-]*(.*)$/.exec(line);
+    if (!m) continue;
+    const state = m[1].toUpperCase();
+    const number = m[2].trim().replace(/[^\w .#/-]/g, '').slice(0, 40);
+    out.set(state, number ? { state, number } : { state });
+  }
+  return [...out.values()].slice(0, 20);
+}
+
+/** "Washington County, TX" per line → [{state, county}]. */
+export function parseCounties(v: string) {
+  const out = new Map<string, { state: string; county: string }>();
+  for (const line of v.split(/\r?\n|;/)) {
+    const m = /^\s*(.+?)\s*,\s*([A-Za-z]{2})\s*$/.exec(line);
+    if (!m) continue;
+    const name = m[1].replace(/\s+/g, ' ').trim().slice(0, 60);
+    const county = /\b(county|parish|borough)$/i.test(name) ? name : `${name} County`;
+    out.set(`${m[2].toUpperCase()}:${county.toLowerCase()}`, { state: m[2].toUpperCase(), county });
+  }
+  return [...out.values()].slice(0, 60);
 }
 
 /** Turns form fields into a listing-shaped object. Unknown values are null; tier is always basic. */
@@ -96,12 +148,18 @@ export function toListing(f: z.infer<typeof formSchema>, raw: FormData, today: D
       source: 'submission',
       description: null,
       bookingUrl: null,
+      brokerage: f.brokerage,
+      agentType: f.agentType,
+      email: f.email,
+      licenses: parseLicenses(f.licenses),
+      countiesServed: parseCounties(f.countiesServed),
+      photo: f.photos[0] ? { id: f.photos[0].id, alt: f.photos[0].alt.length >= 3 ? f.photos[0].alt : f.name, width: f.photos[0].width, height: f.photos[0].height } : null,
     },
     oddHours: odd,
   };
 }
 
-export function buildEmail(f: z.infer<typeof formSchema>, raw: FormData, today: Date) {
+export function buildEmail(f: z.infer<typeof formSchema>, raw: FormData, today: Date, origin = `https://${site.domain}`) {
   const isUpdate = !!f.listing;
   // Only an owner or staff member can ask for Verified; customers' corrections are Basic.
   const tier = f.tier === 'verified' && f.relationship !== 'customer' ? 'verified' : 'basic';
@@ -128,6 +186,8 @@ export function buildEmail(f: z.infer<typeof formSchema>, raw: FormData, today: 
     '',
     'Description from the submitter:',
     f.description ?? '(none)',
+    ...(f.photos.length ? ['', 'Profile photo, review before publishing (link works for 14 days):', `${origin}/photos/${f.photos[0].id}/1600?s=${encodeURIComponent(f.uploadSession)}`] : []),
+    ...(tier === 'verified' ? ['', 'License check: look up each license above with the state commission, then set licenseCheck { checkedOn, states } per UPDATING.md.'] : []),
     ...(oddHours.length ? ['', 'Hours as typed (not understood):', ...oddHours] : []),
   ].join('\n');
   return { subject, text: body, tier };
@@ -152,7 +212,12 @@ export async function handleSubmission(request: Request, deps: FormDeps): Promis
   const parsed = formSchema.safeParse(fields);
   if (!parsed.success) return go('/add-your-business/error/');
 
-  const email = buildEmail(parsed.data, raw, deps.today ?? new Date());
+  if (parsed.data.photos.length) {
+    const ok = !!deps.checkUploads && (await deps.checkUploads(parsed.data.uploadSession, parsed.data.photos.map((p) => p.id)));
+    if (!ok) return go('/add-your-business/error/?reason=photos');
+  }
+
+  const email = buildEmail(parsed.data, raw, deps.today ?? new Date(), origin);
   try {
     await deps.send({ from: deps.from, to: deps.to, replyTo: parsed.data.submitterEmail, subject: email.subject, text: email.text });
   } catch {

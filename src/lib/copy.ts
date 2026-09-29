@@ -86,35 +86,38 @@ export const sellFaqs = [
   { q: 'Can I edit my listing?', a: 'Yes. Use the link on your listing page to send changes; changes during the 30 days are free.' },
 ];
 
-export const plansIntro = `Every ${e.one} can have a free Basic listing. Verified is paid: ${credentialCheck}, then label the listing Verified and show it first in its city and category lists. Verified is never a rating, and payment never changes the facts we publish.`;
+export const plansIntro = `Land agents and brokers can have a free Basic profile. A Verified profile (${price}) adds a check of your ${site.credential.name}, the “License Verified” badge and a place above Basic profiles. It is never a rating, and payment never changes the facts we publish.`;
 
 export const basicBullets = [
-  `Core facts: address, phone, website, hours`,
-  site.basicFacts,
-  `Listed on its city, ${site.regionNoun} and category pages`,
-  `Update it any time with the form`,
+  'Profile with brokerage, office, phone, email and website',
+  'Specialties, states licensed and counties served',
+  `Listed in the land agent directory and on its city and ${site.regionNoun} pages`,
+  'Your land listings shown on your profile',
+  'Update it any time with the form',
 ];
 
 export const verifiedBullets = [
   'Everything in Basic',
-  `${site.credential.name[0].toUpperCase()}${site.credential.name.slice(1)} check plus owner confirmation`,
-  'The Verified label everywhere the listing appears',
-  'Shown first, above Basic listings',
-  `Your own description and contact link, rechecked at each renewal`,
+  `We check your ${site.credential.name} in each state you list`,
+  'The “License Verified” badge, with the date and states we checked',
+  'Shown first, above Basic profiles',
+  'Your own description, photo and booking link',
+  'Rechecked at each yearly renewal',
 ];
 
 export const howToSteps = [
-  `Send your details with the form and choose “Verified”, or use “Is this your business?” on your listing.`,
+  'Create your profile with the form and choose Verified, or use “Is this you?” on your existing profile.',
   payIsMailto ? `Pay ${price}: email ${payEmail} and we’ll send an invoice.` : `Pay ${price} with the payment link.`,
-  `We check the ${site.credential.name} with ${site.credential.source} and confirm the details with you. If the check fails we refund you and the listing stays Basic.`,
-  `The listing gets the Verified label and moves above Basic listings. We recheck it at renewal, and it returns to Basic if not renewed.`,
+  `We look up your ${site.credential.name} with ${site.credential.source} for each state you list and confirm the details with you. If a check fails we refund you and the profile stays Basic.`,
+  'Your profile shows the License Verified badge, the states checked and the date. We recheck at renewal; without renewal it returns to Basic.',
 ];
 
 export const plansFaqs = [
-  { q: 'Is a Basic listing really free?', a: `Yes. We never hide a correct Basic listing because a nearby ${e.one} paid.` },
-  { q: 'Does paying change what you publish?', a: 'No. It buys the Verified label, the check and a place above Basic listings. It never buys a rating, a review or changed facts.' },
-  { q: 'How are listings ordered?', a: 'Verified first, then Basic. Within each, the most complete listings come first, then A to Z.' },
-  { q: 'How much does Verified cost?', a: `${price}.` },
+  { q: 'Is a Basic profile really free?', a: `Yes. We never hide a correct Basic profile because a nearby ${e.one} paid.` },
+  { q: 'What does License Verified mean?', a: `That on the date shown we found the agent’s ${site.credential.name} active with ${site.credential.source} for the states shown. It is not a rating, review or endorsement, and it says nothing about any property.` },
+  { q: 'Does paying change what you publish?', a: 'No. It pays for the license check, the badge and a place above Basic profiles. It never buys a rating, a review or changed facts.' },
+  { q: 'How are agents ordered?', a: 'License Verified first, then Basic. Within each, the most complete profiles come first, then A to Z.' },
+  { q: 'Can agents list land for sale too?', a: 'Yes. Land listings are separate: $49 for 30 days, for owners and agents alike, with no commission.' },
 ];
 
 export const aboutListings = [

@@ -603,3 +603,11 @@ dialog.modal h2 { margin: 0 0 0.5rem; font-size: 1.5rem; }
 @media (min-width: 56rem) { .af-grid { grid-template-columns: repeat(4, 1fr); } }
 .agent-filters label:not(.check) { margin-top: 0; }
 .agent-filters .check { margin-top: 0.5rem; }
+.section-sm { margin-top: 2.25rem; }
+.verify-box { margin-top: 1.5rem; }
+.verify-basic { border-left-color: var(--line-strong); }
+.uploader-single [data-kind], .uploader-single .pi-tools [data-move], .uploader-single .cover { display: none; }
+.uploader-single .photo-list { grid-template-columns: minmax(0, 14rem); }
+.check-grid { display: grid; gap: 0 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); margin-top: 1rem; }
+.check-grid legend { grid-column: 1 / -1; }
+.hours-grid { display: grid; gap: 0 1rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }

@@ -1,6 +1,6 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { describe, expect, it } from 'vitest';
-import ListingCard from '../src/components/ListingCard.astro';
+import AgentCard from '../src/components/AgentCard.astro';
 import { effectiveTier, enrich, sortListings } from '../src/lib/core';
 import { enrichLand, isLive, sortLand } from '../src/lib/land';
 import type { ListingData } from '../src/lib/types';
@@ -25,12 +25,13 @@ describe('Verified expiry', () => {
     expect(expired.bookingUrl).toBeUndefined();
 
     const container = await AstroContainer.create();
-    const html = await container.renderToString(ListingCard, { props: { listing: expired } });
+    const html = await container.renderToString(AgentCard, { props: { listing: expired } });
     expect(html).not.toContain('Verified');
-    expect(html).not.toContain('is-verified');
+    expect(html).not.toContain('badge-verified');
+    expect(html).toContain('data-verified="0"');
 
     const current = enrich('texas/austin/current', data({ name: 'Zed Agent', slug: 'current', tier: 'verified', verifiedUntil: new Date('2027-01-01') }), today);
-    expect(await container.renderToString(ListingCard, { props: { listing: current } })).toContain('>Verified<');
+    expect(await container.renderToString(AgentCard, { props: { listing: current } })).toContain('License Verified');
     const complete = enrich('texas/austin/aaa', data({ name: 'Aaa Agent', slug: 'aaa', phone: '1' }), today);
     expect(sortListings([expired, complete, current]).map((l) => l.slug)).toEqual(['current', 'aaa', 'test-agent']);
   });
@@ -48,7 +49,7 @@ describe('Land classified expiry', () => {
     expect(isLive({ ...ad, status: 'withdrawn' }, today)).toBe(false);
   });
   it('orders ads newest first with no paid placement', () => {
-    const mk = (slug: string, posted: string) => enrichLand(`texas/washington-county/${slug}`, { title: slug, slug, status: 'published', location: { county: 'Washington County', region: 'TX' }, lat: 30, lng: -96, acres: 5, seller: { type: 'owner', name: 'X', phone: '555 0100 000' }, summary: 'x'.repeat(40), links: [], attributes: {}, postedOn: new Date(posted), expiresOn: new Date('2026-10-30'), lastUpdated: new Date(posted), source: 'test' });
+    const mk = (slug: string, posted: string) => enrichLand(`texas/washington-county/${slug}`, { title: slug, slug, status: 'published', location: { county: 'Washington County', region: 'TX' }, lat: 30, lng: -96, acres: 5, seller: { type: 'owner', name: 'X', phone: '555 0100 000' }, summary: 'x'.repeat(40), links: [], photos: [], attributes: {}, postedOn: new Date(posted), expiresOn: new Date('2026-10-30'), lastUpdated: new Date(posted), source: 'test' });
     expect(sortLand([mk('b-old', '2026-09-01'), mk('a-new', '2026-09-20'), mk('c-new', '2026-09-20')]).map((l) => l.slug)).toEqual(['a-new', 'c-new', 'b-old']);
   });
 });

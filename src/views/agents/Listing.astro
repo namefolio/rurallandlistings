@@ -1,74 +1,120 @@
 ---
+// Agent profile. License Verified profiles say exactly which states' licenses were checked, and when.
 import Base from '../../layouts/Base.astro';
 import Faqs from '../../components/Faqs.astro';
+import Icon from '../../components/Icon.astro';
+import LandList from '../../components/LandList.astro';
 import { site } from '../../../site.config';
 import { business, faqPage } from '../../lib/jsonld';
 import { factRows, fmtDate, hoursRows, mapsUrl, type City, type Region } from '../../lib/core';
+import { licenseBadge, verifiedMeaning } from '../../lib/copy';
+import { photoUrl } from '../../lib/photos';
 import type { Faq, Listing } from '../../lib/types';
-
 import { loadLand } from '../../lib/data';
+
 const { listing: l, region, city, nearby, faqs } = Astro.props as { listing: Listing; region: Region; city: City; nearby: Listing[]; faqs: Faq[] };
 const landForSale = (await loadLand()).land.filter((x) => x.seller.agentSlug === l.slug);
 const verified = l.effectiveTier === 'verified';
 const update = `/add-your-business/?listing=${l.slug}`;
+const hubUrl = `/${site.hub}/`;
+const initials = l.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+const licStates = [...new Set((l.licenses ?? []).map((x) => x.state))];
+const stateName = (code: string) => Object.values(site.regions).find((r) => r.code === code)?.name ?? code;
+const checked = verified ? l.licenseCheck : undefined;
+const hasHours = !!l.hours && Object.keys(l.hours).length > 0;
+const tel = l.phone ? `tel:${l.phone.replace(/[^+\d]/g, '')}` : '';
+const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
 ---
 <Base
   title={site.titles.listing(l.name, l.address.city, region.code)}
   description={site.titles.listingDescription(l.name, l.address.city, region.code, site.cardFacts(l).slice(0, 3))}
   path={l.url}
-  crumbs={[{ name: 'Home', url: '/' }, { name: region.name, url: region.url }, { name: city.name, url: city.url }, { name: l.name, url: l.url }]}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land agents', url: hubUrl }, { name: region.name, url: region.url }, { name: city.name, url: city.url }, { name: l.name, url: l.url }]}
   jsonld={[business(l), ...faqPage(faqs)]}
+  bodyClass={l.phone ? 'has-contact-bar' : undefined}
 >
-  {verified && <p class="badge">Verified</p>}
-  <h1>{l.name}</h1>
-  <p class="lead">{l.summary}</p>
-  {verified && l.description && (
-    <section aria-labelledby="owner">
-      <h2 id="owner">From the owner</h2>
-      <p>{l.description}</p>
-    </section>
-  )}
+  <div class="wrap">
+    <div class="agent-head">
+      {l.photo ? <img class="avatar avatar-lg" src={photoUrl(l.photo.id, 480)} alt={l.photo.alt || l.name} width="112" height="112" /> : <span class="avatar avatar-lg" aria-hidden="true">{initials}</span>}
+      <div>
+        {verified ? <span class="badge-verified"><Icon name="shield" />{licenseBadge}</span> : <span class="badge-basic">Basic profile</span>}
+        <h1>{l.name}</h1>
+        <p class="muted">{[l.agentType && site.agentTypes[l.agentType], l.brokerage, `${l.address.city}, ${l.address.region}`].filter(Boolean).join(' · ')}</p>
+      </div>
+    </div>
 
-  <h2>Details</h2>
-  <table>
-    <tbody>
-      <tr><th scope="row">Address</th><td>{l.address.street}, {l.address.city}, {l.address.region} {l.address.postalCode}</td></tr>
-      <tr><th scope="row">Phone</th><td>{l.phone ? <a href={`tel:${l.phone.replace(/[^+\d]/g, '')}`}>{l.phone}</a> : 'Not listed'}</td></tr>
-      <tr><th scope="row">Website</th><td>{l.website ? <a href={l.website} rel="nofollow">{new URL(l.website).hostname.replace(/^www\./, '')}</a> : 'Not listed'}</td></tr>
-      {verified && l.bookingUrl && <tr><th scope="row">Booking</th><td><a href={l.bookingUrl} rel="nofollow">Book with {l.name}</a></td></tr>}
-      {factRows(l).map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}
-      <tr><th scope="row">Other links</th><td>{l.sameAs.length ? l.sameAs.map((u, i) => <>{i > 0 && ', '}<a href={u} rel="nofollow">{new URL(u).hostname.replace(/^www\./, '')}</a></>) : 'None listed'}</td></tr>
-    </tbody>
-  </table>
-  <p><a href={mapsUrl(l)} rel="nofollow">Open {l.name} in Google Maps</a></p>
+    <div class="prop-layout">
+      <div>
+        <p class="lead">{l.summary}</p>
+        {verified && l.description && <p>{l.description}</p>}
 
-  <h2>Opening hours</h2>
-  <table>
-    <tbody>{hoursRows(l).map(([d, h]) => <tr><th scope="row">{d}</th><td>{h}</td></tr>)}</tbody>
-  </table>
-  <p class="muted">Hours change. Call ahead before you visit an office.</p>
+        {checked ? (
+          <section class="verify-box" aria-labelledby="verified">
+            <h2 id="verified"><Icon name="shield" />What “{licenseBadge}” means here</h2>
+            <p>On {fmtDate(checked.checkedOn)} we checked this agent’s {site.credential.name} for {checked.states.map(stateName).join(', ')} using {site.credential.source}, and confirmed the details with the agent.</p>
+            <p class="muted">It is not a rating, review or endorsement, and it does not cover other states, the agent’s listings or the properties they sell. <a href="/listing-plans/#license-verified">How we check</a></p>
+          </section>
+        ) : (
+          <section class="verify-box verify-basic" aria-labelledby="verified">
+            <h2 id="verified">Basic profile</h2>
+            <p>This profile was provided by the agent. We have not checked their {site.credential.name}. You can look it up with the state’s real estate commission before you work with them.</p>
+          </section>
+        )}
 
-  {landForSale.length > 0 && (
-    <section aria-labelledby="land">
-      <h2 id="land">Land for sale from {l.name}</h2>
-      <ul>{landForSale.map((x) => <li><a href={x.url}>{x.title}</a>, {x.location.county}, {x.location.region}</li>)}</ul>
-    </section>
-  )}
+        <section class="section-sm" aria-labelledby="details">
+          <h2 id="details">Details</h2>
+          <dl class="details-grid">
+            {l.brokerage && <div><dt>Brokerage</dt><dd>{l.brokerage}</dd></div>}
+            {l.agentType && <div><dt>Type</dt><dd>{site.agentTypes[l.agentType]}</dd></div>}
+            <div><dt>Licensed in</dt><dd>{licStates.length ? licStates.map(stateName).join(', ') : <span class="unk">Not provided</span>}</dd></div>
+            {(l.licenses ?? []).filter((x) => x.number).map((x) => <div><dt>License ({x.state})</dt><dd>{x.number}</dd></div>)}
+            <div><dt>Counties served</dt><dd>{l.countiesServed?.length ? l.countiesServed.map((c) => `${c.county}, ${c.state}`).join('; ') : <span class="unk">Not provided</span>}</dd></div>
+            {factRows(l).map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+            <div><dt>Office</dt><dd>{l.address.street}, {l.address.city}, {l.address.region} {l.address.postalCode}</dd></div>
+          </dl>
+          <p class="small"><a href={mapsUrl(l)} rel="nofollow">Open the office in Google Maps</a></p>
+        </section>
 
-  <Faqs faqs={faqs} />
+        {hasHours && (
+          <section class="section-sm" aria-labelledby="hours">
+            <h2 id="hours">Office hours</h2>
+            <dl class="details-grid">{hoursRows(l).map(([d, h]) => <div><dt>{d}</dt><dd>{h}</dd></div>)}</dl>
+          </section>
+        )}
 
-  {nearby.length > 0 && (
-    <section aria-labelledby="nearby">
-      <h2 id="nearby">Nearby {site.entity.many}</h2>
-      <ul>{nearby.map((n) => <li><a href={n.url}>{n.name}</a>, {n.address.city}</li>)}</ul>
-      <p><a href={city.url}>All {site.entity.many} in {city.name}</a></p>
-    </section>
-  )}
+        <section class="section-sm" aria-labelledby="land">
+          <h2 id="land">Land listed by {l.name}</h2>
+          {landForSale.length > 0 ? <LandList listings={landForSale} /> : <p class="muted">No land listed on {site.name} right now.</p>}
+        </section>
 
-  <p class="muted">Last updated {fmtDate(l.lastUpdated)}.</p>
-  {verified ? (
-    <p>Verified: details confirmed by the owner. <a href={update}>Update this listing</a></p>
-  ) : (
-    <p>Is this your business? <a href={update}>Get it Verified or send a correction</a></p>
+        <Faqs faqs={faqs} />
+
+        {nearby.length > 0 && (
+          <section class="section-sm" aria-labelledby="nearby">
+            <h2 id="nearby">Other land agents nearby</h2>
+            <ul class="inline-list">{nearby.map((n) => <li><a href={n.url}>{n.name}</a>, {n.address.city}</li>)}</ul>
+            <p><a href={city.url}>All land agents in {city.name}</a> · <a href={hubUrl}>Search the directory</a></p>
+          </section>
+        )}
+
+        <p class="small muted">Profile last updated {fmtDate(l.lastUpdated)}. {verified ? <a href={update}>Update this profile</a> : <>Is this you? <a href={update}>Update it or get License Verified</a></>}</p>
+      </div>
+
+      <aside class="prop-aside" aria-label="Contact the agent">
+        <div class="contact-card" id="contact">
+          <h2>Contact {l.name}</h2>
+          {l.phone && <a class="btn btn-primary" href={tel}><Icon name="phone" />Call {l.phone}</a>}
+          {l.email && <a class="btn btn-secondary" href={`mailto:${l.email}`}><Icon name="mail" />Email</a>}
+          {l.website && <a class="btn btn-secondary" href={l.website} rel="nofollow">Website: {host(l.website)}</a>}
+          {!l.phone && !l.email && !l.website && <p>No contact details listed.</p>}
+          {verified && l.bookingUrl && <a class="btn btn-ghost" href={l.bookingUrl} rel="nofollow">Book a call</a>}
+          {l.sameAs.length > 0 && <p class="fine">Also on {l.sameAs.map((u, i) => <>{i > 0 && ', '}<a href={u} rel="nofollow">{host(u)}</a></>)}</p>}
+          <p class="fine">You contact the agent directly. {site.name} is not a party to any agreement between you.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+  {l.phone && (
+    <div class="contact-bar"><a class="btn btn-primary" href={tel}><Icon name="phone" />Call {l.name.split(' ')[0]}</a>{l.email && <a class="btn btn-secondary" href={`mailto:${l.email}`}><Icon name="mail" />Email</a>}</div>
   )}
 </Base>

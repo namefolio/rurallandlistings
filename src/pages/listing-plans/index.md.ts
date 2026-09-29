@@ -4,7 +4,7 @@ import { basicBullets, howToSteps, payLabel, payLink, plansFaqs, plansIntro, pri
 import { faqsMd, mdResponse } from '../../lib/markdown';
 
 export const GET: APIRoute = () =>
-  mdResponse(`# List your ${site.entity.one}: Basic or Verified
+  mdResponse(`# Land agent profiles: Basic (free) or Verified
 
 ${plansIntro}
 

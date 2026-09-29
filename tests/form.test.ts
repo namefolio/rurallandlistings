@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { handleSubmission, rawEmail, type Outgoing } from '../src/form';
+import { handleSubmission, parseCounties, parseLicenses, rawEmail, type Outgoing } from '../src/form';
 
 const today = new Date('2026-09-28T12:00:00Z');
 
@@ -42,7 +42,7 @@ describe('form handler', () => {
     expect(l.attributes.accreditedLandConsultant).toBe(false);
     expect(l.attributes.worksWithSellers).toBeNull();
     expect(l.hours).toMatchObject({ sun: '12:00-18:00', mon: 'closed', tue: null });
-    expect(Object.keys(l)).toEqual(['name', 'slug', 'status', 'tier', 'verifiedUntil', 'address', 'lat', 'lng', 'phone', 'website', 'sameAs', 'hours', 'summary', 'attributes', 'lastUpdated', 'source', 'description', 'bookingUrl']);
+    expect(Object.keys(l)).toEqual(['name', 'slug', 'status', 'tier', 'verifiedUntil', 'address', 'lat', 'lng', 'phone', 'website', 'sameAs', 'hours', 'summary', 'attributes', 'lastUpdated', 'source', 'description', 'bookingUrl', 'brokerage', 'agentType', 'email', 'licenses', 'countiesServed', 'photo']);
     expect(sent[0].text).toContain('Tier requested: Basic');
     expect(sent[0].text).toContain('- Email: sam@example.com');
     expect(JSON.stringify(l)).not.toContain('sam@example.com');
@@ -109,5 +109,33 @@ describe('form handler', () => {
     expect(raw).toContain('Subject: =?UTF-8?B?');
     expect(raw).toContain('Reply-To: <g@h.i>');
     expect(raw).toMatch(/\r\n\r\nhi\r\nthere$/);
+  });
+});
+
+describe('agent profile fields', () => {
+  it('parses licenses and counties typed one per line', () => {
+    expect(parseLicenses('TX 123456\nok: 99-1\nnot a state line!\ntx #654321')).toEqual([{ state: 'TX', number: '654321' }, { state: 'OK', number: '99-1' }]);
+    expect(parseCounties('Washington County, TX\nAustin, tx\nnowhere\nOrleans Parish, LA')).toEqual([
+      { state: 'TX', county: 'Washington County' }, { state: 'TX', county: 'Austin County' }, { state: 'LA', county: 'Orleans Parish' },
+    ]);
+  });
+
+  it('carries brokerage, type, public email, licenses and service area into the profile JSON', async () => {
+    const { d, sent } = deps();
+    await handleSubmission(form({ brokerage: 'Prairie Land Brokerage', agentType: 'broker', email: 'hello@prairieland.example', licenses: 'TX 123456', countiesServed: 'Washington County, TX' }), d);
+    const l = jsonBlock(sent[0].text);
+    expect(l).toMatchObject({ brokerage: 'Prairie Land Brokerage', agentType: 'broker', email: 'hello@prairieland.example', licenses: [{ state: 'TX', number: '123456' }], countiesServed: [{ state: 'TX', county: 'Washington County' }], photo: null });
+  });
+
+  it('rejects a profile photo that the upload session does not vouch for', async () => {
+    const photos = JSON.stringify([{ id: 'a'.repeat(16) + '/' + 'b'.repeat(12), alt: '', width: 960, height: 960 }]);
+    const { d, sent } = deps();
+    const res = await handleSubmission(form({ photos, uploadSession: 'x' }), { ...d, checkUploads: async () => false });
+    expect(res.headers.get('Location')).toBe('https://rurallandlistings.com/add-your-business/error/?reason=photos');
+    expect(sent).toHaveLength(0);
+    const ok = deps();
+    await handleSubmission(form({ photos, uploadSession: 'x' }), { ...ok.d, checkUploads: async () => true });
+    expect(jsonBlock(ok.sent[0].text).photo).toEqual({ id: 'a'.repeat(16) + '/' + 'b'.repeat(12), alt: 'Prairie Land Co', width: 960, height: 960 });
+    expect(ok.sent[0].text).toContain('/photos/' + 'a'.repeat(16) + '/' + 'b'.repeat(12) + '/1600?s=x');
   });
 });
