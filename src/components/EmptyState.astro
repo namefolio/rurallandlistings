@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+interface Props { title: string; text: string; icon?: 'land' | 'search' | 'user' | 'bookmark'; heading?: 'h2' | 'h3' }
+const { title, text, icon = 'land', heading = 'h2' } = Astro.props;
+const H = heading;
+---
+<div class="empty">
+  <Icon name={icon} class="empty-icon" />
+  <H>{title}</H>
+  <p>{text}</p>
+  <div class="btns"><slot /></div>
+</div>

@@ -17,4 +17,6 @@ export default defineConfig({
   trailingSlash: 'always',
   build: { format: 'directory', inlineStylesheets: 'always' },
   integrations: [sitemap({ filter: isIndexable })],
+  // Never inline scripts: the CSP (public/_headers) allows only same-origin scripts and one hashed snippet.
+  vite: { build: { assetsInlineLimit: 0 }, worker: { format: 'es' } },
 });

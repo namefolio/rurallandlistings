@@ -70,3 +70,15 @@ Evidence:
 - Map link uses an approximate point, labelled as not a boundary.
 - Changes during the paid period are free; renewals cost $49.
 - Demo data: 3 demo agents (Brenham, TX) and 3 demo land ads (Washington County, TX) marked `demo: true`; the demo ads end between 2026-10-26 and 2026-10-28 and then drop off like real ones. `npm run remove-demo` removes both.
+
+## Marketplace redesign (2026-09-29)
+
+Ben asked for a serious marketplace feel (Zillow / Land.com / outdoor brands, not copied), keeping the business model. Decisions:
+
+- **Look:** off-white paper, forest green primary, tan accents, charcoal text; Source Serif 4 headings, Public Sans body; subtle borders, sparing radius, no gradients. Hero photo slot in `src/assets/hero/` (contour drawing until a licensed photo is added).
+- **Search** (`/land-for-sale/`): every live listing is rendered server-side (crawlable); `src/scripts/search.ts` filters, sorts, pages and syncs the URL using the same rules as the alert job (`src/lib/search.ts`). Fine to a few thousand listings; move to a Worker/D1 query beyond that.
+- **Map:** MapLibre + OpenFreeMap tiles (no key), loaded only when shown. Pins are rounded to ~1 km unless the seller ticks "show exact location"; property pages draw a ~1.5 km circle.
+- **Photos:** resized in the browser (480/960/1600 px, WebP with JPEG fallback), uploaded to R2 under a Turnstile-gated signed session, private until a published file lists them (`/data/photo-ids.json`). Unpublished uploads are not cleaned up yet (add an R2 lifecycle rule if storage grows).
+- **Saved searches:** kept on the visitor's device; optional email alerts are double opt-in (D1 + Email Service), sent by a daily cron, each listing emailed once per search. No accounts.
+- **Agents:** badge reads "License Verified" and every Verified profile states which states were checked and when (`licenseCheck`). Land pages never show the badge; they say in words that it covers the agent, not the property.
+- **Wording rule** (`npm run check:wording`): "verified" appears only as the tier name, the License Verified badge, or advice that buyers independently verify.

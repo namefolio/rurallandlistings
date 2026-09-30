@@ -2,7 +2,9 @@
 // the Worker injects Turnstile and email sending, so tests can too.
 import { z } from 'zod';
 import { PLACEHOLDERS, site } from '../site.config';
-import { noNewlines, optText, optUrl, readAttributes, slugify, text, type FormDeps } from './form';
+import { noNewlines, optText, optUrl, photosField, readAttributes, slugify, text, type FormDeps } from './form';
+
+export type LandFormDeps = FormDeps;
 
 const c = site.classifieds;
 const PAGE = '/sell-your-land/';
@@ -28,6 +30,11 @@ export const landFormSchema = z
     price: optNumber(1_000_000_000, true),
     summary: text(2000).default(''),
     links: text(1500).default(''),
+    photos: photosField(),
+    uploadSession: z.string().trim().max(200).default(''),
+    videoUrl: optUrl.default(''),
+    exactLocation: z.enum(['yes', '']).default('').transform((v) => v === 'yes'),
+    locationHint: text(160).default('').transform((v) => v || null),
     sellerType: z.enum(['owner', 'agent']).default('owner'),
     sellerName: text(100).refine(noNewlines).default(''),
     sellerPhone: optText(30),
@@ -47,6 +54,7 @@ export type LandForm = z.infer<typeof landFormSchema>;
 
 /** Turns form fields into a land-file-shaped object. Unknown values are null; dates are set when it goes live. */
 export function toLand(f: LandForm, raw: FormData, today: Date) {
+  const photos = f.photos.map((p, i) => ({ id: p.id, alt: p.alt.length >= 3 ? p.alt : `Photo ${i + 1} of ${f.title || 'the land'}`, ...(p.kind && { kind: p.kind }), width: p.width, height: p.height }));
   return {
     title: f.title || null,
     slug: f.listing || slugify(f.title),
@@ -59,6 +67,9 @@ export function toLand(f: LandForm, raw: FormData, today: Date) {
     seller: { type: f.sellerType, name: f.sellerName || null, phone: f.sellerPhone, email: f.sellerEmail, agentSlug: null },
     summary: f.summary || null,
     links: f.links.split(/\s+/).filter((u) => optUrl.safeParse(u).success && /^https?:\/\//.test(u)).slice(0, 5),
+    photos,
+    videoUrl: f.videoUrl && /^https:\/\/(www\.)?(youtube\.com|youtu\.be|vimeo\.com)\//.test(f.videoUrl) ? f.videoUrl : null,
+    exactLocation: f.exactLocation || null,
     attributes: readAttributes(raw, c.attributes),
     postedOn: null,
     expiresOn: null,
@@ -75,7 +86,7 @@ const INSTRUCTIONS = {
 };
 const LABELS = { new: `New listing (${price})`, renew: `Renewal (${price})`, change: 'Change only (no charge)' };
 
-export function buildLandEmail(f: LandForm, raw: FormData, today: Date) {
+export function buildLandEmail(f: LandForm, raw: FormData, today: Date, origin = site.url) {
   const subject = `[${site.domain}] Land listing · ${f.request === 'new' ? `New: ${f.title}` : f.request === 'renew' ? `Renewal: ${f.listing}` : `Change: ${f.listing}`}`;
   const body = [
     INSTRUCTIONS[f.request],
@@ -86,6 +97,9 @@ export function buildLandEmail(f: LandForm, raw: FormData, today: Date) {
     '```',
     '',
     `Request: ${LABELS[f.request]}`,
+    ...(f.locationHint || f.exactLocation ? ['', `Location from the seller${f.exactLocation ? ' (wants the exact spot shown on the map)' : ''}: ${f.locationHint ?? '(none given)'}`] : []),
+    ...(f.photos.length ? ['', `Photos (${f.photos.length}), review before publishing. Links work for 14 days:`, ...f.photos.map((p, i) => `${i + 1}. ${origin}/photos/${p.id}/1600?s=${encodeURIComponent(f.uploadSession)}${p.kind ? ` (${p.kind})` : ''}`)] : []),
+    ...(f.videoUrl ? ['', `Video link: ${f.videoUrl}`] : []),
     '',
     'Submitter (private, never publish):',
     `- Name: ${f.submitterName}`,
@@ -94,7 +108,7 @@ export function buildLandEmail(f: LandForm, raw: FormData, today: Date) {
   return { subject, text: body };
 }
 
-export async function handleLandSubmission(request: Request, deps: FormDeps): Promise<Response> {
+export async function handleLandSubmission(request: Request, deps: LandFormDeps): Promise<Response> {
   const origin = new URL(request.url).origin;
   const go = (path: string) => new Response(null, { status: 303, headers: { Location: origin + PAGE + path } });
   let raw: FormData;
@@ -112,7 +126,12 @@ export async function handleLandSubmission(request: Request, deps: FormDeps): Pr
   const parsed = landFormSchema.safeParse(fields);
   if (!parsed.success) return go('error/');
 
-  const email = buildLandEmail(parsed.data, raw, deps.today ?? new Date());
+  if (parsed.data.photos.length) {
+    const ok = !!deps.checkUploads && (await deps.checkUploads(parsed.data.uploadSession, parsed.data.photos.map((p) => p.id)));
+    if (!ok) return go('error/?reason=photos');
+  }
+
+  const email = buildLandEmail(parsed.data, raw, deps.today ?? new Date(), origin);
   try {
     await deps.send({ from: deps.from, to: deps.to, replyTo: parsed.data.submitterEmail, subject: email.subject, text: email.text });
   } catch {

@@ -1,15 +1,33 @@
 ---
+// The listing card used everywhere land appears: search, home, state, county and type pages.
+import Icon from './Icon.astro';
+import NoPhoto from './NoPhoto.astro';
+import Photo from './Photo.astro';
 import { site } from '../../site.config';
-import { fmtDate } from '../lib/core';
 import type { Land } from '../lib/types';
-interface Props { land: Land }
-const { land: l } = Astro.props;
+interface Props { land: Land; eager?: boolean; headingLevel?: 'h2' | 'h3' }
+const { land: l, eager = false, headingLevel = 'h3' } = Astro.props;
 const c = site.classifieds;
+const ppa = c.perAcre(l);
+const features = c.features(l);
+const types = ((l.attributes.landTypes as string[] | undefined) ?? []).map((k) => c.landTypes[k] ?? k);
+const H = headingLevel;
+const cover = l.photos[0];
+const desc = l.summary.replace(/\s+/g, ' ').slice(0, 220);
 ---
-<li class="card land-card">
-  <p class="card-price">{c.priceText(l)}</p>
-  <h3><a href={l.url}>{l.title}</a></h3>
-  <p class="muted">{l.location.county}, {l.location.region}{l.location.nearestTown ? ` · near ${l.location.nearestTown}` : ''}</p>
-  <ul>{c.cardFacts(l).map((f) => <li>{f}</li>)}</ul>
-  <p class="muted small">Listed {fmtDate(l.postedOn)}</p>
+<li class="lcard" data-u={l.url}>
+  <div class="lcard-media">
+    {cover ? <Photo photo={cover} sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 50vw, 100vw" eager={eager} alt="" /> : <NoPhoto />}
+    {l.demo && <span class="lcard-flag">Demo</span>}
+    {l.photos.length > 1 && <span class="lcard-count"><Icon name="camera" />{l.photos.length}</span>}
+  </div>
+  <div class="lcard-body">
+    <p class="lcard-price"><strong>{c.priceText(l)}</strong>{ppa && <span>{c.money(ppa)}/acre</span>}</p>
+    <H><a href={l.url}>{l.title}</a></H>
+    <p class="lcard-loc"><Icon name="pin" />{l.location.county}, {l.location.region}{l.location.nearestTown ? ` · near ${l.location.nearestTown}` : ''}</p>
+    <p class="lcard-facts">{c.acresText(l.acres)}{types.length > 0 && ` · ${types[0]}`}</p>
+    {features.length > 0 && <p class="lcard-features">{features.join(' · ')}</p>}
+    <p class="lcard-desc">{desc}</p>
+    <span class="lcard-cta" aria-hidden="true">View Property <Icon name="arrow" /></span>
+  </div>
 </li>

@@ -6,7 +6,7 @@ const { listings, place } = Astro.props;
 const groups = site.bestFor.map((b) => ({ label: b.label, items: listings.filter(b.test) })).filter((g) => g.items.length > 0);
 ---
 {groups.length > 0 && (
-  <section aria-labelledby="best-for">
+  <section class="section" aria-labelledby="best-for">
     <h2 id="best-for">Best for, in {place}</h2>
     <p class="muted">Built from what each {site.entity.one} publishes. Not a ranking.</p>
     <div class="cols">

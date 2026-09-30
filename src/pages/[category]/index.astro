@@ -1,9 +1,8 @@
 ---
-// Land category pages ("hunting land for sale"), only with 3+ live listings.
-import Base from '../../layouts/Base.astro';
-import LandList from '../../components/LandList.astro';
+// National land type pages ("hunting land for sale"), only with 3+ live listings.
+import LandIndex from '../../views/land/LandIndex.astro';
 import { site } from '../../../site.config';
-import { landCategoryPages, type LandCategoryPage } from '../../lib/data';
+import { landCategoryPages, stateTypePages, type LandCategoryPage } from '../../lib/data';
 import { landItemList } from '../../lib/jsonld';
 
 export async function getStaticPaths() {
@@ -12,15 +11,18 @@ export async function getStaticPaths() {
 const { page } = Astro.props as { page: LandCategoryPage };
 const c = site.classifieds;
 const lower = page.title[0] + page.title.slice(1).toLowerCase();
+const states = (await stateTypePages()).filter((p) => p.national === page.slug);
 ---
-<Base
+<LandIndex
   title={c.titles.category(page.title)}
   description={c.titles.categoryDescription(page.noun, page.listings.length)}
+  h1={`${lower} ${site.countryPhrase}`}
+  intro={`${c.titles.categoryDescription(page.noun, page.listings.length)} Every listing is written by the seller, who you contact directly.`}
   path={page.url}
   crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url: `/${c.hub}/` }, { name: page.title, url: page.url }]}
   jsonld={[landItemList(page.title, page.listings)]}
->
-  <h1>{lower} {site.countryPhrase}</h1>
-  <p class="lead">{c.titles.categoryDescription(page.noun, page.listings.length)}</p>
-  <LandList listings={page.listings} heading={`${page.listings.length} ${c.entity.many}`} />
-</Base>
+  listings={page.listings}
+  query={page.query}
+  queryName={page.title}
+  related={[{ heading: `${page.title} by state`, links: states.map((s) => ({ label: s.region.name, url: s.url, n: s.listings.length })) }]}
+/>

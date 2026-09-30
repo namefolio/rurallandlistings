@@ -1,6 +1,19 @@
 import { z } from 'zod';
 import { site } from '../../site.config';
-import { DAYS, type AttributeDef } from './types';
+import { DAYS, PHOTO_KINDS, type AttributeDef } from './types';
+
+/** Upload ids are "{session}/{photo}" (hex), as the uploader creates them. */
+export const PHOTO_ID_RE = /^[a-f0-9]{16}\/[a-f0-9]{12}$/;
+export const photoSchema = z
+  .object({
+    id: z.string().regex(PHOTO_ID_RE),
+    alt: z.string().min(3).max(160),
+    kind: z.enum(PHOTO_KINDS).optional(),
+    width: z.number().int().min(100).max(10000),
+    height: z.number().int().min(100).max(10000),
+  })
+  .strict();
+const stateCode = z.string().regex(/^[A-Z]{2}$/);
 
 /** "11:00-19:00", "11:00-14:00,15:00-19:00" or "closed". */
 export const HOURS_RE = /^(closed|([01]\d|2[0-4]):[0-5]\d-([01]\d|2[0-4]):[0-5]\d(,([01]\d|2[0-4]):[0-5]\d-([01]\d|2[0-4]):[0-5]\d)*)$/;
@@ -49,9 +62,17 @@ export const listingSchema = z
     source: z.string().min(1),
     description: z.string().max(1200).optional(),
     bookingUrl: z.url().optional(),
+    brokerage: z.string().min(2).max(120).optional(),
+    agentType: z.enum(Object.keys(site.agentTypes) as [string, ...string[]]).optional(),
+    email: z.email().optional(),
+    photo: photoSchema.optional(),
+    licenses: z.array(z.object({ state: stateCode, number: z.string().min(2).max(40).optional() }).strict()).max(60).optional(),
+    countiesServed: z.array(z.object({ state: stateCode, county: z.string().min(3).max(60) }).strict()).max(200).optional(),
+    licenseCheck: z.object({ checkedOn: z.coerce.date(), states: z.array(stateCode).min(1) }).strict().optional(),
   })
   .strict()
-  .refine((l) => l.tier !== 'verified' || !!l.verifiedUntil, { message: 'verified listings need verifiedUntil', path: ['verifiedUntil'] });
+  .refine((l) => l.tier !== 'verified' || !!l.verifiedUntil, { message: 'verified listings need verifiedUntil', path: ['verifiedUntil'] })
+  .refine((l) => l.tier !== 'verified' || !!l.licenseCheck, { message: 'verified listings need licenseCheck (date and states checked)', path: ['licenseCheck'] });
 
 const phoneRe = /^[+()\d][\d ()+.-]{6,24}$/;
 
@@ -86,6 +107,9 @@ export const landSchema = z
       .refine((s) => !!(s.phone || s.email), { message: 'seller needs a phone or an email' }),
     summary: z.string().min(40).max(2000),
     links: z.array(z.url()).max(5).default([]),
+    photos: z.array(photoSchema).max(30).default([]),
+    videoUrl: z.url().optional(),
+    exactLocation: z.boolean().optional(),
     attributes: attributesFor(site.classifieds.attributes).default({}),
     postedOn: z.coerce.date(),
     expiresOn: z.coerce.date(),

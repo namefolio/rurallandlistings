@@ -1,0 +1,8 @@
+---
+import Prose from '../../../layouts/Prose.astro';
+import { site } from '../../../../site.config';
+---
+<Prose title={`That link has expired | ${site.name}`} description="Unconfirmed alerts are deleted after 7 days. Save the search again to get a new confirmation email." path="/saved-searches/link-expired/" h1="That link has expired" noindex crumbs={false}>
+  <p>Unconfirmed alerts are deleted after 7 days. Save the search again to get a new confirmation email.</p>
+  <div class="btns"><a class="btn btn-primary" href="/land-for-sale/">Search land</a><a class="btn btn-secondary" href="/saved-searches/">Saved searches</a></div>
+</Prose>

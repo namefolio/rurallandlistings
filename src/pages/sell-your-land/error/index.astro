@@ -1,10 +1,9 @@
 ---
-import Base from '../../../layouts/Base.astro';
+import Prose from '../../../layouts/Prose.astro';
 import { PLACEHOLDERS, site } from '../../../../site.config';
 const email = PLACEHOLDERS.submissionsEmail;
 ---
-<Base title={`Your land listing was not sent | ${site.name}`} description="The form could not be sent." path="/sell-your-land/error/" noindex markdown={false}>
-  <h1>Sorry, that did not send</h1>
-  <p>Something went wrong, or a required field or the spam check was missing. Nothing was stored.</p>
-  <p><a href="/sell-your-land/#form">Try the form again</a>, or email the details to <a href={`mailto:${email}`}>{email}</a>.</p>
-</Base>
+<Prose title={`Your land listing was not sent | ${site.name}`} description="The form could not be sent." path="/sell-your-land/error/" h1="Sorry, that did not send" noindex crumbs={false}>
+  <p>Something went wrong: a required field or the security check was missing, or a photo upload had expired. Nothing was published and you have not been charged.</p>
+  <p>Your draft is still saved on this device. <a href="/sell-your-land/#start">Go back to your listing</a> and try again, or email the details to <a href={`mailto:${email}`}>{email}</a>.</p>
+</Prose>

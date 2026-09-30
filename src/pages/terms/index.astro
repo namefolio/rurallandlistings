@@ -1,0 +1,26 @@
+---
+import Prose from '../../layouts/Prose.astro';
+import { site } from '../../../site.config';
+import { classifiedTerm, marketplaceLine, price } from '../../lib/copy';
+---
+<Prose title={`Terms of Use | ${site.name}`} description={`The terms for using ${site.name}, listing land and creating agent profiles.`} path="/terms/" h1="Terms of use" lead="Plain-language terms for using the site. By using the site or submitting a listing you agree to them.">
+  <h2>The service</h2>
+  <p>{marketplaceLine} We provide a place to advertise and find rural land and land professionals. We are not a party to any transaction between users.</p>
+  <h2>Land listings</h2>
+  <ul>
+    <li>A land listing costs {classifiedTerm}, paid before it goes live. Renewals cost the same. Changes during the listing period are free.</li>
+    <li>You must own the land or be authorized to market it, and the information you give must be accurate and not misleading.</li>
+    <li>You must have the right to publish every photo, video and document you submit, and you allow us to display them on the site and in search results and alerts while the listing runs.</li>
+    <li>We review listings and may decline, edit for formatting, or remove a listing that is incomplete, misleading, unlawful or not rural land for sale. If we decline a listing before it goes live, we refund the fee.</li>
+    <li>Paying for a listing does not guarantee enquiries, traffic, buyer interest or a sale.</li>
+  </ul>
+  <h2>Buyers</h2>
+  <p>Using the site is free. Listing information is provided by sellers and is not independently verified; you are responsible for your own due diligence before any purchase.</p>
+  <h2>Agent profiles</h2>
+  <p>Basic profiles are free. Verified profiles cost {price}; the License Verified badge is shown only after a successful license check and lapses if not renewed.</p>
+  <h2>Acceptable use</h2>
+  <p>Do not scrape contact details for marketing, send spam to sellers, or submit false listings. We may block abusive use.</p>
+  <h2>Liability</h2>
+  <p>The site is provided as is. To the extent the law allows, {site.name} is not liable for listing content, for dealings between users, or for losses arising from use of the site.</p>
+  <p class="muted small">Questions: <a href="/contact/">contact us</a>.</p>
+</Prose>

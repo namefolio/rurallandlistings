@@ -1,0 +1,5 @@
+---
+interface Props { text?: string }
+const { text = 'Photos coming soon' } = Astro.props;
+---
+<div class="no-photo" role="img" aria-label="No photos yet"><span>{text}</span></div>

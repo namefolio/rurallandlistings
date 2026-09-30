@@ -1,111 +1,210 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Faqs from '../../components/Faqs.astro';
+import Icon from '../../components/Icon.astro';
+import PhotoUploader from '../../components/PhotoUploader.astro';
+import ValueProp from '../../components/ValueProp.astro';
 import { site } from '../../../site.config';
-import { adNotice, classifiedPrice, classifiedTerm, sellFaqs, sellSteps } from '../../lib/copy';
+import { classifiedPrice, classifiedTerm, marketplaceLine, sellFaqs, sellerSteps } from '../../lib/copy';
 import { faqPage } from '../../lib/jsonld';
 
-// The Worker fills in ?listing= (renewal or change) and the Turnstile site key with HTMLRewriter,
-// so this page ships no JavaScript of its own.
+// The Worker fills in ?listing= (renewal or change) and the Turnstile site key with HTMLRewriter.
+// Without JavaScript every step shows at once and the form still posts; src/scripts/sell-form.ts adds the
+// steps, per-step checks, saved progress and photo uploads.
 const c = site.classifieds;
 const states = Object.values(site.regions).filter((r) => r.code).sort((a, b) => a.name.localeCompare(b.name));
+const pill = `${classifiedPrice} · ${c.days}-day listing`;
+const steps = ['Property', 'Land', 'Details', 'Photos', 'Contact'];
+const details: [string, string, string?][] = [
+  ['publicRoadAccess', 'Road access', 'Public road frontage or deeded access'],
+  ['powerAvailable', 'Electricity', 'Power on the land or at the road'],
+  ['well', 'Well'],
+  ['septicOrPerc', 'Septic', 'Septic system or a passed perc test'],
+  ['surfaceWater', 'Water', 'Creek, pond, river or spring'],
+  ['surveyed', 'Survey', 'A recorded survey exists'],
+  ['mineralRights', 'Mineral rights', 'Included with the sale'],
+  ['deedRestrictions', 'Restrictions', 'Deed restrictions, covenants or HOA'],
+  ['mobileHomesAllowed', 'Mobile homes', 'Allowed on the land'],
+  ['buildings', 'Buildings', 'House, barn, cabin or sheds'],
+  ['ownerFinancing', 'Owner financing', 'You will finance the buyer'],
+];
+const StepHead = (n: number) => `Step ${n} of ${steps.length}`;
 ---
-<Base title={`Sell your land: ${classifiedTerm} | ${site.name}`} description={`List rural land for sale by owner or agent for ${classifiedTerm}. Buyers contact you directly; no commission.`} path="/sell-your-land/" crumbs={[{ name: 'Home', url: '/' }, { name: 'Sell your land', url: '/sell-your-land/' }]} jsonld={faqPage(sellFaqs)}>
+<Base title={`Sell Your Land: List Rural Land for ${classifiedPrice} | ${site.name}`} description={`List farms, ranches, hunting land and rural acreage for ${classifiedTerm}. Upload photos, reach land buyers and let them contact you directly. No commission.`} path="/sell-your-land/" crumbs={[{ name: 'Home', url: '/' }, { name: 'Sell your land', url: '/sell-your-land/' }]} jsonld={faqPage(sellFaqs)}>
   <script slot="head" src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  <h1>Sell your land: {classifiedTerm}</h1>
-  <p class="lead">Owners and agents can list rural land here. You write the ad, buyers contact you directly, and we take no commission.</p>
-  <p class="disclosure">{adNotice}</p>
-
-  <h2>How it works</h2>
-  <ol>{sellSteps.map((s) => <li>{s}</li>)}</ol>
-  <p class="muted">Agents: you can also add a free listing for your agency. <a href="/listing-plans/">Agent listing plans</a>.</p>
-
-  <h2 id="form">Send your land listing</h2>
-  <p id="update-note" class="disclosure" hidden>You are renewing or changing <strong id="update-name">this listing</strong>. Fill in only what changes.</p>
-  <form method="post" action="/sell-your-land/">
-    <input type="hidden" name="listing" value="" />
-    <fieldset>
-      <legend>What are you sending?</legend>
-      <div class="tier-cards">
-        <label class="tier-card"><input type="radio" name="request" value="new" checked /><strong>New listing ({classifiedPrice})<span>Runs {c.days} days from the day it goes live.</span></strong></label>
-        <label class="tier-card"><input type="radio" name="request" value="renew" disabled /><strong>Renew ({classifiedPrice})<span>Another {c.days} days. Use the link on your listing.</span></strong></label>
-        <label class="tier-card"><input type="radio" name="request" value="change" disabled /><strong>Change only (free)<span>Fix details while the ad is running.</span></strong></label>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>The land</legend>
-      <label for="l-title">Headline <span class="hint">(like “40 wooded acres with creek near Townsville”)</span></label>
-      <input id="l-title" name="title" type="text" required data-new-only minlength="5" maxlength="90" />
-      <label for="l-region">State</label>
-      <select id="l-region" name="region" required data-new-only>
-        <option value="">Choose a state</option>
-        {states.map((s) => <option value={s.code}>{s.name}</option>)}
-      </select>
-      <label for="l-county">County <span class="hint">(like “Wharton County”)</span></label>
-      <input id="l-county" name="county" type="text" required data-new-only maxlength="60" />
-      <label for="l-town">Nearest town</label>
-      <input id="l-town" name="nearestTown" type="text" maxlength="60" />
-      <label for="l-zip">ZIP code</label>
-      <input id="l-zip" name="postalCode" type="text" maxlength="10" inputmode="numeric" autocomplete="postal-code" />
-      <label for="l-acres">Acres</label>
-      <input id="l-acres" name="acres" type="text" required data-new-only maxlength="20" inputmode="decimal" />
-      <label for="l-price">Asking price in dollars <span class="hint">(leave empty for “price on request”)</span></label>
-      <input id="l-price" name="price" type="text" maxlength="20" inputmode="numeric" />
-      <label for="l-summary">Describe the land <span class="hint">(up to about 300 words: terrain, access, water, utilities, what it’s good for)</span></label>
-      <textarea id="l-summary" name="summary" required data-new-only minlength="40" maxlength="2000"></textarea>
-      <label for="l-links">Links to photos, a survey or a map <span class="hint">(up to 5, one per line)</span></label>
-      <textarea id="l-links" name="links" maxlength="1500"></textarea>
-    </fieldset>
-
-    <details>
-      <summary>What the land has (optional)</summary>
-      {c.attributes.map((a) =>
-        a.type === 'multi' ? (
-          <fieldset>
-            <legend>{a.label}</legend>
-            {Object.entries(a.options).map(([k, label]) => <label class="check"><input type="checkbox" name={a.key} value={k} />{label}</label>)}
-          </fieldset>
-        ) : a.type === 'bool' ? (
-          <><label for={`l-${a.key}`}>{a.label}</label>
-          <select id={`l-${a.key}`} name={a.key}><option value="">Not sure</option><option value="yes">Yes</option><option value="no">No</option></select></>
-        ) : (
-          <><label for={`l-${a.key}`}>{a.label} <span class="hint">(dollars)</span></label><input id={`l-${a.key}`} name={a.key} type="number" min="0" max={a.max ?? 1000000} inputmode="numeric" /></>
-        ),
-      )}
-    </details>
-
-    <fieldset>
-      <legend>How buyers reach you <span class="hint">(published on the ad)</span></legend>
-      <label for="l-stype">You are</label>
-      <select id="l-stype" name="sellerType">
-        <option value="owner">The owner</option>
-        <option value="agent">A land agent for the owner</option>
-      </select>
-      <label for="l-sname">Name to show</label>
-      <input id="l-sname" name="sellerName" type="text" required data-new-only maxlength="100" />
-      <label for="l-sphone">Phone <span class="hint">(phone or email, or both)</span></label>
-      <input id="l-sphone" name="sellerPhone" type="tel" maxlength="30" />
-      <label for="l-semail">Email</label>
-      <input id="l-semail" name="sellerEmail" type="email" maxlength="200" />
-    </fieldset>
-
-    <fieldset>
-      <legend>About you <span class="hint">(never published)</span></legend>
-      <label for="l-name">Your name</label>
-      <input id="l-name" name="submitterName" type="text" required maxlength="100" autocomplete="name" />
-      <label for="l-email">Your email, for the invoice</label>
-      <input id="l-email" name="submitterEmail" type="email" required maxlength="200" autocomplete="email" />
-      <label class="check"><input type="checkbox" name="consent" value="yes" required />I own this land or am authorized to sell it, the details are accurate, and they may be published.</label>
-    </fieldset>
-
-    <div class="hp" aria-hidden="true">
-      <label for="l-hp">Leave this empty</label>
-      <input id="l-hp" name="fax_number" type="text" tabindex="-1" autocomplete="off" />
+  <div class="wrap">
+    <div class="page-head">
+      <p class="price-pill"><Icon name="tag" />{pill}</p>
+      <h1>Sell your land, directly</h1>
+      <p class="lead">Owners and land agents list here for one flat fee. Buyers contact you directly, and you keep 100% of the sale.</p>
+      <div class="btns"><a class="btn btn-primary btn-lg" href="#start">Start your listing</a><a class="btn btn-secondary btn-lg" href="#how">How it works</a></div>
     </div>
-    <div class="cf-turnstile" data-sitekey=""></div>
-    <div class="btns"><button class="btn btn-primary" type="submit">Send land listing</button></div>
-  </form>
+  </div>
 
-  <Faqs faqs={sellFaqs} />
+  <section class="section band-white"><div class="wrap"><ValueProp cta={false} /></div></section>
+
+  <section class="section" aria-labelledby="how">
+    <div class="wrap">
+      <h2 id="how">How selling works</h2>
+      <ol class="steps hiw-steps">{sellerSteps.map(([t, d]) => <li><strong>{t}</strong><span>{d}</span></li>)}</ol>
+      <p class="muted small">{marketplaceLine}</p>
+    </div>
+  </section>
+
+  <section class="section band" aria-labelledby="start">
+    <div class="wrap">
+      <h2 id="start">Create your land listing</h2>
+      <p class="muted">About 10 minutes. Your progress is saved on this device as you go.</p>
+      <p id="update-note" class="notice" hidden><Icon name="info" /><span>You are renewing or changing <strong id="update-name">this listing</strong>. Fill in only what changes.</span></p>
+
+      <form class="form-card" id="sell-form" method="post" action="/sell-your-land/">
+        <input type="hidden" name="listing" value="" />
+        <input type="hidden" name="photos" value="[]" />
+        <input type="hidden" name="uploadSession" value="" />
+        <ol class="stepper js-only" aria-label="Progress">
+          {steps.map((s, i) => <li data-step-dot={i}><span class="sr-only">Step {i + 1}: </span><span class="lbl">{s}</span></li>)}
+        </ol>
+
+        <section class="form-step" data-step="0" aria-labelledby="st-0">
+          <div class="step-head"><p>{StepHead(1)}</p><span class="price-pill">{pill}</span></div>
+          <h2 id="st-0">The property</h2>
+          <p class="help-lead">Where it is, how big, and your asking price.</p>
+          <fieldset id="request-type" hidden>
+            <legend>What are you sending?</legend>
+            <div class="tier-cards">
+              <label class="tier-card"><input type="radio" name="request" value="new" checked /><strong>New listing ({classifiedPrice})<span>Runs {c.days} days from the day it goes live.</span></strong></label>
+              <label class="tier-card"><input type="radio" name="request" value="renew" disabled /><strong>Renew ({classifiedPrice})<span>Another {c.days} days.</span></strong></label>
+              <label class="tier-card"><input type="radio" name="request" value="change" disabled /><strong>Change only (free)<span>Fix details while it runs.</span></strong></label>
+            </div>
+          </fieldset>
+          <label for="l-title">Property title <span class="hint">e.g. “80 Acres of Timber &amp; Hunting Land near Milford”</span></label>
+          <input id="l-title" name="title" type="text" required data-new-only minlength="5" maxlength="90" />
+          <div class="field-row">
+            <div>
+              <label for="l-region">State</label>
+              <select id="l-region" name="region" required data-new-only>
+                <option value="">Choose a state</option>
+                {states.map((s) => <option value={s.code}>{s.name}</option>)}
+              </select>
+            </div>
+            <div>
+              <label for="l-county">County <span class="hint">e.g. “Pike County”</span></label>
+              <input id="l-county" name="county" type="text" required data-new-only minlength="3" maxlength="60" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div><label for="l-town">Nearest town</label><input id="l-town" name="nearestTown" type="text" maxlength="60" /></div>
+            <div><label for="l-zip">ZIP code</label><input id="l-zip" name="postalCode" type="text" maxlength="10" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}(-[0-9]{4})?" /></div>
+          </div>
+          <div class="field-row">
+            <div><label for="l-acres">Acres</label><input id="l-acres" name="acres" type="text" required data-new-only maxlength="20" inputmode="decimal" pattern="[0-9,]*\.?[0-9]*" /></div>
+            <div><label for="l-price">Asking price ($) <span class="hint">leave empty for “price on request”</span></label><input id="l-price" name="price" type="text" maxlength="20" inputmode="numeric" pattern="[$0-9, ]*" /></div>
+          </div>
+          <p class="help" id="ppa-note" aria-live="polite"></p>
+          <details class="more">
+            <summary>Show the exact location? (optional)</summary>
+            <p class="help">By default the map shows only the general area (about a 1.5 km circle), never your boundary.</p>
+            <label class="check"><input type="checkbox" name="exactLocation" value="yes" />Show the exact location on the map</label>
+            <label for="l-loc">GPS coordinates or road address of the entrance <span class="hint">(helps us place the map; not published unless you tick the box)</span></label>
+            <input id="l-loc" name="locationHint" type="text" maxlength="160" />
+          </details>
+        </section>
+
+        <section class="form-step" data-step="1" aria-labelledby="st-1">
+          <div class="step-head"><p>{StepHead(2)}</p><span class="price-pill">{pill}</span></div>
+          <h2 id="st-1">What kind of land is it?</h2>
+          <p class="help-lead">Choose all that apply. Buyers filter by these.</p>
+          <fieldset data-min-checked="1" data-new-only-group>
+            <legend class="sr-only">Property type</legend>
+            <div class="check-cards">
+              {Object.entries(c.landTypes).map(([k, label]) => <label class="check-card"><input type="checkbox" name="landTypes" value={k} />{label}</label>)}
+            </div>
+            <p class="form-msg err" data-group-error hidden>Choose at least one property type.</p>
+          </fieldset>
+        </section>
+
+        <section class="form-step" data-step="2" aria-labelledby="st-2">
+          <div class="step-head"><p>{StepHead(3)}</p><span class="price-pill">{pill}</span></div>
+          <h2 id="st-2">Property details</h2>
+          <p class="help-lead">Answer what you know. “Not sure” is fine; buyers will ask.</p>
+          {details.map(([key, label, hint]) => (
+            <fieldset class="seg">
+              <legend>{label}{hint && <span class="hint"> · {hint}</span>}</legend>
+              <div class="seg-opts">
+                <label><input type="radio" name={key} value="yes" /><span>Yes</span></label>
+                <label><input type="radio" name={key} value="no" /><span>No</span></label>
+                <label><input type="radio" name={key} value="" checked /><span>Not sure</span></label>
+              </div>
+            </fieldset>
+          ))}
+          <label for="l-tax">Annual property taxes ($)</label>
+          <input id="l-tax" name="annualTaxes" type="number" min="0" max="1000000" inputmode="numeric" />
+        </section>
+
+        <section class="form-step" data-step="3" aria-labelledby="st-3">
+          <div class="step-head"><p>{StepHead(4)}</p><span class="price-pill">{pill}</span></div>
+          <h2 id="st-3">Photos and description</h2>
+          <p class="help-lead">Listings with good photos get far more attention. Add up to 25.</p>
+          <PhotoUploader />
+          <label for="l-summary">Description <span class="hint">terrain, access, water, utilities, what the land is good for</span></label>
+          <textarea id="l-summary" name="summary" required data-new-only minlength="40" maxlength="2000" rows="8"></textarea>
+          <p class="help"><span id="summary-count">0</span> / 2,000 characters</p>
+          <label for="l-video">Video link <span class="hint">(optional, YouTube or Vimeo)</span></label>
+          <input id="l-video" name="videoUrl" type="url" maxlength="300" placeholder="https://" />
+          <label for="l-links">Links to a survey, plat or map <span class="hint">(optional, up to 5, one per line)</span></label>
+          <textarea id="l-links" name="links" maxlength="1500" rows="3"></textarea>
+        </section>
+
+        <section class="form-step" data-step="4" aria-labelledby="st-4">
+          <div class="step-head"><p>{StepHead(5)}</p><span class="price-pill">{pill}</span></div>
+          <h2 id="st-4">How buyers reach you</h2>
+          <p class="help-lead">Shown on your listing. Buyers contact you directly.</p>
+          <label for="l-stype">You are</label>
+          <select id="l-stype" name="sellerType">
+            <option value="owner">The owner</option>
+            <option value="agent">A land agent for the owner</option>
+          </select>
+          <label for="l-sname">Name</label>
+          <input id="l-sname" name="sellerName" type="text" required data-new-only minlength="2" maxlength="100" autocomplete="name" />
+          <div class="field-row">
+            <div><label for="l-sphone">Phone</label><input id="l-sphone" name="sellerPhone" type="tel" maxlength="30" autocomplete="tel" /></div>
+            <div><label for="l-semail">Email</label><input id="l-semail" name="sellerEmail" type="email" maxlength="200" autocomplete="email" /></div>
+          </div>
+          <p class="help">Give a phone number, an email, or both.</p>
+
+          <fieldset class="form-private">
+            <legend>About you <span class="hint">(private, never published)</span></legend>
+            <div class="field-row">
+              <div><label for="l-name">Your name</label><input id="l-name" name="submitterName" type="text" required maxlength="100" autocomplete="name" /></div>
+              <div><label for="l-email">Your email, for the receipt</label><input id="l-email" name="submitterEmail" type="email" required maxlength="200" autocomplete="email" /></div>
+            </div>
+            <label class="check"><input type="checkbox" name="consent" value="yes" required />I own this land or am authorized to sell it, the details are accurate to my knowledge, and they may be published.</label>
+          </fieldset>
+
+          <div class="js-only">
+            <h3>Review</h3>
+            <dl class="review" id="review"></dl>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="l-hp">Leave this empty</label>
+            <input id="l-hp" name="fax_number" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <div class="cf-turnstile" data-sitekey=""></div>
+          <div class="btns"><button class="btn btn-primary btn-lg btn-block" type="submit" data-submit>Publish My Land Listing — {classifiedPrice}</button></div>
+          <p class="help">Next you pay {classifiedPrice}. We review your listing before it goes live, then it runs for {c.days} days. No commission, no guarantee of a sale. By publishing you agree to the <a href="/terms/">Terms</a> and <a href="/listing-disclaimer/">Listing Disclaimer</a>.</p>
+        </section>
+
+        <div class="step-nav js-only-flex">
+          <button class="btn btn-secondary" type="button" data-back>Back</button>
+          <button class="btn btn-primary" type="button" data-next>Continue</button>
+        </div>
+        <p class="saved-note js-only" id="saved-note" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Questions from sellers">
+    <div class="wrap"><Faqs faqs={sellFaqs} heading="Questions from sellers" /></div>
+  </section>
+  <script>import '../../scripts/sell-form';</script>
 </Base>

@@ -1,42 +1,57 @@
 ---
+// "For land agents": the free Basic profile vs the paid Verified profile, and what License Verified means.
 import Base from '../../layouts/Base.astro';
 import Faqs from '../../components/Faqs.astro';
+import Icon from '../../components/Icon.astro';
 import { site } from '../../../site.config';
-import { basicBullets, howToSteps, payLabel, payLink, plansFaqs, plansIntro, price, verifiedBullets } from '../../lib/copy';
+import { basicBullets, howToSteps, licenseBadge, payLabel, payLink, plansFaqs, plansIntro, price, verifiedMeaning } from '../../lib/copy';
+import { verifiedBullets } from '../../lib/copy';
 import { faqPage } from '../../lib/jsonld';
-
-const e = site.entity;
 ---
 <Base
-  title={`List your ${e.one}: Basic or Verified | ${site.name}`}
-  description={`Every ${e.one} can have a free Basic listing. Verified (${price}) adds a ${site.credential.name} check, owner confirmation and a place above Basic listings.`}
+  title={`For Land Agents: Free Profile or License Verified (${price}) | ${site.name}`}
+  description={`Land agents and brokers can create a free Basic profile. Verified (${price}) adds a ${site.credential.name} check, the ${licenseBadge} badge and a place above Basic profiles.`}
   path="/listing-plans/"
-  crumbs={[{ name: 'Home', url: '/' }, { name: 'Listing plans', url: '/listing-plans/' }]}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land agents', url: `/${site.hub}/` }, { name: 'Agent profiles', url: '/listing-plans/' }]}
   jsonld={faqPage(plansFaqs)}
 >
-  <h1>List your {e.one}: Basic or Verified</h1>
-  <p class="lead">{plansIntro}</p>
-
-  <div class="plans">
-    <section class="plan" aria-labelledby="plan-basic">
-      <h2 id="plan-basic">Basic</h2>
-      <p class="price">Free</p>
-      <ul>{basicBullets.map((b) => <li>{b}</li>)}</ul>
+  <div class="wrap">
+    <section class="section-sm">
+      <p class="eyebrow">For land agents and brokers</p>
+      <h1>Be found by people buying and selling rural land</h1>
+      <p class="lead">{plansIntro}</p>
     </section>
-    <section class="plan is-verified" aria-labelledby="plan-verified">
-      <h2 id="plan-verified">Verified</h2>
-      <p class="price">{price}</p>
-      <ul>{verifiedBullets.map((b) => <li>{b}</li>)}</ul>
+
+    <div class="plans section-sm">
+      <section class="plan" aria-labelledby="plan-basic">
+        <h2 id="plan-basic">Basic</h2>
+        <p class="amount">Free</p>
+        <ul class="checks">{basicBullets.map((b) => <li><Icon name="check" />{b}</li>)}</ul>
+        <a class="btn btn-secondary" href="/add-your-business/">Create a free profile</a>
+      </section>
+      <section class="plan is-featured" aria-labelledby="plan-verified">
+        <h2 id="plan-verified">Verified <span class="badge-verified"><Icon name="shield" />{licenseBadge}</span></h2>
+        <p class="amount">{price}</p>
+        <ul class="checks">{verifiedBullets.map((b) => <li><Icon name="check" />{b}</li>)}</ul>
+        <a class="btn btn-primary" href="/add-your-business/?tier=verified">Get License Verified</a>
+      </section>
+    </div>
+
+    <section class="section-sm verify-box" id="license-verified" aria-labelledby="lv">
+      <h2 id="lv"><Icon name="shield" />What “{licenseBadge}” means</h2>
+      <p>{verifiedMeaning}</p>
+      <p>Each Verified profile shows which states we checked and the date of the check. We check again at every renewal.</p>
     </section>
+
+    <section class="section-sm" aria-labelledby="how">
+      <h2 id="how">How to get License Verified</h2>
+      <ol class="steps">{howToSteps.map((s) => <li><span>{s}</span></li>)}</ol>
+      <div class="btns">
+        <a class="btn btn-primary" href="/add-your-business/?tier=verified">Create your profile</a>
+        <a class="btn btn-secondary" href={payLink}>{payLabel}</a>
+      </div>
+    </section>
+
+    <Faqs faqs={plansFaqs} />
   </div>
-
-  <h2>How to get a Verified listing</h2>
-  <ol>{howToSteps.map((s) => <li>{s}</li>)}</ol>
-
-  <div class="btns">
-    <a class="btn btn-primary" href="/add-your-business/?tier=verified">Send your {e.one}’s details</a>
-    <a class="btn btn-secondary" href={payLink}>{payLabel}</a>
-  </div>
-
-  <Faqs faqs={plansFaqs} />
 </Base>

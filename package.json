@@ -7,7 +7,7 @@
     "build": "astro build",
     "build:demo": "PUBLIC_INCLUDE_DEMO=1 astro build",
     "preview": "npm run build:demo && wrangler dev",
-    "check": "astro check && node scripts/check-placeholders.mjs",
+    "check": "astro check && tsc -p tsconfig.worker.json && node scripts/check-placeholders.mjs",
     "test": "vitest run",
     "check:wording": "node scripts/check-wording.mjs",
     "lighthouse": "node scripts/lighthouse.mjs",
@@ -19,11 +19,13 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.5",
+    "maplibre-gl": "^6.11.2",
     "zod": "^4.6.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@cloudflare/workers-types": "^5.20260928.1",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
     "lighthouse": "^13.5.0",
     "typescript": "^6.0.3",
     "vitest": "^5.0.2",

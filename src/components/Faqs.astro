@@ -1,11 +1,14 @@
 ---
+import Icon from './Icon.astro';
 import type { Faq } from '../lib/types';
-interface Props { faqs: Faq[]; heading?: string }
-const { faqs, heading = 'Questions' } = Astro.props;
+interface Props { faqs: Faq[]; heading?: string; id?: string }
+const { faqs, heading = 'Questions', id = 'faqs' } = Astro.props;
 ---
 {faqs.length > 0 && (
-  <section aria-labelledby="faqs">
-    <h2 id="faqs">{heading}</h2>
-    {faqs.map((f) => (<><h3>{f.q}</h3><p>{f.a}</p></>))}
+  <section aria-labelledby={id}>
+    <h2 id={id}>{heading}</h2>
+    <div class="faq">
+      {faqs.map((f) => (<details><summary>{f.q}<Icon name="down" /></summary><p>{f.a}</p></details>))}
+    </div>
   </section>
 )}

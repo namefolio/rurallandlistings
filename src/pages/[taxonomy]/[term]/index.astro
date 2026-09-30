@@ -1,6 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import ListingList from '../../../components/ListingList.astro';
+import AgentList from '../../../components/AgentList.astro';
 import { site } from '../../../../site.config';
 import { termPages, type TermPage } from '../../../lib/data';
 import { itemList } from '../../../lib/jsonld';
@@ -14,10 +14,13 @@ const { page } = Astro.props as { page: TermPage };
   title={`${page.title} ${site.countryPhrase} | ${site.name}`}
   description={page.description}
   path={page.url}
-  crumbs={[{ name: 'Home', url: '/' }, { name: page.title, url: page.url }]}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land agents', url: `/${site.hub}/` }, { name: page.title, url: page.url }]}
   jsonld={[itemList(page.title, page.listings)]}
 >
-  <h1>{page.title}</h1>
-  <p class="lead">{page.description}</p>
-  <ListingList listings={page.listings} heading={`${page.listings.length} ${site.entity.many}`} showCity />
+  <div class="wrap">
+    <h1>{page.title}</h1>
+    <p class="lead">{page.description}</p>
+    <h2>{page.listings.length} {page.listings.length === 1 ? 'land agent' : 'land agents'}</h2>
+    <AgentList listings={page.listings} />
+  </div>
 </Base>

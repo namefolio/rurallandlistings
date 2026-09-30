@@ -1,0 +1,6 @@
+{
+  // The Worker (src/worker.ts) runs on Cloudflare, not in a browser: checked with Workers types and no DOM.
+  "extends": "astro/tsconfigs/strict",
+  "include": ["src/worker.ts", "src/env.d.ts"],
+  "compilerOptions": { "types": ["@cloudflare/workers-types"], "lib": ["ES2023"], "noEmit": true }
+}

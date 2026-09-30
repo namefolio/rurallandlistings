@@ -1,0 +1,19 @@
+---
+// A responsive uploaded photo (WebP/JPEG sizes made by the uploader). Lazy unless `eager`.
+import { photoHeight, photoSrcset, photoUrl } from '../lib/photos';
+import type { Photo } from '../lib/types';
+interface Props { photo: Photo; sizes: string; eager?: boolean; class?: string; alt?: string }
+const { photo, sizes, eager = false, class: cls, alt } = Astro.props;
+---
+<img
+  class={cls}
+  src={photoUrl(photo.id, 960)}
+  srcset={photoSrcset(photo)}
+  sizes={sizes}
+  width={960}
+  height={photoHeight(photo, 960)}
+  alt={alt ?? photo.alt}
+  loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : undefined}
+  decoding="async"
+/>

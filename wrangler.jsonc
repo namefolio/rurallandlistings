@@ -10,15 +10,46 @@
     "binding": "ASSETS",
     "html_handling": "force-trailing-slash",
     "not_found_handling": "404-page",
-    // The Worker runs only for the two forms and their pay pages; everything else is static.
-    "run_worker_first": ["/add-your-business/", "/add-your-business/thanks-verified/", "/sell-your-land/", "/sell-your-land/thanks/"]
+    // The Worker runs only for the forms, their pay pages, the API and photos; everything else is static.
+    "run_worker_first": ["/add-your-business/", "/add-your-business/thanks-verified/", "/sell-your-land/", "/sell-your-land/thanks/", "/api/*", "/photos/*"]
   },
-  // Email Routing must be enabled on the domain and the destination verified.
-  "send_email": [{ "name": "SUBMISSIONS", "destination_address": "hello@namefolio.co" }],
+  // Submissions to the site owner. Email Routing must be enabled on the domain and the destination verified.
+  // ALERTS: Cloudflare Email Service (Email Sending) for saved-search alerts to any address. The sender domain
+  // must be onboarded under Compute > Email Service > Email Sending (Workers Paid plan). Until then alerts fail
+  // gracefully and searches are still saved in the browser.
+  "send_email": [
+    { "name": "SUBMISSIONS", "destination_address": "hello@namefolio.co" },
+    { "name": "ALERTS" }
+  ],
+  // Uploaded listing photos (created 2026-09-29).
+  "r2_buckets": [{ "binding": "PHOTOS", "bucket_name": "rurallandlistings-production-media" }],
+  // Saved searches for email alerts (created 2026-09-29; the Worker creates its table on first use).
+  "d1_databases": [{ "binding": "DB", "database_name": "rurallandlistings-production", "database_id": "cf10421f-1a3e-4784-9238-540f04dbaa65", "migrations_dir": "migrations" }],
+  // Saved-search alerts run once a day, after the 06:17 UTC rebuild has published new listings.
+  "triggers": { "crons": ["0 14 * * *"] },
   "vars": {
     "SUBMISSIONS_TO": "hello@namefolio.co",
     "FORM_FROM": "submissions@rurallandlistings.com",
+    "ALERTS_FROM": "alerts@rurallandlistings.com",
     "TURNSTILE_SITE_KEY": ""
+  },
+  // Branch previews (Workers Builds runs `wrangler preview` for pull requests). Previews use their own D1 database and
+  // R2 bucket (created 2026-09-30) so test uploads and saved searches never touch production. Alert emails from a
+  // preview can only go to the site owner's inbox. Cron triggers do not run in previews.
+  "previews": {
+    "vars": {
+      "SUBMISSIONS_TO": "hello@namefolio.co",
+      "FORM_FROM": "submissions@rurallandlistings.com",
+      "ALERTS_FROM": "alerts@rurallandlistings.com",
+      "TURNSTILE_SITE_KEY": ""
+    },
+    "d1_databases": [{ "binding": "DB", "database_id": "39ee7521-6be7-4335-a474-db775582581e" }],
+    "r2_buckets": [{ "binding": "PHOTOS", "bucket_name": "rurallandlistings-preview-media" }],
+    "send_email": [
+      { "name": "SUBMISSIONS", "destination_address": "hello@namefolio.co" },
+      { "name": "ALERTS", "destination_address": "hello@namefolio.co" }
+    ]
   }
-  // Secret: TURNSTILE_SECRET (wrangler secret put TURNSTILE_SECRET). Local dev uses .dev.vars with test keys.
+  // Secret: TURNSTILE_SECRET (wrangler secret put TURNSTILE_SECRET). It also signs photo upload sessions unless you
+  // set a separate UPLOAD_SECRET. Local dev uses .dev.vars with test keys.
 }

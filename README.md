@@ -1,6 +1,6 @@
 # RuralLandListings.com
 
-Rural land for sale (paid classifieds: $49 for 30 days) plus a directory of US land agents (free Basic, paid Verified). Astro (static output, zero client JS) served by Cloudflare Workers static assets; one tiny Worker handles the two forms. Listings are JSON files, so an AI agent can maintain them: see [UPDATING.md](UPDATING.md). Research, design and open decisions: [docs/BRIEF.md](docs/BRIEF.md).
+Rural land for sale (paid classifieds: $49 for 30 days) plus a directory of US land agents (free Basic, paid Verified). Astro (static output, small page scripts only where needed) served by Cloudflare Workers static assets. The Worker handles the two forms, photo uploads (R2), photo serving, saved-search email alerts (D1 + Email Service) and a daily alert job (cron). Listings are JSON files, so an AI agent can maintain them: see [UPDATING.md](UPDATING.md). Research, design and open decisions: [docs/BRIEF.md](docs/BRIEF.md).
 
 ## Develop
 
@@ -8,7 +8,7 @@ Rural land for sale (paid classifieds: $49 for 30 days) plus a directory of US l
 npm install
 npm run dev            # includes demo listings
 npm run check          # types + content schema (warns while PLACEHOLDER values remain)
-npm test               # both form handlers, Verified expiry, land ad expiry and ordering
+npm test               # form handlers, Verified expiry, land ad expiry, search rules, uploads, saved-search alerts
 npm run build          # production build (demo listings excluded)
 npm run build:demo     # build with demo listings
 npm run check:wording  # after a build: no "verified" wording outside the Verified tier copy
@@ -30,6 +30,10 @@ One-time dashboard steps:
 3. **Turnstile:** create a widget for the domain; put the site key in `wrangler.jsonc` (`TURNSTILE_SITE_KEY`) and run `npx wrangler secret put TURNSTILE_SECRET`. Without the secret both forms fail closed.
 4. **Payment:** both products are invoiced by email by default. If you switch to Stripe Payment Links ($49 land ad, $149 Verified agent), set them in `site.config.ts` with success URLs `/sell-your-land/` and `/listing-plans/`.
 5. **AI Crawl Control:** make sure AI crawlers are allowed; optionally enable Markdown for Agents.
+6. **Photos (R2):** bucket `rurallandlistings-production-media` is bound as `PHOTOS` (already created). Nothing to do unless it was deleted. Uploads are signed with `UPLOAD_SECRET` if set, otherwise `TURNSTILE_SECRET`, so uploads need step 3.
+7. **Saved searches (D1):** database `rurallandlistings-production` is bound as `DB` (already created). The Worker creates its table itself; `migrations/` holds the same schema for `wrangler d1 migrations apply`.
+8. **Alert emails (Email Service):** the `ALERTS` binding sends to any address and needs Workers Paid plus Email Sending onboarding for `rurallandlistings.com` (Compute & AI > Email Service > Email Sending > onboard domain, which adds SPF/DKIM records). Until then "Save this search" still works on the visitor's device and the email option says alerts are not on yet.
+9. **Hero photo:** drop a landscape JPG (at least 2400 px wide, one you have rights to) into `src/assets/hero/`; the home page uses it automatically. Without one it shows the drawn contour design.
 
 ## Start the next domain from this repo
 

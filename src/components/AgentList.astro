@@ -1,0 +1,8 @@
+---
+import AgentCard from './AgentCard.astro';
+import type { Listing } from '../lib/types';
+interface Props { listings: Listing[] }
+const { listings } = Astro.props;
+---
+<ul class="agent-grid">{listings.map((l) => <AgentCard listing={l} />)}</ul>
+<p class="small muted after-grid">License Verified profiles are paid and shown first; the badge means a license check, not a rating. <a href="/listing-plans/">How profiles work</a></p>

@@ -1,12 +1,9 @@
 ---
 import LandCard from './LandCard.astro';
-import { adNotice } from '../lib/copy';
 import type { Land } from '../lib/types';
-interface Props { listings: Land[]; heading: string }
-const { listings, heading } = Astro.props;
+interface Props { listings: Land[]; eagerFirst?: number; class?: string }
+const { listings, eagerFirst = 0, class: cls } = Astro.props;
 ---
-<h2>{heading}</h2>
-<p class="disclosure">{adNotice} Newest first. <a href="/sell-your-land/">How land listings work</a></p>
-<ul class="grid">
-  {listings.map((l) => <LandCard land={l} />)}
+<ul class:list={['land-grid', cls]}>
+  {listings.map((l, i) => <LandCard land={l} eager={i < eagerFirst} />)}
 </ul>

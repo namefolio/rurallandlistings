@@ -1,22 +1,177 @@
 ---
+// /land-for-sale/: the search page. Every live listing is rendered as a card (so the page works and is
+// crawlable without JavaScript); src/scripts/search.ts filters, sorts, pages and maps them in the browser.
 import Base from '../../layouts/Base.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import Icon from '../../components/Icon.astro';
+import LandList from '../../components/LandList.astro';
+import SaveSearch from '../../components/SaveSearch.astro';
 import { site } from '../../../site.config';
-import { loadLand } from '../../lib/data';
-import { adNotice, classifiedTerm } from '../../lib/copy';
+import { loadLand, searchItems, searchPlaces } from '../../lib/data';
+import { landItemList } from '../../lib/jsonld';
+import { classifiedPrice } from '../../lib/copy';
+import { SORTS } from '../../lib/search';
 
 const c = site.classifieds;
 const { regions, land } = await loadLand();
+const items = await searchItems();
+const places = await searchPlaces();
 const url = `/${c.hub}/`;
+const states = Object.entries(site.regions).filter(([, r]) => r.code).sort(([, a], [, b]) => a.name.localeCompare(b.name));
+const counties = regions.flatMap((r) => r.counties.map((k) => ({ state: r.slug, slug: k.countySlug, name: k.name })));
+const labels = {
+  states: Object.fromEntries(states.map(([slug, r]) => [slug, r.name])),
+  counties: Object.fromEntries(counties.map((k) => [k.slug, k.name])),
+  types: c.landTypes,
+  features: c.featureFilters,
+};
+const data = { items, labels, mapStyle: site.mapStyle, pageSize: 24 };
+const n = land.length;
 ---
-<Base title={c.titles.hub} description={c.titles.hubDescription(land.length)} path={url} noindex={land.length < 3} crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url }]}>
-  <h1>Rural land for sale by {site.regionNoun}</h1>
-  <p class="lead">{land.length} {land.length === 1 ? c.entity.one : c.entity.many} from owners and agents, grouped by {site.regionNoun} and {c.placeNoun}.</p>
-  <p class="disclosure">{adNotice}</p>
-  {regions.length === 0 && <p>No land is listed right now. <a href="/sell-your-land/">Sell your land here for {classifiedTerm}</a>.</p>}
-  {regions.map((r) => (
-    <section>
-      <h2><a href={r.url}>Land for sale in {r.name}</a></h2>
-      <ul class="inline-list">{r.counties.map((k) => <li><a href={k.url}>{k.name} ({k.listings.length})</a></li>)}</ul>
-    </section>
-  ))}
+<Base
+  title="Land for Sale: Search Farms, Ranches, Hunting Land & Acreage | RuralLandListings"
+  description={`Search ${n > 0 ? `${n} ` : ''}rural land listings by state, county, acreage, price and land type. Farms, ranches, timberland, hunting land and waterfront, listed by owners and agents.`}
+  path={url}
+  noindex={n < 3}
+  crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url }]}
+  jsonld={n ? [landItemList('Land for sale', land)] : []}
+  bodyClass="page-search"
+>
+  <div class="wrap">
+    <div class="search-head">
+      <div>
+        <h1>Land for sale</h1>
+        <p class="muted" id="search-desc">Farms, ranches, timberland, hunting and recreational land from owners and land professionals.</p>
+      </div>
+      <button class="btn btn-secondary js-only-inline" type="button" data-save-search><Icon name="bookmark" />Save this search</button>
+    </div>
+
+    <div class="search-layout">
+      <form class="filters" id="filters" method="get" action={url} aria-labelledby="filters-h">
+        <div class="filters-head">
+          <h2 id="filters-h">Filters</h2>
+          <button class="btn btn-ghost btn-sm" type="button" data-clear>Clear all</button>
+          <button class="btn btn-ghost btn-sm filters-close" type="button" data-close-filters aria-label="Close filters"><Icon name="close" /></button>
+        </div>
+
+        <label for="f-loc">State, county or town</label>
+        <input id="f-loc" name="loc" type="search" list="f-places" autocomplete="off" maxlength="80" placeholder="e.g. Pike County, PA" />
+        <datalist id="f-places">{places.map((p) => <option value={p} />)}</datalist>
+
+        <label for="f-state">State</label>
+        <select id="f-state" name="state">
+          <option value="">Any state</option>
+          {states.map(([slug, r]) => <option value={slug}>{r.name}</option>)}
+        </select>
+
+        <label for="f-county">County</label>
+        <select id="f-county" name="county">
+          <option value="">Any county</option>
+          {counties.map((k) => <option value={k.slug} data-state={k.state}>{k.name}</option>)}
+        </select>
+
+        <label for="f-town">City or nearest town</label>
+        <input id="f-town" name="town" type="text" maxlength="60" autocomplete="off" />
+
+        <label for="f-type">Property type</label>
+        <select id="f-type" name="type">
+          <option value="">Any type</option>
+          {Object.entries(c.landTypes).map(([k, v]) => <option value={k}>{v}</option>)}
+        </select>
+
+        <fieldset>
+          <legend>Acreage</legend>
+          <div class="pair">
+            <div><label for="f-mina">Min acres</label><input id="f-mina" name="minAcres" type="number" min="0" step="any" inputmode="decimal" /></div>
+            <div><label for="f-maxa">Max acres</label><input id="f-maxa" name="maxAcres" type="number" min="0" step="any" inputmode="decimal" /></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Price</legend>
+          <div class="pair">
+            <div><label for="f-minp">Min price ($)</label><input id="f-minp" name="minPrice" type="number" min="0" step="1000" inputmode="numeric" /></div>
+            <div><label for="f-maxp">Max price ($)</label><input id="f-maxp" name="maxPrice" type="number" min="0" step="1000" inputmode="numeric" /></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Land and features</legend>
+          <div class="checks-2">
+            {c.featureFilters.map((f) => <label class="check"><input type="checkbox" name="f" value={f.key} />{f.label}</label>)}
+          </div>
+        </fieldset>
+
+        <noscript><div class="btns"><button class="btn btn-primary btn-block" type="submit">Show results</button></div></noscript>
+        <div class="filters-actions">
+          <button class="btn btn-secondary" type="button" data-clear>Clear</button>
+          <button class="btn btn-primary" type="button" data-close-filters data-show-count>Show results</button>
+        </div>
+      </form>
+
+      <div class="results" id="results-panel">
+        <div class="results-bar">
+          <p class="results-count" id="count" aria-live="polite">{n === 1 ? '1 property found' : `${n} properties found`}</p>
+          <div class="results-tools">
+            <label class="sr-only" for="f-sort">Sort by</label>
+            <select id="f-sort" name="sort" form="filters">
+              {Object.entries(SORTS).map(([k, v]) => <option value={k}>{v}</option>)}
+            </select>
+            <div class="seg-toggle js-only-inline" role="group" aria-label="View">
+              <button type="button" data-view="grid" aria-pressed="true"><Icon name="grid" /><span class="sr-only">Grid view</span></button>
+              <button type="button" data-view="list" aria-pressed="false"><Icon name="list" /><span class="sr-only">List view</span></button>
+              <button type="button" data-view="map" aria-pressed="false"><Icon name="map" />Map</button>
+            </div>
+          </div>
+        </div>
+        <ul class="active-filters" id="active" aria-label="Active filters"></ul>
+
+        <div class="map-wrap" id="map-wrap" hidden>
+          <div class="map" id="map" role="region" aria-label="Map of matching listings"></div>
+          <div class="map-tools"><label><input type="checkbox" id="map-bounds" /> Search as I move the map</label></div>
+          <p class="map-note">Pins show approximate locations.</p>
+          <p class="map-loading" id="map-loading">Loading map…</p>
+        </div>
+
+        {n > 0 ? (
+          <div id="results" class="view-grid compact-mobile">
+            <LandList listings={land} eagerFirst={2} />
+          </div>
+        ) : (
+          <EmptyState title="Be among the first properties listed." text="No land is listed yet. Save this search to get an email when matching land is listed, or list your own land.">
+            <button class="btn btn-primary js-only-inline" type="button" data-save-search><Icon name="bell" />Save this search</button>
+            <a class="btn btn-secondary" href="/sell-your-land/">List Your Land — {classifiedPrice}</a>
+          </EmptyState>
+        )}
+        <div id="no-results" hidden>
+          <EmptyState title="No land matches these filters yet." text="Try expanding your search or save this search to get notified when matching land is listed." icon="search">
+            <button class="btn btn-secondary" type="button" data-clear>Clear filters</button>
+            <button class="btn btn-primary" type="button" data-save-search><Icon name="bell" />Save this search</button>
+          </EmptyState>
+        </div>
+        <p class="more-wrap" id="more-wrap" hidden><button class="btn btn-secondary" type="button" id="more">Show more properties</button></p>
+      </div>
+    </div>
+
+    {regions.length > 0 && (
+      <section class="section" aria-labelledby="by-state">
+        <h2 id="by-state">Browse land for sale by state</h2>
+        {regions.map((r) => (
+          <>
+            <h3><a href={r.url}>Land for sale in {r.name}</a></h3>
+            <ul class="inline-list">{r.counties.map((k) => <li><a href={k.url}>{k.name} ({k.listings.length})</a></li>)}</ul>
+          </>
+        ))}
+      </section>
+    )}
+  </div>
+
+  <div class="mobile-bar js-only-flex" aria-label="Search tools">
+    <button type="button" data-open-filters><Icon name="filter" />Filters <span class="n" id="filter-n" hidden></span></button>
+    <button type="button" data-toggle-map><Icon name="map" /><span>Map</span></button>
+  </div>
+
+  <SaveSearch />
+  <script type="application/json" id="search-data" set:html={JSON.stringify(data).replace(/</g, '\\u003c')} />
+  <script>import '../../scripts/search';</script>
 </Base>

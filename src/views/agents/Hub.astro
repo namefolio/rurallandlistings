@@ -1,17 +1,75 @@
 ---
+// /land-agents/: the directory. All profiles are rendered (crawlable without JavaScript);
+// src/scripts/agents.ts filters them by state, county, specialty, type and Verified.
 import Base from '../../layouts/Base.astro';
+import AgentList from '../../components/AgentList.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import Icon from '../../components/Icon.astro';
 import { site } from '../../../site.config';
 import { loadAll } from '../../lib/data';
+import { itemList } from '../../lib/jsonld';
+import { licenseBadge, price } from '../../lib/copy';
 
 const { regions, listings } = await loadAll();
-const title = `${site.entity.ManyTitle} by ${site.regionNoun[0].toUpperCase()}${site.regionNoun.slice(1)} | ${site.name}`;
+const url = `/${site.hub}/`;
+const states = Object.values(site.regions).filter((r) => r.code).sort((a, b) => a.name.localeCompare(b.name));
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const counties = [...new Map(listings.flatMap((l) => l.countiesServed ?? []).map((c) => [`${c.state}:${slug(c.county)}`, c])).entries()].sort(([, a], [, b]) => a.county.localeCompare(b.county));
+const specialties = site.attributes.find((a) => a.key === 'specialties');
+const specOptions = specialties?.type === 'multi' ? specialties.options : {};
 ---
-<Base title={title} description={`Browse ${listings.length} ${site.entity.many} by ${site.regionNoun} and city.`} path={`/${site.hub}/`} noindex={listings.length < 3} crumbs={[{ name: 'Home', url: '/' }, { name: site.entity.Many, url: `/${site.hub}/` }]}>
-  <h1>{site.entity.Many} by {site.regionNoun}</h1>
-  {regions.map((r) => (
-    <section>
-      <h2><a href={r.url}>{r.name}</a></h2>
-      <ul class="inline-list">{r.cities.map((c) => <li><a href={c.url}>{c.name} ({c.listings.length})</a></li>)}</ul>
+<Base title={`Land Agents & Brokers: Farm, Ranch and Recreational Land Specialists | ${site.name}`} description={`Find land agents and brokers by state, county and specialty: farms and ranches, hunting and recreational land, timberland and land auctions. ${licenseBadge} profiles show a checked real estate license.`} path={url} noindex={listings.length < 3} crumbs={[{ name: 'Home', url: '/' }, { name: 'Land agents', url }]} jsonld={listings.length ? [itemList('Land agents', listings)] : []}>
+  <div class="wrap">
+    <div class="search-head">
+      <div>
+        <h1>Find a land agent</h1>
+        <p class="muted">Agents and brokers who specialize in rural land, by location and specialty.</p>
+      </div>
+      <a class="btn btn-secondary" href="/listing-plans/"><Icon name="user" />Create an agent profile</a>
+    </div>
+
+    <form class="filters agent-filters" id="agent-filters" aria-label="Filter land agents">
+      <div class="af-grid">
+        <div><label for="a-state">State</label><select id="a-state" name="state"><option value="">Any state</option>{states.map((s) => <option value={s.code}>{s.name}</option>)}</select></div>
+        <div><label for="a-county">County served</label><select id="a-county" name="county"><option value="">Any county</option>{counties.map(([k, c]) => <option value={k} data-state={c.state}>{c.county}, {c.state}</option>)}</select></div>
+        <div><label for="a-spec">Specialty</label><select id="a-spec" name="spec"><option value="">Any specialty</option>{Object.entries(specOptions).map(([k, v]) => <option value={k}>{v}</option>)}</select></div>
+        <div><label for="a-type">Agent type</label><select id="a-type" name="type"><option value="">Any type</option>{Object.entries(site.agentTypes).map(([k, v]) => <option value={k}>{v}</option>)}</select></div>
+      </div>
+      <label class="check"><input type="checkbox" name="verified" value="1" id="a-verified" /><span>{licenseBadge} only</span></label>
+    </form>
+
+    <p class="results-count" id="agent-count" aria-live="polite">{listings.length} {listings.length === 1 ? 'agent' : 'agents'}</p>
+    {listings.length > 0 ? (
+      <div id="agent-results"><AgentList listings={listings} /></div>
+    ) : (
+      <EmptyState title="The land agent directory is just opening." text={`Land agents can create a free profile now. Verified profiles (${price}) add the ${licenseBadge} badge.`} icon="user">
+        <a class="btn btn-primary" href="/add-your-business/">Create a free profile</a>
+        <a class="btn btn-secondary" href="/listing-plans/">Compare profiles</a>
+      </EmptyState>
+    )}
+    <div id="agent-none" hidden>
+      <EmptyState title="No agents match these filters yet." text="Try a nearby state or a broader specialty. Agents in your area can create a free profile." icon="search">
+        <button class="btn btn-secondary" type="button" data-agent-clear>Clear filters</button>
+      </EmptyState>
+    </div>
+
+    {regions.length > 0 && (
+      <section class="section" aria-labelledby="by-state">
+        <h2 id="by-state">Land agents by state</h2>
+        {regions.map((r) => (
+          <>
+            <h3><a href={r.url}>Land agents in {r.name}</a></h3>
+            <ul class="inline-list">{r.cities.map((c) => <li><a href={c.url}>{c.name} ({c.listings.length})</a></li>)}</ul>
+          </>
+        ))}
+      </section>
+    )}
+
+    <section class="section band-white panel" aria-labelledby="for-agents">
+      <h2 id="for-agents">Are you a land agent?</h2>
+      <p>Create a free Basic profile, or become a Verified Agent for {price} to show the {licenseBadge} badge and appear first.</p>
+      <div class="btns"><a class="btn btn-primary" href="/listing-plans/">See agent profiles</a></div>
     </section>
-  ))}
+  </div>
+  <script>import '../../scripts/agents';</script>
 </Base>

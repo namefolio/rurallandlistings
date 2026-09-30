@@ -1,0 +1,80 @@
+---
+// Shared layout for land index pages: state, county, national type and state-type pages.
+import Base from '../../layouts/Base.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import Faqs from '../../components/Faqs.astro';
+import Icon from '../../components/Icon.astro';
+import LandList from '../../components/LandList.astro';
+import SaveSearch from '../../components/SaveSearch.astro';
+import { site } from '../../../site.config';
+import { adNotice, classifiedPrice } from '../../lib/copy';
+import type { Faq, Land } from '../../lib/types';
+
+export interface Links { heading: string; links: { label: string; url: string; n?: number }[] }
+interface Props {
+  title: string;
+  description: string;
+  h1: string;
+  intro: string;
+  path: string;
+  crumbs: { name: string; url: string }[];
+  listings: Land[];
+  /** /land-for-sale/ query that refines this page (and names its saved search). */
+  query: string;
+  queryName: string;
+  noindex?: boolean;
+  jsonld?: object[];
+  related?: Links[];
+  faqs?: Faq[];
+}
+const { title, description, h1, intro, path, crumbs, listings, query, queryName, noindex, jsonld = [], related = [], faqs = [] } = Astro.props;
+const c = site.classifieds;
+const acres = listings.reduce((s, l) => s + l.acres, 0);
+const priced = listings.filter((l) => l.price && l.acres);
+const ppas = priced.map((l) => (l.price as number) / l.acres).sort((a, b) => a - b);
+const median = ppas.length ? Math.round(ppas[Math.floor(ppas.length / 2)]) : undefined;
+---
+<Base title={title} description={description} path={path} noindex={noindex} crumbs={crumbs} jsonld={jsonld}>
+  <div class="wrap">
+    <div class="page-head">
+      <h1>{h1}</h1>
+      {intro.split('\n\n').map((p, i) => <p class:list={{ lead: i === 0 }}>{p}</p>)}
+    </div>
+    {listings.length > 0 && (
+      <dl class="keyfacts">
+        <div><dt>Listings</dt><dd>{listings.length}</dd></div>
+        <div><dt>Total acres</dt><dd>{Math.round(acres).toLocaleString('en-US')}</dd></div>
+        <div><dt>Median $/acre</dt><dd>{median ? c.money(median) : '—'}</dd></div>
+        <div><dt>Owner financing</dt><dd>{listings.filter((l) => l.attributes.ownerFinancing === true).length}</dd></div>
+      </dl>
+    )}
+    <div class="btns">
+      <a class="btn btn-primary" href={`/${c.hub}/?${query}`}><Icon name="filter" />Refine this search</a>
+      <a class="btn btn-secondary" href={`/${c.hub}/?${query}&view=map`}><Icon name="map" />View on map</a>
+      <button class="btn btn-secondary js-only-inline" type="button" data-save-search={query} data-save-name={queryName}><Icon name="bell" />Save this search</button>
+    </div>
+
+    {listings.length > 0 ? (
+      <section aria-labelledby="listings-h">
+        <h2 id="listings-h" class="sr-only">Listings</h2>
+        <LandList listings={listings} eagerFirst={2} class="compact-mobile" />
+        <p class="small muted after-grid">{adNotice} Newest first.</p>
+      </section>
+    ) : (
+      <EmptyState title="No land matches this page yet." text="Save this search to get notified when matching land is listed.">
+        <a class="btn btn-secondary" href={`/${c.hub}/`}>Browse all land</a>
+        <a class="btn btn-primary" href="/sell-your-land/">List Your Land — {classifiedPrice}</a>
+      </EmptyState>
+    )}
+
+    {related.filter((r) => r.links.length).map((r) => (
+      <section aria-label={r.heading}>
+        <h2>{r.heading}</h2>
+        <ul class="tiles">{r.links.map((k) => <li><a href={k.url}>{k.label}{k.n !== undefined && <small>{k.n}</small>}</a></li>)}</ul>
+      </section>
+    ))}
+    <Faqs faqs={faqs} />
+    <slot />
+  </div>
+  <SaveSearch />
+</Base>

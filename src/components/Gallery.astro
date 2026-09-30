@@ -1,0 +1,35 @@
+---
+// Property photos: a swipeable track on phones, a five-photo grid on desktop, and a full-screen viewer.
+import Icon from './Icon.astro';
+import NoPhoto from './NoPhoto.astro';
+import Photo from './Photo.astro';
+import { PHOTO_KIND_LABELS } from '../lib/photos';
+import type { Photo as P } from '../lib/types';
+interface Props { photos: P[]; title: string }
+const { photos, title } = Astro.props;
+---
+{photos.length === 0 ? (
+  <div class="gallery-empty"><NoPhoto text="The seller has not added photos yet" /></div>
+) : (
+  <div class:list={['gallery', { 'has-grid': photos.length >= 5 }]} data-gallery aria-roledescription="carousel" aria-label={`Photos of ${title}`}>
+    <div class="gallery-track" tabindex="0">
+      {photos.map((p, i) => (
+        <figure aria-roledescription="slide" aria-label={`${i + 1} of ${photos.length}`} data-i={i}>
+          <Photo photo={p} sizes="(min-width: 76rem) 76rem, 100vw" eager={i === 0} />
+          <figcaption>{p.kind && p.kind !== 'other' ? `${PHOTO_KIND_LABELS[p.kind]} · ` : ''}{p.alt}</figcaption>
+        </figure>
+      ))}
+    </div>
+    {photos.length > 1 && (
+      <>
+        <button class="gallery-nav prev js-only-inline" type="button" data-prev aria-label="Previous photo"><Icon name="left" /></button>
+        <button class="gallery-nav next js-only-inline" type="button" data-next aria-label="Next photo"><Icon name="right" /></button>
+      </>
+    )}
+    <button class="gallery-count js-only-inline" type="button" data-open-lightbox><Icon name="expand" /><span data-counter>1 / {photos.length}</span><span class="sr-only">: view all photos</span></button>
+    <dialog class="lightbox" aria-label={`Photos of ${title}`}>
+      <button class="btn btn-light lightbox-close" type="button" data-close-lightbox><Icon name="close" />Close</button>
+      <div class="gallery-track" data-lightbox-track tabindex="0"></div>
+    </dialog>
+  </div>
+)}

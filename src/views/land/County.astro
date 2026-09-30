@@ -1,7 +1,5 @@
 ---
-import Base from '../../layouts/Base.astro';
-import LandList from '../../components/LandList.astro';
-import Faqs from '../../components/Faqs.astro';
+import LandIndex from './LandIndex.astro';
 import { site } from '../../../site.config';
 import { loadAll } from '../../lib/data';
 import { faqPage, landItemList } from '../../lib/jsonld';
@@ -12,24 +10,23 @@ const { region, county, intro, nearbyCounties, noindex, faqs } = Astro.props as 
 const c = site.classifieds;
 const place = `${county.name}, ${region.code}`;
 const agentRegion = (await loadAll()).regions.find((r) => r.slug === region.slug);
+const code = (k: County) => (k.regionSlug === region.slug ? region.code : site.regions[k.regionSlug]?.code);
 ---
-<Base
+<LandIndex
   title={c.titles.county(county.name, region.code)}
   description={c.titles.countyDescription(county.name, region.code, county.listings.length)}
+  h1={c.titles.countyH1(county.name, region.code)}
+  intro={intro}
   path={county.url}
   noindex={noindex}
   crumbs={[{ name: 'Home', url: '/' }, { name: 'Land for sale', url: `/${c.hub}/` }, { name: region.name, url: region.url }, { name: county.name, url: county.url }]}
   jsonld={[landItemList(`Land for sale in ${place}`, county.listings), ...faqPage(faqs)]}
->
-  <h1>{c.titles.countyH1(county.name, region.code)}</h1>
-  {intro.split('\n\n').map((p, i) => <p class:list={{ lead: i === 0 }}>{p}</p>)}
-  <LandList listings={county.listings} heading={`${county.listings.length} ${county.listings.length === 1 ? c.entity.one : c.entity.many} in ${place}`} />
-  <Faqs faqs={faqs} />
-  {nearbyCounties.length > 0 && (
-    <section aria-labelledby="nearby">
-      <h2 id="nearby">Land for sale in nearby counties</h2>
-      <ul class="inline-list">{nearbyCounties.map((k) => <li><a href={k.url}>{k.name}, {k.regionSlug === region.slug ? region.code : site.regions[k.regionSlug]?.code}</a></li>)}</ul>
-    </section>
-  )}
-  {agentRegion && <p><a href={agentRegion.url}>{site.entity.Many} in {region.name}</a></p>}
-</Base>
+  listings={county.listings}
+  query={`state=${region.slug}&county=${county.countySlug}`}
+  queryName={`Land for sale in ${place}`}
+  faqs={faqs}
+  related={[
+    { heading: 'Land for sale in nearby counties', links: nearbyCounties.map((k) => ({ label: `${k.name}, ${code(k)}`, url: k.url, n: k.listings.length })) },
+    { heading: `More in ${region.name}`, links: [{ label: `All land for sale in ${region.name}`, url: region.url, n: region.listings.length }, ...(agentRegion ? [{ label: `Land agents in ${region.name}`, url: agentRegion.url }] : [])] },
+  ]}
+/>

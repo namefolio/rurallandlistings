@@ -1,9 +1,9 @@
 ---
-import Base from '../../../layouts/Base.astro';
+import Prose from '../../../layouts/Prose.astro';
 import { site } from '../../../../site.config';
 ---
-<Base title={`Thanks, we have your changes | ${site.name}`} description="Your changes were sent." path="/sell-your-land/thanks-change/" noindex markdown={false}>
-  <h1>Thanks, we have your changes</h1>
+<Prose title={`Thanks, we have your changes | ${site.name}`} description="Your changes were sent." path="/sell-your-land/thanks-change/" h1="Thanks, we have your changes" noindex crumbs={false}>
   <p>We apply them to your land listing, usually within a couple of days. Its end date stays the same.</p>
   <p><a href="/">Back to the home page</a></p>
-</Base>
+</Prose>
+<script>try { localStorage.removeItem('rll:sell-draft'); } catch {}</script>

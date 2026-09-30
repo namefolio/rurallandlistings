@@ -10,6 +10,11 @@ export type AttributeDef =
 
 export type Tier = 'basic' | 'verified';
 
+/** A photo stored in R2. Served at `/photos/{id}/{w}` for each width in PHOTO_WIDTHS. */
+export const PHOTO_KINDS = ['aerial', 'access', 'terrain', 'feature', 'water', 'buildings', 'boundary', 'other'] as const;
+export type PhotoKind = (typeof PHOTO_KINDS)[number];
+export interface Photo { id: string; alt: string; kind?: PhotoKind; width: number; height: number }
+
 export interface ListingData {
   name: string;
   slug: string;
@@ -30,6 +35,16 @@ export interface ListingData {
   source: string;
   description?: string;
   bookingUrl?: string;
+  /** Brokerage or company the agent works under. */
+  brokerage?: string;
+  agentType?: string;
+  email?: string;
+  photo?: Photo;
+  /** States the agent holds a real estate license in (and the license number, when published). */
+  licenses?: { state: string; number?: string }[];
+  countiesServed?: { state: string; county: string }[];
+  /** The license check behind Verified: when it was done and which states were checked. */
+  licenseCheck?: { checkedOn: Date; states: string[] };
 }
 
 /** A listing plus the facts the build derives from its folder and the date. */
@@ -79,8 +94,14 @@ export interface LandData {
   seller: { type: 'owner' | 'agent'; name: string; phone?: string; email?: string; agentSlug?: string };
   /** The seller's own description of the land. */
   summary: string;
-  /** Seller's links: photos, survey, maps. */
+  /** Seller's links: survey, map, an outside album. */
   links: string[];
+  /** Uploaded photos, cover first. */
+  photos: Photo[];
+  /** A YouTube or Vimeo link from the seller. */
+  videoUrl?: string;
+  /** The seller agreed to show the exact point; otherwise maps and data show an approximate area. */
+  exactLocation?: boolean;
   attributes: Record<string, unknown>;
   postedOn: Date;
   expiresOn: Date;
@@ -97,6 +118,8 @@ export interface Land extends LandData {
 /** A land category page (e.g. "hunting land for sale"), built only with 3+ live listings. */
 export interface LandCategory {
   slug: string;
+  /** The /land-for-sale/ query that matches this category. */
+  query: string;
   title: string;
   noun: string;
   test: (l: LandData) => boolean;
