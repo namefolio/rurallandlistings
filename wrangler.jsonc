@@ -32,6 +32,23 @@
     "FORM_FROM": "submissions@rurallandlistings.com",
     "ALERTS_FROM": "alerts@rurallandlistings.com",
     "TURNSTILE_SITE_KEY": ""
+  },
+  // Branch previews (Workers Builds runs `wrangler preview` for pull requests). Previews use their own D1 database and
+  // R2 bucket (created 2026-09-30) so test uploads and saved searches never touch production. Alert emails from a
+  // preview can only go to the site owner's inbox. Cron triggers do not run in previews.
+  "previews": {
+    "vars": {
+      "SUBMISSIONS_TO": "hello@namefolio.co",
+      "FORM_FROM": "submissions@rurallandlistings.com",
+      "ALERTS_FROM": "alerts@rurallandlistings.com",
+      "TURNSTILE_SITE_KEY": ""
+    },
+    "d1_databases": [{ "binding": "DB", "database_id": "39ee7521-6be7-4335-a474-db775582581e" }],
+    "r2_buckets": [{ "binding": "PHOTOS", "bucket_name": "rurallandlistings-preview-media" }],
+    "send_email": [
+      { "name": "SUBMISSIONS", "destination_address": "hello@namefolio.co" },
+      { "name": "ALERTS", "destination_address": "hello@namefolio.co" }
+    ]
   }
   // Secret: TURNSTILE_SECRET (wrangler secret put TURNSTILE_SECRET). It also signs photo upload sessions unless you
   // set a separate UPLOAD_SECRET. Local dev uses .dev.vars with test keys.
