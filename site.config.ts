@@ -10,7 +10,7 @@ import type { AttributeDef, BestFor, Faq, LandCategory, LandData, ListingData, T
 // Defaults copied from Ben's other directory sites (for example TattooStudioGuide). Confirm or replace before launch: see docs/BRIEF.md.
 export const PLACEHOLDERS = {
   /** Email or URL for the home-page "domain for sale" banner. */
-  forSaleContact: 'https://www.domainmarket.com/',
+  forSaleContact: 'https://www.domainmarket.com/buynow/rurallandlistings.com',
   /** Inbox that receives form emails (must be a verified Email Routing destination). */
   submissionsEmail: 'hello@namefolio.co',
   /** Price shown for a Verified agent listing. The $149 is Ben's; the one-year term is our default. */
