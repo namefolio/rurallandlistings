@@ -1,0 +1,48 @@
+{
+  "name": "United Country | Bluntzer Real Estate",
+  "slug": "united-country-bluntzer-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "4250 Five Points Rd, Suite 8",
+    "city": "Corpus Christi",
+    "region": "TX",
+    "postalCode": "78410"
+  },
+  "lat": 27.8458,
+  "lng": -97.596,
+  "phone": "(361) 241-5363",
+  "website": "https://www.ucbluntzerrealestate.com",
+  "sameAs": [],
+  "summary": "Corpus Christi office helping buyers and sellers with hunting land, cattle ranches, farmland, rural acreage and coastal homes in the Coastal Bend of South Texas.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TX",
+      "county": "Nueces County"
+    },
+    {
+      "state": "TX",
+      "county": "Jim Wells County"
+    },
+    {
+      "state": "TX",
+      "county": "San Patricio County"
+    },
+    {
+      "state": "TX",
+      "county": "Aransas County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.ucbluntzerrealestate.com/aboutus.htm"
+}

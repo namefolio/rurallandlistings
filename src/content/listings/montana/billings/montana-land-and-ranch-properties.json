@@ -1,0 +1,47 @@
+{
+  "name": "Montana Land and Ranch Properties",
+  "slug": "montana-land-and-ranch-properties",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1925 Grand Ave",
+    "city": "Billings",
+    "region": "MT",
+    "postalCode": "59102"
+  },
+  "lat": 45.7813,
+  "lng": -108.5727,
+  "phone": "(406) 692-5999",
+  "website": "https://www.mtlandandranch.com/",
+  "sameAs": [],
+  "summary": "Billings brokerage focused on land, ranch and recreational property sales in south central Montana, serving first-time land buyers and families selling operations.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "MT",
+      "county": "Big Horn County"
+    },
+    {
+      "state": "MT",
+      "county": "Carbon County"
+    },
+    {
+      "state": "MT",
+      "county": "Yellowstone County"
+    },
+    {
+      "state": "MT",
+      "county": "Stillwater County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mtlandandranch.com/"
+}

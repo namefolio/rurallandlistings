@@ -1,0 +1,30 @@
+{
+  "name": "Garrett Land Company",
+  "slug": "garrett-land-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "119 Felton Drive",
+    "city": "Rockmart",
+    "region": "GA",
+    "postalCode": "30153"
+  },
+  "lat": 33.9979,
+  "lng": -85.0594,
+  "phone": "(678) 540-4300",
+  "website": "https://www.garrettlandcompany.com/",
+  "sameAs": [],
+  "summary": "Rockmart brokerage led by owner-broker Mike Garrett selling farm, timber, row crop, transitional and commercial land in northwest Georgia and nearby Alabama.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "development"
+    ],
+    "worksWithSellers": true,
+    "accreditedLandConsultant": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.garrettlandcompany.com/about/"
+}

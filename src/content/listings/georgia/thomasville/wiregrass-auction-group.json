@@ -1,0 +1,27 @@
+{
+  "name": "Wiregrass Auction Group",
+  "slug": "wiregrass-auction-group",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "13035 US Highway 319 North, Suite G",
+    "city": "Thomasville",
+    "region": "GA",
+    "postalCode": "31757"
+  },
+  "lat": 30.8536,
+  "lng": -83.8883,
+  "phone": "(229) 890-2437",
+  "website": "https://www.wiregrassauctiongroup.com/",
+  "sameAs": [],
+  "summary": "Thomasville auction company selling real estate, estates and other assets by auction for owners in south Georgia, north Florida and southeast Alabama.",
+  "attributes": {
+    "specialties": [
+      "land-auctions"
+    ],
+    "worksWithSellers": true
+  },
+  "agentType": "auctioneer",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.wiregrassauctiongroup.com/"
+}

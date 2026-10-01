@@ -1,0 +1,52 @@
+{
+  "name": "American Heartland Real Estate & Auctions",
+  "slug": "american-heartland-real-estate-and-auctions",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "504 E Hwy 54",
+    "city": "El Dorado Springs",
+    "region": "MO",
+    "postalCode": "64744"
+  },
+  "lat": 37.8652,
+  "lng": -94.0124,
+  "phone": "(417) 876-2699",
+  "website": "https://www.eldorealty.com/",
+  "sameAs": [],
+  "summary": "El Dorado Springs United Country office selling farms, hunting and timber land, ranches and country homes in west-central and southwest Missouri, along with auction services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions"
+    ]
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "MO",
+      "county": "Cedar County"
+    },
+    {
+      "state": "MO",
+      "county": "St. Clair County"
+    },
+    {
+      "state": "MO",
+      "county": "Polk County"
+    },
+    {
+      "state": "MO",
+      "county": "Vernon County"
+    },
+    {
+      "state": "MO",
+      "county": "Barton County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.eldorealty.com/index.html"
+}

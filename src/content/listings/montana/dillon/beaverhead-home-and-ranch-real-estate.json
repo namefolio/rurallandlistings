@@ -1,0 +1,29 @@
+{
+  "name": "Beaverhead Home and Ranch Real Estate",
+  "slug": "beaverhead-home-and-ranch-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "10 W Reeder Street",
+    "city": "Dillon",
+    "region": "MT",
+    "postalCode": "59725"
+  },
+  "lat": 45.2339,
+  "lng": -112.6405,
+  "phone": "(406) 683-2234",
+  "website": "https://beaverheadhomeandranch.com/",
+  "sameAs": [],
+  "summary": "Dillon brokerage representing buyers and sellers of cattle ranches, agricultural, fishing and hunting properties in the Beaverhead Valley and southwest Montana.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://beaverheadhomeandranch.com/"
+}

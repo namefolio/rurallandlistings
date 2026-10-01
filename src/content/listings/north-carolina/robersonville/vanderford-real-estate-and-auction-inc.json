@@ -1,0 +1,28 @@
+{
+  "name": "Vanderford Real Estate & Auction Inc",
+  "slug": "vanderford-real-estate-and-auction-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1441 Winslow Rd.",
+    "city": "Robersonville",
+    "region": "NC",
+    "postalCode": "27871"
+  },
+  "lat": 35.8218,
+  "lng": -77.26,
+  "phone": "(252) 795-5763",
+  "website": "https://www.vanderfordrealestateandauction.com/",
+  "sameAs": [],
+  "summary": "Locally owned Robersonville firm focused on eastern North Carolina farmland and timber sales, offering real estate brokerage, auctions and forest management services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "land-auctions"
+    ]
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.vanderfordrealestateandauction.com/"
+}

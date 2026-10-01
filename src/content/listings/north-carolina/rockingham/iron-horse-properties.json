@@ -1,0 +1,32 @@
+{
+  "name": "Iron Horse Properties",
+  "slug": "iron-horse-properties",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "174 Airport Rd",
+    "city": "Rockingham",
+    "region": "NC",
+    "postalCode": "28379"
+  },
+  "lat": 34.9336,
+  "lng": -79.7666,
+  "phone": "(910) 997-2248",
+  "website": "https://www.ironhorseproperties.net/",
+  "sameAs": [],
+  "summary": "Rockingham land brokerage serving the Sandhills and Pee Dee regions with sales of timber, hunting, farm and development tracts, plus forestry consulting, auctions and mineral rights help.",
+  "attributes": {
+    "specialties": [
+      "timberland",
+      "hunting-recreational",
+      "farms-ranches",
+      "development",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.ironhorseproperties.net/services/"
+}

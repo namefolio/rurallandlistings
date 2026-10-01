@@ -15,6 +15,8 @@ import { loadLand } from '../../lib/data';
 const { listing: l, region, city, nearby, faqs } = Astro.props as { listing: Listing; region: Region; city: City; nearby: Listing[]; faqs: Faq[] };
 const landForSale = (await loadLand()).land.filter((x) => x.seller.agentSlug === l.slug);
 const verified = l.effectiveTier === 'verified';
+// Basic profiles from public pages record the page they came from; link it so readers can check.
+const sourceUrl = /^https?:\/\//.test(l.source) ? l.source : undefined;
 const update = `/add-your-business/?listing=${l.slug}`;
 const hubUrl = `/${site.hub}/`;
 const initials = l.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
@@ -57,7 +59,7 @@ const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
         ) : (
           <section class="verify-box verify-basic" aria-labelledby="license-check">
             <h2 id="license-check">Basic profile</h2>
-            <p>This profile was provided by the agent. We have not checked their {site.credential.name}. You can look it up with the state’s real estate commission before you work with them.</p>
+            <p>This free profile uses details from the agent’s own public website or from their submission. We have not checked their {site.credential.name}. You can look it up with the state’s real estate commission before you work with them.</p>
           </section>
         )}
 
@@ -97,7 +99,7 @@ const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
           </section>
         )}
 
-        <p class="small muted">Profile last updated {fmtDate(l.lastUpdated)}. {verified ? <a href={update}>Update this profile</a> : <>Is this you? <a href={update}>Update it or get License Verified</a></>}</p>
+        <p class="small muted">Profile last updated {fmtDate(l.lastUpdated)}. {sourceUrl ? <>Source: <a href={sourceUrl} rel="nofollow">{host(sourceUrl)}</a>. </> : null}{verified ? <a href={update}>Update this profile</a> : <>Is this you? <a href={update}>Update it or get License Verified</a></>}</p>
       </div>
 
       <aside class="prop-aside" aria-label="Contact the agent">

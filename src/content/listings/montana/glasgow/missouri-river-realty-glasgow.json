@@ -1,0 +1,30 @@
+{
+  "name": "Missouri River Realty - Glasgow",
+  "slug": "missouri-river-realty-glasgow",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "111 3rd Street South",
+    "city": "Glasgow",
+    "region": "MT",
+    "postalCode": "59230"
+  },
+  "lat": 48.2034,
+  "lng": -106.6094,
+  "phone": "(406) 228-2273",
+  "website": "https://www.missouririverrealty.com/",
+  "sameAs": [],
+  "summary": "Glasgow office of a northeast Montana brokerage selling farms, ranches, recreational property and small acreage along the Highway 2 corridor from Havre to Glasgow.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "Missouri River Realty",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.missouririverrealty.com/"
+}

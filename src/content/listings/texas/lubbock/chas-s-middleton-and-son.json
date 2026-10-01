@@ -1,0 +1,30 @@
+{
+  "name": "Chas. S. Middleton and Son",
+  "slug": "chas-s-middleton-and-son",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "5016 122nd Street",
+    "city": "Lubbock",
+    "region": "TX",
+    "postalCode": "79424"
+  },
+  "lat": 33.5159,
+  "lng": -101.9344,
+  "phone": "(806) 763-5331",
+  "website": "https://www.chassmiddleton.com",
+  "sameAs": [],
+  "summary": "Lubbock-based land brokerage handling farms, ranches, hunting and recreational land, with buyer and seller services plus land appraisals and water, mineral and wind rights transactions.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.chassmiddleton.com/contact"
+}

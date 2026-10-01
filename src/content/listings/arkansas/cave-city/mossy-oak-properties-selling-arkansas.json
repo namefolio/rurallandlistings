@@ -1,0 +1,83 @@
+{
+  "name": "Mossy Oak Properties Selling Arkansas",
+  "slug": "mossy-oak-properties-selling-arkansas",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "8111 N St. Louis",
+    "city": "Cave City",
+    "region": "AR",
+    "postalCode": "72521"
+  },
+  "lat": 35.9517,
+  "lng": -91.5444,
+  "phone": "(870) 495-2123",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-selling-arkansas/",
+  "sameAs": [],
+  "summary": "Cave City office of Mossy Oak Properties listing hunting land, timberland, farms and ranches across north-central and northeast Arkansas, with 1031 exchange experience.",
+  "attributes": {
+    "specialties": [
+      "hunting-recreational",
+      "timberland",
+      "farms-ranches"
+    ]
+  },
+  "brokerage": "Mossy Oak Properties",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "AR",
+      "county": "Sharp County"
+    },
+    {
+      "state": "AR",
+      "county": "Izard County"
+    },
+    {
+      "state": "AR",
+      "county": "Baxter County"
+    },
+    {
+      "state": "AR",
+      "county": "Fulton County"
+    },
+    {
+      "state": "AR",
+      "county": "Lawrence County"
+    },
+    {
+      "state": "AR",
+      "county": "Randolph County"
+    },
+    {
+      "state": "AR",
+      "county": "Greene County"
+    },
+    {
+      "state": "AR",
+      "county": "Craighead County"
+    },
+    {
+      "state": "AR",
+      "county": "Stone County"
+    },
+    {
+      "state": "AR",
+      "county": "Independence County"
+    },
+    {
+      "state": "AR",
+      "county": "Jackson County"
+    },
+    {
+      "state": "AR",
+      "county": "Poinsett County"
+    },
+    {
+      "state": "AR",
+      "county": "Cleburne County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-selling-arkansas/"
+}

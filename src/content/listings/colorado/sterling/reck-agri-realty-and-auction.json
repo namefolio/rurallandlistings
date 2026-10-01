@@ -1,0 +1,29 @@
+{
+  "name": "Reck Agri Realty & Auction",
+  "slug": "reck-agri-realty-and-auction",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "535 E. Chestnut Street",
+    "city": "Sterling",
+    "region": "CO",
+    "postalCode": "80751"
+  },
+  "lat": 40.6306,
+  "lng": -103.2212,
+  "phone": "(970) 522-7770",
+  "website": "https://www.reckagri.com/",
+  "sameAs": [],
+  "summary": "Sterling-based agricultural real estate and auction firm selling dryland, irrigated, CRP and ranch properties by private treaty, live auction and online auction across Colorado, Nebraska and Kansas.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "auctioneer",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.reckagri.com/contact"
+}

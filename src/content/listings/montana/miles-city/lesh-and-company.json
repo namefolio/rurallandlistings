@@ -1,0 +1,34 @@
+{
+  "name": "Lesh & Company",
+  "slug": "lesh-and-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2708 Main St, Suite 2",
+    "city": "Miles City",
+    "region": "MT",
+    "postalCode": "59301"
+  },
+  "lat": 46.4075,
+  "lng": -105.8332,
+  "phone": "(406) 234-1523",
+  "website": "https://www.milescityforsale.com/",
+  "sameAs": [],
+  "summary": "Miles City brokerage handling farms, ranches and raw land along with residential and commercial property in Custer County and the wider eastern Montana region.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "MT",
+      "county": "Custer County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://milescitychamber.com/real-estate/name/lesh-company/"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Phillips Realty",
+  "slug": "phillips-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "207 West Main Street, Suite 4",
+    "city": "Lewistown",
+    "region": "MT",
+    "postalCode": "59457"
+  },
+  "lat": 47.0563,
+  "lng": -109.4203,
+  "phone": "(406) 366-0636",
+  "website": "https://phillips-realty.com/",
+  "sameAs": [],
+  "summary": "Family-run Lewistown brokerage operating since 1982 that sells cattle ranches, irrigated and dryland farms, mountain and riverfront land in central Montana.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://phillips-realty.com/"
+}

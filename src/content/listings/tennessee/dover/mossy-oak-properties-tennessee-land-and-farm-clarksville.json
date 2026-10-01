@@ -1,0 +1,30 @@
+{
+  "name": "Mossy Oak Properties Tennessee Land & Farm - Clarksville",
+  "slug": "mossy-oak-properties-tennessee-land-and-farm-clarksville",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "714 Donelson Pkwy Suite A",
+    "city": "Dover",
+    "region": "TN",
+    "postalCode": "37058"
+  },
+  "lat": 36.4942,
+  "lng": -87.8787,
+  "phone": "(615) 879-8282",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-tennessee-land-farm-clarksville/",
+  "sameAs": [],
+  "summary": "Recreational land brokerage office in Dover that markets farm, hunting, investment and rural residential property in northern Middle Tennessee, with listings in counties such as Stewart and Benton.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "Mossy Oak Properties Tennessee Land & Farm",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-tennessee-land-farm-clarksville/"
+}

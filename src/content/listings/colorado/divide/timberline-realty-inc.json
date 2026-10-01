@@ -1,0 +1,53 @@
+{
+  "name": "Timberline Realty, Inc.",
+  "slug": "timberline-realty-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "11511 US West Highway 24",
+    "city": "Divide",
+    "region": "CO",
+    "postalCode": "80814"
+  },
+  "lat": 38.9576,
+  "lng": -105.1994,
+  "phone": "(719) 687-3678",
+  "website": "https://www.timberlinerealtyinc.com/",
+  "sameAs": [],
+  "summary": "United Country office in Divide selling farms, ranches, acreage, hunting and fishing properties, cabins and mountain homes around Teller County and central Colorado.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "lots-homesites"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "CO",
+      "county": "Teller County"
+    },
+    {
+      "state": "CO",
+      "county": "El Paso County"
+    },
+    {
+      "state": "CO",
+      "county": "Pueblo County"
+    },
+    {
+      "state": "CO",
+      "county": "Park County"
+    },
+    {
+      "state": "CO",
+      "county": "Larimer County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.timberlinerealtyinc.com/index.html"
+}

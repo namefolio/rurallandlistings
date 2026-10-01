@@ -1,0 +1,38 @@
+{
+  "name": "United Country Birdsong Auction & Real Estate Group",
+  "slug": "united-country-birdsong-auction-and-real-estate-group",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1323 W Maud St.",
+    "city": "Poplar Bluff",
+    "region": "MO",
+    "postalCode": "63901"
+  },
+  "lat": 36.7662,
+  "lng": -90.4166,
+  "phone": "(573) 727-9656",
+  "website": "https://www.uclandauctions.com/",
+  "sameAs": [],
+  "summary": "Poplar Bluff United Country office, with a second location in Van Buren, selling farms, ranches, hunting tracts and timberland in southern Missouri and offering real estate auctions.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "MO",
+      "county": "Butler County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.uclandauctions.com/index.html"
+}

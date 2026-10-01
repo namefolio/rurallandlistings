@@ -1,0 +1,29 @@
+{
+  "name": "Missouri Home, Farm & Land Realty, LLC",
+  "slug": "missouri-home-farm-and-land-realty-llc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2390 S. Springfield Ave., Suite A",
+    "city": "Bolivar",
+    "region": "MO",
+    "postalCode": "65613"
+  },
+  "lat": 37.6085,
+  "lng": -93.4126,
+  "phone": "(417) 777-3300",
+  "website": "https://missourihomefarmland.com/",
+  "sameAs": [],
+  "summary": "Bolivar real estate firm helping buyers and sellers with working farms, hunting ground, bare acreage and homes across southwest Missouri.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://missourihomefarmland.com/"
+}

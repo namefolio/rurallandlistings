@@ -1,0 +1,51 @@
+{
+  "name": "United Country Land & Lifestyle Realty",
+  "slug": "united-country-land-and-lifestyle-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "12 W. Main Street",
+    "city": "Owingsville",
+    "region": "KY",
+    "postalCode": "40360"
+  },
+  "lat": 38.1532,
+  "lng": -83.7564,
+  "phone": "(606) 336-0494",
+  "website": "https://www.landandlifestylerealty.com/",
+  "sameAs": [],
+  "summary": "Owingsville office handling hunting and recreational land, cattle farms, horse properties and homesite lots in east central and northeastern Kentucky, with auction services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "lots-homesites",
+      "land-auctions"
+    ]
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "KY",
+      "county": "Bath County"
+    },
+    {
+      "state": "KY",
+      "county": "Clark County"
+    },
+    {
+      "state": "KY",
+      "county": "Rowan County"
+    },
+    {
+      "state": "KY",
+      "county": "Harrison County"
+    },
+    {
+      "state": "KY",
+      "county": "Menifee County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.landandlifestylerealty.com/"
+}

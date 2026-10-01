@@ -1,0 +1,60 @@
+{
+  "name": "United Country Lakes And Land Realty and Auction",
+  "slug": "united-country-lakes-and-land-realty-and-auction",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "112 E. Cumberland Street",
+    "city": "Albany",
+    "region": "KY",
+    "postalCode": "42602"
+  },
+  "lat": 36.6857,
+  "lng": -85.1407,
+  "phone": "(606) 387-0020",
+  "website": "https://www.countrylakesandland.com/",
+  "sameAs": [],
+  "summary": "Albany real estate and auction office selling farms, timberland, hunting and lake-area recreational property around Lake Cumberland and Dale Hollow Lake.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions"
+    ],
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "KY",
+      "county": "Clinton County"
+    },
+    {
+      "state": "KY",
+      "county": "Cumberland County"
+    },
+    {
+      "state": "KY",
+      "county": "Wayne County"
+    },
+    {
+      "state": "KY",
+      "county": "Russell County"
+    },
+    {
+      "state": "KY",
+      "county": "Monroe County"
+    },
+    {
+      "state": "KY",
+      "county": "Taylor County"
+    },
+    {
+      "state": "KY",
+      "county": "Metcalfe County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.countrylakesandland.com/index.html"
+}

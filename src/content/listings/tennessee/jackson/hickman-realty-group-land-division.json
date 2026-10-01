@@ -1,0 +1,93 @@
+{
+  "name": "Hickman Realty Group Land Division",
+  "slug": "hickman-realty-group-land-division",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "49 Murray Guard Drive",
+    "city": "Jackson",
+    "region": "TN",
+    "postalCode": "38305"
+  },
+  "lat": 35.6829,
+  "lng": -88.8281,
+  "phone": "(731) 664-1006",
+  "website": "https://www.hickmanrealty.com/land-division.php",
+  "sameAs": [],
+  "summary": "Land division of a Jackson brokerage that handles agricultural farmland, timberland, recreational and investment tracts across West Tennessee, and offers CRP consultation.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "Hickman Realty Group, Inc.",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Madison County"
+    },
+    {
+      "state": "TN",
+      "county": "Gibson County"
+    },
+    {
+      "state": "TN",
+      "county": "Crockett County"
+    },
+    {
+      "state": "TN",
+      "county": "Henderson County"
+    },
+    {
+      "state": "TN",
+      "county": "Carroll County"
+    },
+    {
+      "state": "TN",
+      "county": "Haywood County"
+    },
+    {
+      "state": "TN",
+      "county": "Decatur County"
+    },
+    {
+      "state": "TN",
+      "county": "Hardeman County"
+    },
+    {
+      "state": "TN",
+      "county": "Fayette County"
+    },
+    {
+      "state": "TN",
+      "county": "Benton County"
+    },
+    {
+      "state": "TN",
+      "county": "Chester County"
+    },
+    {
+      "state": "TN",
+      "county": "Dyer County"
+    },
+    {
+      "state": "TN",
+      "county": "Henry County"
+    },
+    {
+      "state": "TN",
+      "county": "Lake County"
+    },
+    {
+      "state": "TN",
+      "county": "Lauderdale County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.hickmanrealty.com/land-division.php"
+}

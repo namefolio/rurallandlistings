@@ -1,0 +1,29 @@
+{
+  "name": "Carolina Forestry & Realty",
+  "slug": "carolina-forestry-and-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "314 W Millbrook Road, Suite 121",
+    "city": "Raleigh",
+    "region": "NC",
+    "postalCode": "27609"
+  },
+  "lat": 35.848,
+  "lng": -78.6317,
+  "phone": "(919) 510-4663",
+  "website": "https://carolinaforestry.com/",
+  "sameAs": [],
+  "summary": "Raleigh-based forestry and land realty firm that markets timberland, farms and hunting tracts across North Carolina and neighboring states, alongside timber management and forestry consulting.",
+  "attributes": {
+    "specialties": [
+      "timberland",
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://carolinaforestry.com/"
+}

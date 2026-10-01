@@ -1,0 +1,30 @@
+{
+  "name": "NC Land Company",
+  "slug": "nc-land-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "101 N Heritage Street",
+    "city": "Kinston",
+    "region": "NC",
+    "postalCode": "28501"
+  },
+  "lat": 35.2783,
+  "lng": -77.586,
+  "phone": "(252) 559-9272",
+  "website": "https://www.nclandcompany.com/",
+  "sameAs": [],
+  "summary": "Kinston land brokerage covering eastern North Carolina, handling farmland, hunting tracts, hog and poultry operations, timber sales and conservation easement properties for buyers and sellers.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.nclandcompany.com/"
+}

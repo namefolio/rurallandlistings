@@ -1,0 +1,27 @@
+{
+  "name": "Howell Real Estate",
+  "slug": "howell-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1416 Key Street",
+    "city": "Guymon",
+    "region": "OK",
+    "postalCode": "73942"
+  },
+  "lat": 36.6961,
+  "lng": -101.4778,
+  "phone": "(580) 468-1000",
+  "website": "https://www.howellrealestateok.com/",
+  "sameAs": [],
+  "summary": "Guymon firm operating since 1980 that provides farm and ranch sales, land auctions and agricultural property appraisals across the Oklahoma Panhandle and neighboring Kansas and Texas.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "land-auctions"
+    ]
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.howellrealestateok.com/"
+}

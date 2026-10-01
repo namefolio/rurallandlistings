@@ -1,0 +1,27 @@
+{
+  "name": "Kurtz Auction & Realty Co.",
+  "slug": "kurtz-auction-and-realty-co",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "305 Frederica Street",
+    "city": "Owensboro",
+    "region": "KY",
+    "postalCode": "42301"
+  },
+  "lat": 37.7513,
+  "lng": -87.1554,
+  "phone": "(270) 926-8553",
+  "website": "https://www.kurtzauction.com/",
+  "sameAs": [],
+  "summary": "Auction and realty company with an Owensboro office that runs land and farm auctions along with other real estate sales in western Kentucky and southern Indiana.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "land-auctions"
+    ]
+  },
+  "agentType": "auctioneer",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.kurtzauction.com/"
+}

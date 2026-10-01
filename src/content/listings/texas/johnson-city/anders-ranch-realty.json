@@ -1,0 +1,29 @@
+{
+  "name": "Anders Ranch Realty",
+  "slug": "anders-ranch-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "302 E. Main St.",
+    "city": "Johnson City",
+    "region": "TX",
+    "postalCode": "78636"
+  },
+  "lat": 30.2948,
+  "lng": -98.3691,
+  "phone": "(830) 481-4444",
+  "website": "https://andersranchrealty.com",
+  "sameAs": [],
+  "summary": "Texas Hill Country brokerage with offices in Johnson City, Fredericksburg and Blanco, offering buyer and seller representation for ranch, river and recreational properties, plus value assessments and 1031 exchanges.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://andersranchrealty.com/"
+}

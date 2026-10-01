@@ -1,0 +1,48 @@
+{
+  "name": "Winstead Real Estate & Land Co.",
+  "slug": "winstead-real-estate-and-land-co",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "501 E. Main St.",
+    "city": "Martin",
+    "region": "TN",
+    "postalCode": "38237"
+  },
+  "lat": 36.3425,
+  "lng": -88.8554,
+  "phone": "(731) 504-8969",
+  "website": "https://www.winsteadrealestateandland.com/",
+  "sameAs": [],
+  "summary": "Martin-based land and real estate company handling farms, hunting tracts and recreational property in Northwest Tennessee, plus a rental division.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Obion County"
+    },
+    {
+      "state": "TN",
+      "county": "Lauderdale County"
+    },
+    {
+      "state": "TN",
+      "county": "Weakley County"
+    },
+    {
+      "state": "TN",
+      "county": "Gibson County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.winsteadrealestateandland.com/contactus.htm"
+}

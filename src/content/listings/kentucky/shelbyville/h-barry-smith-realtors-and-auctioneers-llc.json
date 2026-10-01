@@ -1,0 +1,55 @@
+{
+  "name": "H. Barry Smith Realtors and Auctioneers, LLC",
+  "slug": "h-barry-smith-realtors-and-auctioneers-llc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "223 Midland Park Drive",
+    "city": "Shelbyville",
+    "region": "KY",
+    "postalCode": "40065"
+  },
+  "lat": 38.2162,
+  "lng": -85.2243,
+  "phone": "(888) 631-2746",
+  "website": "https://www.hbarrysmith.com/",
+  "sameAs": [],
+  "summary": "Shelbyville realty and auction firm selling land, farms and estates by auction and private treaty in Shelby County and nearby north central Kentucky counties.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "auctioneer",
+  "countiesServed": [
+    {
+      "state": "KY",
+      "county": "Shelby County"
+    },
+    {
+      "state": "KY",
+      "county": "Jefferson County"
+    },
+    {
+      "state": "KY",
+      "county": "Henry County"
+    },
+    {
+      "state": "KY",
+      "county": "Oldham County"
+    },
+    {
+      "state": "KY",
+      "county": "Spencer County"
+    },
+    {
+      "state": "KY",
+      "county": "Franklin County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.hbarrysmith.com/"
+}

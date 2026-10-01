@@ -1,0 +1,29 @@
+{
+  "name": "Ranch & Resort Realty",
+  "slug": "ranch-and-resort-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2507 Riverside Drive Unit 102",
+    "city": "Steamboat Springs",
+    "region": "CO",
+    "postalCode": "80487"
+  },
+  "lat": 40.6327,
+  "lng": -106.9318,
+  "phone": "(970) 734-7885",
+  "website": "https://ranchresortrealty.com/",
+  "sameAs": [],
+  "summary": "Steamboat Springs brokerage focused on recreational, hunting, fishing, cattle and guest ranches plus land and resort property in Routt County and northwest Colorado, with real estate consulting services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://ranchresortrealty.com/"
+}

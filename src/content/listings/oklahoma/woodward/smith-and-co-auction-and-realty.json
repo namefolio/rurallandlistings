@@ -1,0 +1,27 @@
+{
+  "name": "Smith & Co Auction & Realty",
+  "slug": "smith-and-co-auction-and-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1102 Oklahoma Ave",
+    "city": "Woodward",
+    "region": "OK",
+    "postalCode": "73801"
+  },
+  "lat": 36.4268,
+  "lng": -99.402,
+  "phone": "(580) 254-3975",
+  "website": "https://www.smithcoauctions.com/",
+  "sameAs": [],
+  "summary": "Woodward auction and real estate company, established in 1987, that sells land, ranches and farm equipment through live, simulcast and online auctions across northwest Oklahoma and Kansas.",
+  "attributes": {
+    "specialties": [
+      "land-auctions",
+      "farms-ranches"
+    ]
+  },
+  "agentType": "auctioneer",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.smithcoauctions.com/"
+}

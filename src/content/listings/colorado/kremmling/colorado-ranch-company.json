@@ -1,0 +1,29 @@
+{
+  "name": "Colorado Ranch Company",
+  "slug": "colorado-ranch-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "217 Central Ave.",
+    "city": "Kremmling",
+    "region": "CO",
+    "postalCode": "80459"
+  },
+  "lat": 40.0632,
+  "lng": -106.3955,
+  "phone": "(970) 724-5900",
+  "website": "https://www.coloradoranchcompany.com/",
+  "sameAs": [],
+  "summary": "Kremmling-based ranch brokerage that markets working, recreational and shared-amenity ranches in Colorado and Wyoming and also offers ranch consulting.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.coloradoranchcompany.com/contact/"
+}

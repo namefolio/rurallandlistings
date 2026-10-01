@@ -1,0 +1,79 @@
+{
+  "name": "United Country Heartland Realty & Auction",
+  "slug": "united-country-heartland-realty-and-auction",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "905 Lovers Lane Suite 300",
+    "city": "Bowling Green",
+    "region": "KY",
+    "postalCode": "42103"
+  },
+  "lat": 36.9663,
+  "lng": -86.3933,
+  "phone": "(270) 783-3000",
+  "website": "https://www.ucheartlandauctions.com/",
+  "sameAs": [],
+  "summary": "Bowling Green office of United Country selling farms, timberland, hunting and development land in South Central Kentucky through private sales and auctions.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions",
+      "development"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true,
+    "accreditedLandConsultant": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "KY",
+      "county": "Warren County"
+    },
+    {
+      "state": "KY",
+      "county": "Allen County"
+    },
+    {
+      "state": "KY",
+      "county": "Barren County"
+    },
+    {
+      "state": "KY",
+      "county": "Hart County"
+    },
+    {
+      "state": "KY",
+      "county": "Edmonson County"
+    },
+    {
+      "state": "KY",
+      "county": "Simpson County"
+    },
+    {
+      "state": "KY",
+      "county": "Butler County"
+    },
+    {
+      "state": "KY",
+      "county": "Monroe County"
+    },
+    {
+      "state": "KY",
+      "county": "Crittenden County"
+    },
+    {
+      "state": "KY",
+      "county": "Russell County"
+    },
+    {
+      "state": "KY",
+      "county": "Green County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.ucheartlandauctions.com/index.html"
+}

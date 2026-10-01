@@ -1,0 +1,29 @@
+{
+  "name": "Mossy Oak Properties Land and Farms Realty - Leasburg",
+  "slug": "mossy-oak-properties-land-and-farms-realty-leasburg",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "842 Fuqua Road",
+    "city": "Leasburg",
+    "region": "NC",
+    "postalCode": "27291"
+  },
+  "lat": 36.4151,
+  "lng": -79.1942,
+  "phone": "(844) 480-5263",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-land-and-farms-realty-leasburg-nc/",
+  "sameAs": [],
+  "summary": "Leasburg office of a Mossy Oak Properties affiliate that markets farmland, timberland, recreational tracts and rural residences across North Carolina, Virginia and South Carolina.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "hunting-recreational"
+    ]
+  },
+  "brokerage": "Mossy Oak Properties",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-land-and-farms-realty-leasburg-nc/"
+}

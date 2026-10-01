@@ -1,0 +1,63 @@
+{
+  "name": "AltaTerra Realty and Auction LLC",
+  "slug": "altaterra-realty-and-auction-llc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1875 17th ST NE, Suite 120",
+    "city": "Paris",
+    "region": "TX",
+    "postalCode": "75460"
+  },
+  "lat": 33.6581,
+  "lng": -95.5379,
+  "phone": "(903) 438-2585",
+  "website": "https://www.altaterrarealty.com",
+  "sameAs": [],
+  "summary": "Paris, Texas brokerage and auction company marketing farms, ranches, hunting and fishing land and country homes in Northeast Texas and southeastern Oklahoma, with a second office in Clarksville.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ]
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TX",
+      "county": "Lamar County"
+    },
+    {
+      "state": "TX",
+      "county": "Fannin County"
+    },
+    {
+      "state": "TX",
+      "county": "Delta County"
+    },
+    {
+      "state": "TX",
+      "county": "Franklin County"
+    },
+    {
+      "state": "TX",
+      "county": "Hopkins County"
+    },
+    {
+      "state": "TX",
+      "county": "Hunt County"
+    },
+    {
+      "state": "TX",
+      "county": "Red River County"
+    },
+    {
+      "state": "TX",
+      "county": "Titus County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.altaterrarealty.com/index.html"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Montana Land Brokers Company",
+  "slug": "montana-land-brokers-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1004 B Ave",
+    "city": "Circle",
+    "region": "MT",
+    "postalCode": "59215"
+  },
+  "lat": 47.4264,
+  "lng": -105.6148,
+  "phone": "(406) 366-5588",
+  "website": "https://montanalandbrokers.com/",
+  "sameAs": [],
+  "summary": "Circle-based firm selling farm, ranch and recreational property in eastern Montana through traditional listings as well as land and farm auctions.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://montanalandbrokers.com/"
+}

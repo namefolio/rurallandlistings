@@ -1,0 +1,29 @@
+{
+  "name": "Western Ranch Brokers",
+  "slug": "western-ranch-brokers",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "380 Ice Center Lane, Suite A",
+    "city": "Bozeman",
+    "region": "MT",
+    "postalCode": "59718"
+  },
+  "lat": 45.6681,
+  "lng": -111.2404,
+  "phone": "(406) 589-4160",
+  "website": "https://westernranchbrokers.com/",
+  "sameAs": [],
+  "summary": "Bozeman ranch brokerage handling sales of farming, cattle, horse, fishing and hunting properties in Montana, Wyoming and South Dakota, plus valuations and land advisory work.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://westernranchbrokers.com/"
+}

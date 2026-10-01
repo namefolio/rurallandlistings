@@ -1,0 +1,68 @@
+{
+  "name": "Lands of the Carolinas",
+  "slug": "lands-of-the-carolinas",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2002 N. Elm Street",
+    "city": "Lumberton",
+    "region": "NC",
+    "postalCode": "28359"
+  },
+  "lat": 34.6077,
+  "lng": -79.0144,
+  "phone": "(910) 738-7170",
+  "website": "https://www.landsofthecarolinas.com/",
+  "sameAs": [],
+  "summary": "Lumberton land company handling sales of farmland, timberland, hunting tracts and homesites in southeastern North Carolina and nearby South Carolina, plus timber, farm and wildlife management services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "lots-homesites",
+      "development"
+    ]
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "NC",
+      "county": "Robeson County"
+    },
+    {
+      "state": "NC",
+      "county": "Bladen County"
+    },
+    {
+      "state": "NC",
+      "county": "Brunswick County"
+    },
+    {
+      "state": "NC",
+      "county": "Columbus County"
+    },
+    {
+      "state": "NC",
+      "county": "Cumberland County"
+    },
+    {
+      "state": "NC",
+      "county": "Harnett County"
+    },
+    {
+      "state": "NC",
+      "county": "Hoke County"
+    },
+    {
+      "state": "NC",
+      "county": "Edgecombe County"
+    },
+    {
+      "state": "NC",
+      "county": "Ashe County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.landsofthecarolinas.com/"
+}

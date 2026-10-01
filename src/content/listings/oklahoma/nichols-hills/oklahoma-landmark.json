@@ -1,0 +1,29 @@
+{
+  "name": "Oklahoma Landmark",
+  "slug": "oklahoma-landmark",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "6501 Avondale Drive",
+    "city": "Nichols Hills",
+    "region": "OK",
+    "postalCode": "73118"
+  },
+  "lat": 35.5136,
+  "lng": -97.5319,
+  "phone": "(405) 848-8818",
+  "website": "https://oklahomalandmark.com/",
+  "sameAs": [],
+  "summary": "Land brokerage based in the Oklahoma City area that markets hunting properties, farms, ranches and country homes, with listings in central Oklahoma counties such as Logan, Payne and Lincoln.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://oklahomalandmark.com/"
+}

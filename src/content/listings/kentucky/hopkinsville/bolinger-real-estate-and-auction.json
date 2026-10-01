@@ -1,0 +1,30 @@
+{
+  "name": "Bolinger Real Estate & Auction",
+  "slug": "bolinger-real-estate-and-auction",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "526 Country Club Ln.",
+    "city": "Hopkinsville",
+    "region": "KY",
+    "postalCode": "42240"
+  },
+  "lat": 36.8621,
+  "lng": -87.4851,
+  "phone": "(270) 632-8882",
+  "website": "https://www.bolingerrealestate.com/",
+  "sameAs": [],
+  "summary": "Hopkinsville real estate and auction firm selling farmland, recreational land and other property in Christian County and neighboring parts of western Kentucky.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.bolingerrealestate.com/"
+}

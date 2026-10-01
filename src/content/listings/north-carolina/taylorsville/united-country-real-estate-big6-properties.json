@@ -1,0 +1,62 @@
+{
+  "name": "United Country Real Estate | Big6 Properties",
+  "slug": "united-country-real-estate-big6-properties",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "153 NC-16 N",
+    "city": "Taylorsville",
+    "region": "NC",
+    "postalCode": "28681"
+  },
+  "lat": 35.901,
+  "lng": -81.2124,
+  "phone": "(828) 632-2446",
+  "website": "https://www.big6properties.com/",
+  "sameAs": [],
+  "summary": "Taylorsville United Country affiliate with auction services, selling farms, hunting and recreational land, timber tracts and country homes in the northwestern North Carolina foothills and High Country.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "NC",
+      "county": "Alexander County"
+    },
+    {
+      "state": "NC",
+      "county": "Burke County"
+    },
+    {
+      "state": "NC",
+      "county": "Caldwell County"
+    },
+    {
+      "state": "NC",
+      "county": "Watauga County"
+    },
+    {
+      "state": "NC",
+      "county": "Wilkes County"
+    },
+    {
+      "state": "NC",
+      "county": "Iredell County"
+    },
+    {
+      "state": "NC",
+      "county": "Catawba County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.big6properties.com/contactus.htm"
+}

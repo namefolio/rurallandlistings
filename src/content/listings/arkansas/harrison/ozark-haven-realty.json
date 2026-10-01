@@ -1,0 +1,58 @@
+{
+  "name": "Ozark Haven Realty",
+  "slug": "ozark-haven-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2200 Highway 65 South",
+    "city": "Harrison",
+    "region": "AR",
+    "postalCode": "72601"
+  },
+  "lat": 36.2417,
+  "lng": -93.1062,
+  "phone": "(870) 704-7700",
+  "website": "https://www.ozarkhavenrealty.com/",
+  "sameAs": [],
+  "summary": "Small Harrison brokerage handling farms, ranches, land and residential property for buyers and sellers across the Arkansas Ozark counties around Boone County.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "AR",
+      "county": "Baxter County"
+    },
+    {
+      "state": "AR",
+      "county": "Boone County"
+    },
+    {
+      "state": "AR",
+      "county": "Carroll County"
+    },
+    {
+      "state": "AR",
+      "county": "Madison County"
+    },
+    {
+      "state": "AR",
+      "county": "Marion County"
+    },
+    {
+      "state": "AR",
+      "county": "Newton County"
+    },
+    {
+      "state": "AR",
+      "county": "Searcy County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.ozarkhavenrealty.com/"
+}

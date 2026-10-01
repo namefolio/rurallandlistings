@@ -1,0 +1,48 @@
+{
+  "name": "United Country NWA Real Estate",
+  "slug": "united-country-nwa-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "246 Curtis Hutchins Way, Suite A",
+    "city": "Huntsville",
+    "region": "AR",
+    "postalCode": "72740"
+  },
+  "lat": 36.1043,
+  "lng": -93.7279,
+  "phone": "(479) 738-2277",
+  "website": "https://www.nwahomeandfarm.com/",
+  "sameAs": [],
+  "summary": "United Country office in Huntsville (with a Fayetteville location) focused on non-urban property in Northwest Arkansas, including farms, recreational land and country homes.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "AR",
+      "county": "Washington County"
+    },
+    {
+      "state": "AR",
+      "county": "Benton County"
+    },
+    {
+      "state": "AR",
+      "county": "Madison County"
+    },
+    {
+      "state": "AR",
+      "county": "Crawford County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.nwahomeandfarm.com/index.html"
+}

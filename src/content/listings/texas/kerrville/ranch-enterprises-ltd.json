@@ -1,0 +1,28 @@
+{
+  "name": "Ranch Enterprises LTD",
+  "slug": "ranch-enterprises-ltd",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1001 Water Street, Suite 200B",
+    "city": "Kerrville",
+    "region": "TX",
+    "postalCode": "78028"
+  },
+  "lat": 30.0416,
+  "lng": -99.1408,
+  "phone": "(800) 876-9720",
+  "website": "https://www.ranchenterprisesltd.com",
+  "sameAs": [],
+  "summary": "Kerrville-based ranch sales firm with Hill Country, West Texas, South Texas and New Mexico sales departments working with ranch buyers and sellers, and also offering loan servicing.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.ranchenterprisesltd.com/contact"
+}

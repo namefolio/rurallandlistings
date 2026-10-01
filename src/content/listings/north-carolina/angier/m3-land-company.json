@@ -1,0 +1,31 @@
+{
+  "name": "M3 Land Company",
+  "slug": "m3-land-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "739 Oak Grove Church Rd.",
+    "city": "Angier",
+    "region": "NC",
+    "postalCode": "27501"
+  },
+  "lat": 35.4897,
+  "lng": -78.7249,
+  "phone": "(910) 242-4544",
+  "website": "https://m3landcompany.com/",
+  "sameAs": [],
+  "summary": "Angier-based land brokerage selling farms, timberland, hunting tracts and residential acreage across central and eastern North Carolina, the Sandhills and the Coastal Plain, including off-market sales.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "hunting-recreational",
+      "lots-homesites"
+    ],
+    "worksWithSellers": true,
+    "accreditedLandConsultant": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://m3landcompany.com/sell-your-land/"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Agri Land Co.",
+  "slug": "agri-land-co",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "330 East Wood Street",
+    "city": "Troy",
+    "region": "MO",
+    "postalCode": "63379"
+  },
+  "lat": 39.0012,
+  "lng": -90.9624,
+  "phone": "(636) 528-9500",
+  "website": "https://agrilandco.com/",
+  "sameAs": [],
+  "summary": "Troy-based land brokerage handling agricultural farms, investment land and recreational tracts in Missouri and Iowa, with online auctions and hunting leases.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://agrilandco.com/"
+}

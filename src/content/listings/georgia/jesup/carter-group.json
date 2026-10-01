@@ -1,0 +1,30 @@
+{
+  "name": "Carter Group",
+  "slug": "carter-group",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "305 Ty Ty St",
+    "city": "Jesup",
+    "region": "GA",
+    "postalCode": "31545"
+  },
+  "lat": 31.6043,
+  "lng": -81.8871,
+  "phone": "(912) 551-8349",
+  "website": "https://www.cartergroupland.com/",
+  "sameAs": [],
+  "summary": "Jesup-based land brokerage marketing timberland, farms and recreational tracts in southeast Georgia, with added forestry and wildlife management services.",
+  "attributes": {
+    "specialties": [
+      "timberland",
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.cartergroupland.com/contact-us/"
+}

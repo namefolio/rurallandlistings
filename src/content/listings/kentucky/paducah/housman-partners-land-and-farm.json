@@ -1,0 +1,84 @@
+{
+  "name": "Housman Partners Land and Farm",
+  "slug": "housman-partners-land-and-farm",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "207 S Friendship Rd",
+    "city": "Paducah",
+    "region": "KY",
+    "postalCode": "42003"
+  },
+  "lat": 37.0368,
+  "lng": -88.5934,
+  "phone": "(270) 534-5569",
+  "website": "https://housmanpartnerslandandfarm.com/",
+  "sameAs": [],
+  "summary": "Paducah-based land brokerage handling farms, cattle and crop ground, horse properties and hunting tracts across the Jackson Purchase and western Kentucky counties.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true,
+    "accreditedLandConsultant": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "KY",
+      "county": "Marshall County"
+    },
+    {
+      "state": "KY",
+      "county": "Graves County"
+    },
+    {
+      "state": "KY",
+      "county": "Lyon County"
+    },
+    {
+      "state": "KY",
+      "county": "Caldwell County"
+    },
+    {
+      "state": "KY",
+      "county": "Fulton County"
+    },
+    {
+      "state": "KY",
+      "county": "Carlisle County"
+    },
+    {
+      "state": "KY",
+      "county": "Hickman County"
+    },
+    {
+      "state": "KY",
+      "county": "Trigg County"
+    },
+    {
+      "state": "KY",
+      "county": "Calloway County"
+    },
+    {
+      "state": "KY",
+      "county": "Livingston County"
+    },
+    {
+      "state": "KY",
+      "county": "Crittenden County"
+    },
+    {
+      "state": "KY",
+      "county": "Ballard County"
+    },
+    {
+      "state": "KY",
+      "county": "McCracken County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://housmanpartnerslandandfarm.com/contact/"
+}

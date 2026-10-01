@@ -1,0 +1,77 @@
+{
+  "name": "United Country Columbia Realty",
+  "slug": "united-country-columbia-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "740 Nashville Hwy",
+    "city": "Columbia",
+    "region": "TN",
+    "postalCode": "38401"
+  },
+  "lat": 35.6156,
+  "lng": -87.038,
+  "phone": "(931) 388-3600",
+  "website": "https://www.uccolumbiarealty.com/",
+  "sameAs": [],
+  "summary": "Columbia realty office listing Middle Tennessee farms, ranches, land and hunting property along with country homes and auctions.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Wayne County"
+    },
+    {
+      "state": "TN",
+      "county": "Lawrence County"
+    },
+    {
+      "state": "TN",
+      "county": "Davidson County"
+    },
+    {
+      "state": "TN",
+      "county": "Lewis County"
+    },
+    {
+      "state": "TN",
+      "county": "Marshall County"
+    },
+    {
+      "state": "TN",
+      "county": "Humphreys County"
+    },
+    {
+      "state": "TN",
+      "county": "Hickman County"
+    },
+    {
+      "state": "TN",
+      "county": "Giles County"
+    },
+    {
+      "state": "TN",
+      "county": "Perry County"
+    },
+    {
+      "state": "TN",
+      "county": "Maury County"
+    },
+    {
+      "state": "TN",
+      "county": "Decatur County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.uccolumbiarealty.com/"
+}

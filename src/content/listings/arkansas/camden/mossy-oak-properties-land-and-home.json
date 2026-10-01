@@ -1,0 +1,29 @@
+{
+  "name": "Mossy Oak Properties Land and Home",
+  "slug": "mossy-oak-properties-land-and-home",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "819 Lakewood Road",
+    "city": "Camden",
+    "region": "AR",
+    "postalCode": "71701"
+  },
+  "lat": 33.5948,
+  "lng": -92.8513,
+  "phone": "(870) 807-6731",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-land-and-home/",
+  "sameAs": [],
+  "summary": "Camden office of Mossy Oak Properties marketing recreational, hunting, farm, development and residential properties across South Arkansas and North Louisiana.",
+  "attributes": {
+    "specialties": [
+      "hunting-recreational",
+      "farms-ranches",
+      "development"
+    ]
+  },
+  "brokerage": "Mossy Oak Properties",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-land-and-home/"
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Hall and Hall - Eaton Office",
+  "slug": "hall-and-hall-eaton-office",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "100 S. Cherry Ave., Ste. 5B",
+    "city": "Eaton",
+    "region": "CO",
+    "postalCode": "80615"
+  },
+  "lat": 40.5273,
+  "lng": -104.7146,
+  "phone": "(970) 716-2120",
+  "website": "https://hallhall.com/colorado/",
+  "sameAs": [],
+  "summary": "Northern Colorado office of a rural real estate firm that sells working ranches, farmland and hunting and fishing properties, and also provides auctions, appraisals, financing and ranch management.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "Hall and Hall",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://hallhall.com/contact/"
+}

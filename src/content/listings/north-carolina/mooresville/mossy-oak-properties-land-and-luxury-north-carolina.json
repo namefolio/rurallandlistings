@@ -1,0 +1,91 @@
+{
+  "name": "Mossy Oak Properties Land and Luxury - North Carolina",
+  "slug": "mossy-oak-properties-land-and-luxury-north-carolina",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "114 Morlake Drive, Suite 103",
+    "city": "Mooresville",
+    "region": "NC",
+    "postalCode": "28117"
+  },
+  "lat": 35.584,
+  "lng": -80.8685,
+  "phone": "(704) 658-1121",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-land-and-luxury-north-carolina/",
+  "sameAs": [],
+  "summary": "Mooresville Mossy Oak Properties office selling hunting land, timberland, farms, mountain parcels and rural homes across the western Piedmont and foothills of North Carolina.",
+  "attributes": {
+    "specialties": [
+      "hunting-recreational",
+      "timberland",
+      "farms-ranches"
+    ]
+  },
+  "brokerage": "Mossy Oak Properties",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "NC",
+      "county": "Alexander County"
+    },
+    {
+      "state": "NC",
+      "county": "Ashe County"
+    },
+    {
+      "state": "NC",
+      "county": "Anson County"
+    },
+    {
+      "state": "NC",
+      "county": "Avery County"
+    },
+    {
+      "state": "NC",
+      "county": "Burke County"
+    },
+    {
+      "state": "NC",
+      "county": "Cabarrus County"
+    },
+    {
+      "state": "NC",
+      "county": "Caldwell County"
+    },
+    {
+      "state": "NC",
+      "county": "Catawba County"
+    },
+    {
+      "state": "NC",
+      "county": "Cleveland County"
+    },
+    {
+      "state": "NC",
+      "county": "Davidson County"
+    },
+    {
+      "state": "NC",
+      "county": "Davie County"
+    },
+    {
+      "state": "NC",
+      "county": "Forsyth County"
+    },
+    {
+      "state": "NC",
+      "county": "Gaston County"
+    },
+    {
+      "state": "NC",
+      "county": "Guilford County"
+    },
+    {
+      "state": "NC",
+      "county": "Iredell County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-land-and-luxury-north-carolina/"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Legendary Land Co.",
+  "slug": "legendary-land-co",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "111 D St SW",
+    "city": "Ardmore",
+    "region": "OK",
+    "postalCode": "73401"
+  },
+  "lat": 34.1566,
+  "lng": -97.1792,
+  "phone": "(580) 220-7790",
+  "website": "https://legendary.land/",
+  "sameAs": [],
+  "summary": "Oklahoma farm and ranch brokerage with a southern Oklahoma office in Ardmore, marketing agricultural and recreational acreage, often large tracts with water features, between Oklahoma City and the DFW area.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ]
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://legendary.land/"
+}

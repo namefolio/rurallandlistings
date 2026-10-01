@@ -1,0 +1,28 @@
+{
+  "name": "Montana Ranch Properties - Kalispell",
+  "slug": "montana-ranch-properties-kalispell",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "580 Sunset Blvd",
+    "city": "Kalispell",
+    "region": "MT",
+    "postalCode": "59901"
+  },
+  "lat": 48.2028,
+  "lng": -114.3039,
+  "phone": "(406) 309-6330",
+  "website": "https://ranchmt.com/offices/",
+  "sameAs": [],
+  "summary": "Kalispell office of a multi-office Montana firm whose listings center on bare land, farms and ranches, horse properties and sporting properties.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ]
+  },
+  "brokerage": "Montana Ranch Properties",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://ranchmt.com/offices/"
+}

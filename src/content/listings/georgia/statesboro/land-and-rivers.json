@@ -1,0 +1,28 @@
+{
+  "name": "Land & Rivers",
+  "slug": "land-and-rivers",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1207 Merchant Way, Suite 101",
+    "city": "Statesboro",
+    "region": "GA",
+    "postalCode": "30458"
+  },
+  "lat": 32.4408,
+  "lng": -81.774,
+  "phone": "(912) 764-5263",
+  "website": "https://landandrivers.com/",
+  "sameAs": [],
+  "summary": "Statesboro land brokerage founded in 2004 that sells farms, timberland, hunting and recreational tracts across Georgia and South Carolina, also offering forestry and valuation services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "hunting-recreational"
+    ]
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://landandrivers.com/contact/"
+}

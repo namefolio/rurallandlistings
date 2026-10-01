@@ -1,0 +1,28 @@
+{
+  "name": "World Class Ranches",
+  "slug": "world-class-ranches",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "320 E. Carl Albert Parkway B1",
+    "city": "McAlester",
+    "region": "OK",
+    "postalCode": "74501"
+  },
+  "lat": 34.9262,
+  "lng": -95.7592,
+  "phone": "(918) 426-6006",
+  "website": "https://www.worldclassranches.com/",
+  "sameAs": [],
+  "summary": "McAlester-based ranch and rural property brokerage marketing cattle ranches, hunting land, equestrian properties, farmland and agribusiness operations in Oklahoma and Texas.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ]
+  },
+  "brokerage": "Accredited Land Brokers, LLC",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.worldclassranches.com/contact-us"
+}

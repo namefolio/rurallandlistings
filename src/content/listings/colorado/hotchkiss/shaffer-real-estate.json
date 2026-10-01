@@ -1,0 +1,47 @@
+{
+  "name": "Shaffer Real Estate",
+  "slug": "shaffer-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "390 W. Bridge St",
+    "city": "Hotchkiss",
+    "region": "CO",
+    "postalCode": "81419"
+  },
+  "lat": 38.8124,
+  "lng": -107.7472,
+  "phone": "(970) 835-9350",
+  "website": "https://www.westernrange.com/",
+  "sameAs": [],
+  "summary": "Western Colorado farm and ranch brokerage headquartered in Hotchkiss, handling irrigated cropland, livestock operations, orchards, vineyards and mountain recreational land, with additional offices in Delta, Montrose and Fruita.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "CO",
+      "county": "Delta County"
+    },
+    {
+      "state": "CO",
+      "county": "Montrose County"
+    },
+    {
+      "state": "CO",
+      "county": "Gunnison County"
+    },
+    {
+      "state": "CO",
+      "county": "Mesa County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.westernrange.com/contact-western-slope-farms-and-ranches-for-sale/"
+}
