@@ -1,0 +1,28 @@
+{
+  "name": "Heard Auction & Real Estate",
+  "slug": "heard-auction-and-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "3200 W. Modelle Ave",
+    "city": "Clinton",
+    "region": "OK",
+    "postalCode": "73601"
+  },
+  "lat": 35.5115,
+  "lng": -98.9795,
+  "phone": "(580) 323-6120",
+  "website": "https://www.ucheardauction.com/",
+  "sameAs": [],
+  "summary": "United Country affiliate in Clinton offering land auctions, farm and ranch sales and personal property auctions in western Oklahoma and surrounding states including Kansas, Texas and Colorado.",
+  "attributes": {
+    "specialties": [
+      "land-auctions",
+      "farms-ranches"
+    ]
+  },
+  "brokerage": "United Country",
+  "agentType": "auctioneer",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.ucheardauction.com/auctions"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Albemarle Land & Timber Services, Inc.",
+  "slug": "albemarle-land-and-timber-services-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "583 Ownley Road",
+    "city": "Elizabeth City",
+    "region": "NC",
+    "postalCode": "27909"
+  },
+  "lat": 36.2951,
+  "lng": -76.2445,
+  "phone": "(252) 264-2209",
+  "website": "https://nclandandtimber.com/",
+  "sameAs": [],
+  "summary": "Elizabeth City brokerage and land management company selling farmland, timberland and commercial sites in northeastern North Carolina and southern Virginia, with timber harvesting and reforestation services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "development"
+    ],
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://nclandandtimber.com/what-we-can-do-for-you"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Neill Timberland Management & Southern Oaks Realty",
+  "slug": "neill-timberland-management-and-southern-oaks-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "106 East Columbia Street",
+    "city": "Magnolia",
+    "region": "AR",
+    "postalCode": "71753"
+  },
+  "lat": 33.2647,
+  "lng": -93.2392,
+  "phone": "(870) 234-0700",
+  "website": "http://www.neilltimber.com/",
+  "sameAs": [],
+  "summary": "Magnolia forestry consulting firm with an affiliated realty company offering timber sales, appraisals, management planning, hunting leases and land sales in Arkansas and nearby states.",
+  "attributes": {
+    "specialties": [
+      "timberland"
+    ]
+  },
+  "brokerage": "Southern Oaks Realty, LLC",
+  "agentType": "consultant",
+  "lastUpdated": "2026-10-01",
+  "source": "http://www.neilltimber.com/"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Navasota Realty",
+  "slug": "navasota-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "303 E Washington Ave.",
+    "city": "Navasota",
+    "region": "TX",
+    "postalCode": "77868"
+  },
+  "lat": 30.3576,
+  "lng": -96.0594,
+  "phone": "(936) 825-5094",
+  "website": "https://www.navasotarealtyinc.com",
+  "sameAs": [],
+  "summary": "Navasota brokerage founded in 2000 handling farm and ranch sales from small acreage to large ranches in Grimes and surrounding counties, along with residential and commercial property.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches"
+    ]
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.navasotarealtyinc.com/"
+}

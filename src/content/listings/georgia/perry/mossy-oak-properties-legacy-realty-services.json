@@ -1,0 +1,31 @@
+{
+  "name": "Mossy Oak Properties Legacy Realty Services",
+  "slug": "mossy-oak-properties-legacy-realty-services",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1026 Ball Street",
+    "city": "Perry",
+    "region": "GA",
+    "postalCode": "31069"
+  },
+  "lat": 32.4605,
+  "lng": -83.7283,
+  "phone": "(478) 988-0039",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-legacy-realty-services/",
+  "sameAs": [],
+  "summary": "Perry office of the Mossy Oak Properties network, owned by broker Jarrett Lastinger, handling hunting land, timberland, farm and auction sales in middle Georgia.",
+  "attributes": {
+    "specialties": [
+      "hunting-recreational",
+      "timberland",
+      "farms-ranches",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-legacy-realty-services/"
+}

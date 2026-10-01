@@ -1,0 +1,29 @@
+{
+  "name": "Lee, Lee & Puckitt Associates, Inc.",
+  "slug": "lee-lee-and-puckitt-associates-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1002 S Koenigheim, Ste. C",
+    "city": "San Angelo",
+    "region": "TX",
+    "postalCode": "76903"
+  },
+  "lat": 31.4707,
+  "lng": -100.4386,
+  "phone": "(325) 655-6989",
+  "website": "https://www.llpranchland.com",
+  "sameAs": [],
+  "summary": "San Angelo ranch brokerage founded in 1962 that represents buyers and sellers of agricultural, recreational and hunting ranches across Texas and New Mexico, and also provides land appraisals.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.llpranchland.com/"
+}

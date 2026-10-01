@@ -1,0 +1,61 @@
+{
+  "name": "North Missouri Land Company",
+  "slug": "north-missouri-land-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "506 N Missouri St",
+    "city": "Macon",
+    "region": "MO",
+    "postalCode": "63552"
+  },
+  "lat": 39.7481,
+  "lng": -92.4622,
+  "phone": "(660) 395-5263",
+  "website": "https://northmoland.com/",
+  "sameAs": [],
+  "summary": "Locally owned land company in Macon that sells farmland, hunting tracts, homesites and rural property in northern Missouri, including through auctions.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "lots-homesites",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "MO",
+      "county": "Macon County"
+    },
+    {
+      "state": "MO",
+      "county": "Adair County"
+    },
+    {
+      "state": "MO",
+      "county": "Linn County"
+    },
+    {
+      "state": "MO",
+      "county": "Knox County"
+    },
+    {
+      "state": "MO",
+      "county": "Schuyler County"
+    },
+    {
+      "state": "MO",
+      "county": "Randolph County"
+    },
+    {
+      "state": "MO",
+      "county": "Boone County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://northmoland.com/"
+}

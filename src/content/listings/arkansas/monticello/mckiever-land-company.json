@@ -1,0 +1,30 @@
+{
+  "name": "McKiever Land Company",
+  "slug": "mckiever-land-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1236 E Shelton Ave",
+    "city": "Monticello",
+    "region": "AR",
+    "postalCode": "71655"
+  },
+  "lat": 33.625,
+  "lng": -91.7948,
+  "phone": "(870) 460-5210",
+  "website": "https://www.mckieverlandcompany.com/",
+  "sameAs": [],
+  "summary": "Monticello land brokerage led by Josh McKiever handling timberland, recreational hunting tracts, pasture and farmland in South Arkansas, with consulting for both buyers and sellers.",
+  "attributes": {
+    "specialties": [
+      "timberland",
+      "hunting-recreational",
+      "farms-ranches"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mckieverlandcompany.com/"
+}

@@ -1,0 +1,53 @@
+{
+  "name": "United Country Tennessee Home & Land",
+  "slug": "united-country-tennessee-home-and-land",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "132 Line St.",
+    "city": "Granville",
+    "region": "TN",
+    "postalCode": "38564"
+  },
+  "lat": 36.2768,
+  "lng": -85.7475,
+  "phone": "(931) 653-7653",
+  "website": "https://www.tennesseehomeandland.com/",
+  "sameAs": [],
+  "summary": "Granville-based United Country office handling farms, hunting and recreational land, timber tracts and horse properties across the Upper Cumberland counties of Middle Tennessee.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Jackson County"
+    },
+    {
+      "state": "TN",
+      "county": "Putnam County"
+    },
+    {
+      "state": "TN",
+      "county": "White County"
+    },
+    {
+      "state": "TN",
+      "county": "DeKalb County"
+    },
+    {
+      "state": "TN",
+      "county": "Van Buren County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.tennesseehomeandland.com/aboutus.htm"
+}

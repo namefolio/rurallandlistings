@@ -1,0 +1,28 @@
+{
+  "name": "Mossy Oak Properties Oklahoma AgRec Land, LLC",
+  "slug": "mossy-oak-properties-oklahoma-agrec-land-llc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "3001 E Jackson",
+    "city": "Hugo",
+    "region": "OK",
+    "postalCode": "74743"
+  },
+  "lat": 34.0113,
+  "lng": -95.5139,
+  "phone": "(580) 326-8867",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-oklahoma-agrec-land-llc/",
+  "sameAs": [],
+  "summary": "Mossy Oak Properties office in Hugo, Choctaw County, with a team of agents marketing hunting land, country homes and smaller lots in southeast Oklahoma, particularly McCurtain County.",
+  "attributes": {
+    "specialties": [
+      "hunting-recreational",
+      "lots-homesites"
+    ]
+  },
+  "brokerage": "Mossy Oak Properties",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-oklahoma-agrec-land-llc/"
+}

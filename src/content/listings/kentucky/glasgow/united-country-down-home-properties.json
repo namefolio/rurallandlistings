@@ -1,0 +1,59 @@
+{
+  "name": "United Country Down Home Properties",
+  "slug": "united-country-down-home-properties",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "742B East Main Street",
+    "city": "Glasgow",
+    "region": "KY",
+    "postalCode": "42141"
+  },
+  "lat": 36.9882,
+  "lng": -85.9221,
+  "phone": "(270) 629-5263",
+  "website": "https://www.barrencountykyrealestate.com/",
+  "sameAs": [],
+  "summary": "Glasgow-based United Country office marketing farms, hunting property, country homes and recreational land in Barren County and surrounding south-central Kentucky counties.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "KY",
+      "county": "Barren County"
+    },
+    {
+      "state": "KY",
+      "county": "Metcalfe County"
+    },
+    {
+      "state": "KY",
+      "county": "Taylor County"
+    },
+    {
+      "state": "KY",
+      "county": "Hart County"
+    },
+    {
+      "state": "KY",
+      "county": "Cumberland County"
+    },
+    {
+      "state": "KY",
+      "county": "Green County"
+    },
+    {
+      "state": "KY",
+      "county": "Adair County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.barrencountykyrealestate.com/index.html"
+}

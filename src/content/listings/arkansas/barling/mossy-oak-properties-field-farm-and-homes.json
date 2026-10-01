@@ -1,0 +1,32 @@
+{
+  "name": "Mossy Oak Properties Field, Farm, and Homes",
+  "slug": "mossy-oak-properties-field-farm-and-homes",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1200 Fort Street",
+    "city": "Barling",
+    "region": "AR",
+    "postalCode": "72923"
+  },
+  "lat": 35.333,
+  "lng": -94.3082,
+  "phone": "(479) 480-7000",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-field-farm-and-homes/",
+  "sameAs": [],
+  "summary": "Barling office near Fort Smith selling hunting land, timberland, farms, ranches and country homes, including land auctions, in the Arkansas River Valley, Ozarks and Ouachitas.",
+  "attributes": {
+    "specialties": [
+      "hunting-recreational",
+      "timberland",
+      "farms-ranches",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "Mossy Oak Properties",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-field-farm-and-homes/"
+}

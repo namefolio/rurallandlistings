@@ -1,0 +1,43 @@
+{
+  "name": "United Country Blue Sky Homes and Land",
+  "slug": "united-country-blue-sky-homes-and-land",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2525 E Main Street",
+    "city": "Cortez",
+    "region": "CO",
+    "postalCode": "81321"
+  },
+  "lat": 37.3549,
+  "lng": -108.5837,
+  "phone": "(970) 516-1759",
+  "website": "https://www.blueskyhomesandland.com/",
+  "sameAs": [],
+  "summary": "Cortez-based United Country office handling land, acreage, rural properties and homes in southwest Colorado, with additional offices in Mancos and Durango.",
+  "attributes": {
+    "specialties": [
+      "lots-homesites"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "CO",
+      "county": "Montezuma County"
+    },
+    {
+      "state": "CO",
+      "county": "Dolores County"
+    },
+    {
+      "state": "CO",
+      "county": "La Plata County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.blueskyhomesandland.com/"
+}

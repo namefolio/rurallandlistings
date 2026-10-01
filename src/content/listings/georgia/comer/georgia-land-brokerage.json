@@ -1,0 +1,72 @@
+{
+  "name": "Georgia Land Brokerage",
+  "slug": "georgia-land-brokerage",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1970 Main St",
+    "city": "Comer",
+    "region": "GA",
+    "postalCode": "30629"
+  },
+  "lat": 34.0888,
+  "lng": -83.122,
+  "phone": "(678) 791-3483",
+  "website": "https://ga.land/",
+  "sameAs": [],
+  "summary": "Comer-based brokerage helping clients buy and sell farmland, hunting tracts, development land and country homes in central and north Georgia, centered on Oglethorpe County.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "development"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "GA",
+      "county": "Oglethorpe County"
+    },
+    {
+      "state": "GA",
+      "county": "Wilkes County"
+    },
+    {
+      "state": "GA",
+      "county": "Taliaferro County"
+    },
+    {
+      "state": "GA",
+      "county": "Greene County"
+    },
+    {
+      "state": "GA",
+      "county": "Madison County"
+    },
+    {
+      "state": "GA",
+      "county": "Elbert County"
+    },
+    {
+      "state": "GA",
+      "county": "Washington County"
+    },
+    {
+      "state": "GA",
+      "county": "Laurens County"
+    },
+    {
+      "state": "GA",
+      "county": "Pickens County"
+    },
+    {
+      "state": "GA",
+      "county": "Jackson County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://ga.land/"
+}

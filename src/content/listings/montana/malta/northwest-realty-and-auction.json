@@ -1,0 +1,91 @@
+{
+  "name": "Northwest Realty & Auction",
+  "slug": "northwest-realty-and-auction",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "210 US Hwy 2",
+    "city": "Malta",
+    "region": "MT",
+    "postalCode": "59538"
+  },
+  "lat": 48.3692,
+  "lng": -107.8408,
+  "phone": "(406) 654-2881",
+  "website": "https://www.northwestranchland.com/",
+  "sameAs": [],
+  "summary": "Malta-based brokerage handling ranches, farms, hunting ground and recreational land across north central and eastern Montana, working with both buyers and sellers.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "MT",
+      "county": "Phillips County"
+    },
+    {
+      "state": "MT",
+      "county": "Fergus County"
+    },
+    {
+      "state": "MT",
+      "county": "Lewis and Clark County"
+    },
+    {
+      "state": "MT",
+      "county": "Sheridan County"
+    },
+    {
+      "state": "MT",
+      "county": "Meagher County"
+    },
+    {
+      "state": "MT",
+      "county": "Carbon County"
+    },
+    {
+      "state": "MT",
+      "county": "Petroleum County"
+    },
+    {
+      "state": "MT",
+      "county": "Daniels County"
+    },
+    {
+      "state": "MT",
+      "county": "Rosebud County"
+    },
+    {
+      "state": "MT",
+      "county": "Blaine County"
+    },
+    {
+      "state": "MT",
+      "county": "Judith Basin County"
+    },
+    {
+      "state": "MT",
+      "county": "Garfield County"
+    },
+    {
+      "state": "MT",
+      "county": "Valley County"
+    },
+    {
+      "state": "MT",
+      "county": "Roosevelt County"
+    },
+    {
+      "state": "MT",
+      "county": "Hill County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.northwestranchland.com/index.html"
+}

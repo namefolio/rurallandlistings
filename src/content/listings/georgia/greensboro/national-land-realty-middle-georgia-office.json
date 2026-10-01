@@ -1,0 +1,44 @@
+{
+  "name": "National Land Realty - Middle Georgia Office",
+  "slug": "national-land-realty-middle-georgia-office",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1070 Salem Walk Drive, Suite 4",
+    "city": "Greensboro",
+    "region": "GA",
+    "postalCode": "30642"
+  },
+  "lat": 33.5637,
+  "lng": -83.1702,
+  "phone": "(855) 384-5263",
+  "website": "https://nationalland.com/land-brokerage/Greensboro-GA/middle-georgia-office",
+  "sameAs": [],
+  "summary": "Greensboro office of National Land Realty marketing farmland, hunting, ranch and recreational tracts around the Lake Oconee area, with property evaluations and land auctions.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithSellers": true
+  },
+  "brokerage": "National Land Realty",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "GA",
+      "county": "Greene County"
+    },
+    {
+      "state": "GA",
+      "county": "Putnam County"
+    },
+    {
+      "state": "GA",
+      "county": "Morgan County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://nationalland.com/land-brokerage/Greensboro-GA/middle-georgia-office"
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Mossy Oak Properties Missouri Land Brokers",
+  "slug": "mossy-oak-properties-missouri-land-brokers",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2053 S Waverly",
+    "city": "Springfield",
+    "region": "MO",
+    "postalCode": "65804"
+  },
+  "lat": 37.1654,
+  "lng": -93.2522,
+  "phone": "(417) 859-4868",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-missouri-land-brokers/",
+  "sameAs": [],
+  "summary": "Springfield office of Mossy Oak Properties whose team lists farms, ranches, hunting land and timber tracts across southwest and central Missouri.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "Mossy Oak Properties",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-missouri-land-brokers/"
+}

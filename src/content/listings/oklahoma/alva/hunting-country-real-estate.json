@@ -1,0 +1,29 @@
+{
+  "name": "Hunting Country Real Estate",
+  "slug": "hunting-country-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "432 Oklahoma Blvd",
+    "city": "Alva",
+    "region": "OK",
+    "postalCode": "73717"
+  },
+  "lat": 36.8016,
+  "lng": -98.6722,
+  "phone": "(580) 327-7889",
+  "website": "https://www.huntingcountry.net/oklahoma/",
+  "sameAs": [],
+  "summary": "Land brokerage with an office in Alva that sells hunting, recreational and agricultural land, including whitetail, turkey and waterfowl tracts and cropland, across northwest and southeast Oklahoma and several other states.",
+  "attributes": {
+    "specialties": [
+      "hunting-recreational",
+      "farms-ranches"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.huntingcountry.net/oklahoma/"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "Rocking X Land Company Ltd.",
+  "slug": "rocking-x-land-company-ltd",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1510 Rose Ave",
+    "city": "Burlington",
+    "region": "CO",
+    "postalCode": "80807"
+  },
+  "lat": 39.3106,
+  "lng": -102.2583,
+  "phone": "(719) 346-5420",
+  "website": "https://www.rockingxland.com/",
+  "sameAs": [],
+  "summary": "Burlington-based land company selling farms, ranches and hunting land in eastern Colorado and western Kansas through brokerage and land auctions, with a second office in Garden City, Kansas.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ]
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "CO",
+      "county": "Kit Carson County"
+    },
+    {
+      "state": "CO",
+      "county": "Washington County"
+    },
+    {
+      "state": "CO",
+      "county": "Cheyenne County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.rockingxland.com/"
+}

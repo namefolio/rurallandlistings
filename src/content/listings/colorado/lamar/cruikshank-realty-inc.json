@@ -1,0 +1,49 @@
+{
+  "name": "Cruikshank Realty, Inc.",
+  "slug": "cruikshank-realty-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "20 South Main Street",
+    "city": "Lamar",
+    "region": "CO",
+    "postalCode": "81052"
+  },
+  "lat": 38.0841,
+  "lng": -102.6192,
+  "phone": "(719) 336-7802",
+  "website": "https://www.2cr2.com/",
+  "sameAs": [],
+  "summary": "Lamar brokerage in southeastern Colorado handling farm and ranch land, recreational property, water rights, auctions and development sites, with land advisory work extending into Kansas, New Mexico and Oklahoma.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions",
+      "development"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "CO",
+      "county": "Prowers County"
+    },
+    {
+      "state": "CO",
+      "county": "Bent County"
+    },
+    {
+      "state": "CO",
+      "county": "Kiowa County"
+    },
+    {
+      "state": "CO",
+      "county": "Otero County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.2cr2.com/"
+}

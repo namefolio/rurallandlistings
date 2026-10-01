@@ -1,0 +1,62 @@
+{
+  "name": "Southern Tennessee Realty & Auction",
+  "slug": "southern-tennessee-realty-and-auction",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "523 N Locust Ave",
+    "city": "Lawrenceburg",
+    "region": "TN",
+    "postalCode": "38464"
+  },
+  "lat": 35.2507,
+  "lng": -87.3526,
+  "phone": "(931) 244-7126",
+  "website": "https://www.southerntnrealty.com/",
+  "sameAs": [],
+  "summary": "Lawrenceburg realty and auction office selling farms, ranches, hunting tracts, timberland and riverfront property across southern Middle Tennessee.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Wayne County"
+    },
+    {
+      "state": "TN",
+      "county": "Lawrence County"
+    },
+    {
+      "state": "TN",
+      "county": "Lewis County"
+    },
+    {
+      "state": "TN",
+      "county": "Hickman County"
+    },
+    {
+      "state": "TN",
+      "county": "Giles County"
+    },
+    {
+      "state": "TN",
+      "county": "Lincoln County"
+    },
+    {
+      "state": "TN",
+      "county": "Maury County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.southerntnrealty.com/contactus.htm"
+}

@@ -1,0 +1,53 @@
+{
+  "name": "United Country Real Estate | Caprock Properties & Auction",
+  "slug": "united-country-real-estate-caprock-properties-and-auction",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "600 S. Tyler Street, Suite 2100",
+    "city": "Amarillo",
+    "region": "TX",
+    "postalCode": "79101"
+  },
+  "lat": 35.2032,
+  "lng": -101.8421,
+  "phone": "(806) 731-4947",
+  "website": "https://www.uccaprock.com",
+  "sameAs": [],
+  "summary": "Amarillo office selling farms, ranches, horse properties, recreational land and homes across the Texas Panhandle and eastern New Mexico, and offering auction services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TX",
+      "county": "Potter County"
+    },
+    {
+      "state": "TX",
+      "county": "Oldham County"
+    },
+    {
+      "state": "TX",
+      "county": "Deaf Smith County"
+    },
+    {
+      "state": "TX",
+      "county": "Randall County"
+    },
+    {
+      "state": "TX",
+      "county": "Hartley County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.uccaprock.com/index.html"
+}

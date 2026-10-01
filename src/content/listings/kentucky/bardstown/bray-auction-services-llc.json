@@ -1,0 +1,33 @@
+{
+  "name": "Bray Auction Services, LLC",
+  "slug": "bray-auction-services-llc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "253 Guthrie Dr",
+    "city": "Bardstown",
+    "region": "KY",
+    "postalCode": "40004"
+  },
+  "lat": 37.8083,
+  "lng": -85.4613,
+  "phone": "(502) 498-5233",
+  "website": "https://www.brayauctions.com/",
+  "sameAs": [],
+  "summary": "Bardstown auction company that sells real estate, farms and personal property by auction for owners and estates in Nelson County and central Kentucky.",
+  "attributes": {
+    "specialties": [
+      "land-auctions"
+    ],
+    "worksWithSellers": true
+  },
+  "agentType": "auctioneer",
+  "countiesServed": [
+    {
+      "state": "KY",
+      "county": "Nelson County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.brayauctions.com/"
+}

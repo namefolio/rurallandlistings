@@ -1,0 +1,42 @@
+{
+  "name": "United Country Arkansas Properties",
+  "slug": "united-country-arkansas-properties",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "804 Highway 71 North",
+    "city": "Mena",
+    "region": "AR",
+    "postalCode": "71953"
+  },
+  "lat": 34.5814,
+  "lng": -94.221,
+  "phone": "(479) 394-7545",
+  "website": "https://www.mena-arkansas-real-estate.com/",
+  "sameAs": [],
+  "summary": "Mena-based United Country office selling farms, ranches, hunting tracts, recreational land and country homes in Polk County and western Arkansas.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ]
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "AR",
+      "county": "Polk County"
+    },
+    {
+      "state": "AR",
+      "county": "Scott County"
+    },
+    {
+      "state": "AR",
+      "county": "Montgomery County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mena-arkansas-real-estate.com/index.html"
+}

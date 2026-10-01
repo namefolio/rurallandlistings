@@ -1,0 +1,28 @@
+{
+  "name": "Galles Properties",
+  "slug": "galles-properties",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "414 Pagosa Street",
+    "city": "Pagosa Springs",
+    "region": "CO",
+    "postalCode": "81147"
+  },
+  "lat": 37.2523,
+  "lng": -107.0385,
+  "phone": "(970) 264-1250",
+  "website": "https://www.gallesproperties.com/",
+  "sameAs": [],
+  "summary": "Pagosa Springs real estate firm with ranch brokers handling ranches, land, homes and commercial property across southwest Colorado, including the Durango, Chromo and South Fork areas.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.gallesproperties.com/durango-ranches-for-sale/"
+}

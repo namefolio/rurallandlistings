@@ -1,0 +1,31 @@
+{
+  "name": "Mossy Oak Properties Coastal Land and Real Estate",
+  "slug": "mossy-oak-properties-coastal-land-and-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "309 Arnow Court",
+    "city": "Saint Marys",
+    "region": "GA",
+    "postalCode": "31558"
+  },
+  "lat": 30.7305,
+  "lng": -81.5465,
+  "phone": "(912) 674-2700",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-coastal-land-and-real-estate/",
+  "sameAs": [],
+  "summary": "St. Marys office of Mossy Oak Properties with a team of land specialists buying and selling farms, timberland and hunting land in coastal Georgia and northeast Florida.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-coastal-land-and-real-estate/"
+}

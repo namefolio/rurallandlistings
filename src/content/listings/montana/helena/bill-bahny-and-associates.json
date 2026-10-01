@@ -1,0 +1,29 @@
+{
+  "name": "Bill Bahny & Associates",
+  "slug": "bill-bahny-and-associates",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2711 Airport Rd",
+    "city": "Helena",
+    "region": "MT",
+    "postalCode": "59601"
+  },
+  "lat": 46.6131,
+  "lng": -112.0213,
+  "phone": "(800) 237-7844",
+  "website": "https://www.montana-ranches.com/",
+  "sameAs": [],
+  "summary": "Helena ranch and land firm marketing Montana ranches, farms, hunting and recreational properties and homes on acreage for buyers and sellers.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.montana-ranches.com/contact-us/"
+}

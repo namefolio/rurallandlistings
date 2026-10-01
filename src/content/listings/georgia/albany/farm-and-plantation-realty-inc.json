@@ -1,0 +1,28 @@
+{
+  "name": "Farm & Plantation Realty, Inc.",
+  "slug": "farm-and-plantation-realty-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2309 Golf Course Dr",
+    "city": "Albany",
+    "region": "GA",
+    "postalCode": "31721"
+  },
+  "lat": 31.5105,
+  "lng": -84.3087,
+  "phone": "(229) 349-1991",
+  "website": "https://farmplantation.com/",
+  "sameAs": [],
+  "summary": "Albany firm handling sales of farms, timberland and hunting properties across south Georgia from Macon to the Florida line, plus land management and appraisal services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "hunting-recreational"
+    ]
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://farmplantation.com/"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Southern Oklahoma Land Brokers",
+  "slug": "southern-oklahoma-land-brokers",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "453 West Mississippi Ave",
+    "city": "Atoka",
+    "region": "OK",
+    "postalCode": "74525"
+  },
+  "lat": 34.3445,
+  "lng": -96.1418,
+  "phone": "(580) 364-7818",
+  "website": "https://southernoklahomalandbrokers.com/",
+  "sameAs": [],
+  "summary": "Full-service land brokerage in Atoka handling farm, ranch, hunting and recreational properties across southern Oklahoma, with a focus on larger acreage tracts that have creeks, rivers or lakes.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://southernoklahomalandbrokers.com/contact/"
+}

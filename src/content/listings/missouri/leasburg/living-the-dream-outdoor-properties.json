@@ -1,0 +1,30 @@
+{
+  "name": "Living the Dream Outdoor Properties",
+  "slug": "living-the-dream-outdoor-properties",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "6485 N Service Rd W",
+    "city": "Leasburg",
+    "region": "MO",
+    "postalCode": "65535"
+  },
+  "lat": 38.092,
+  "lng": -91.2965,
+  "phone": "(855) 289-3478",
+  "website": "https://livingthedreamland.com/",
+  "sameAs": [],
+  "summary": "Land brokerage headquartered in Leasburg selling farms, ranches, hunting and waterfront land in Missouri and several neighboring states, with auction services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://livingthedreamland.com/"
+}

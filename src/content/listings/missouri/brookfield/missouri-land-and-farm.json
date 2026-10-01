@@ -1,0 +1,30 @@
+{
+  "name": "Missouri Land & Farm",
+  "slug": "missouri-land-and-farm",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "216 North Main Street",
+    "city": "Brookfield",
+    "region": "MO",
+    "postalCode": "64628"
+  },
+  "lat": 39.7846,
+  "lng": -93.0719,
+  "phone": "(660) 258-3185",
+  "website": "https://missourilandandfarm.com/",
+  "sameAs": [],
+  "summary": "Brookfield office marketing farmland, hunting land, lake property and land auctions in north-central Missouri, along with farm and hunting leases.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://missourilandandfarm.com/"
+}

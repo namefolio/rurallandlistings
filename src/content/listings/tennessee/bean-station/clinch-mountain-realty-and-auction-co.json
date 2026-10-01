@@ -1,0 +1,84 @@
+{
+  "name": "Clinch Mountain Realty And Auction Co.",
+  "slug": "clinch-mountain-realty-and-auction-co",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "3736 Hwy 25e",
+    "city": "Bean Station",
+    "region": "TN",
+    "postalCode": "37708"
+  },
+  "lat": 36.3249,
+  "lng": -83.3142,
+  "phone": "(865) 993-5263",
+  "website": "https://ucclinchmountainrealty.com/",
+  "sameAs": [],
+  "summary": "Bean Station realty and auction company marketing farms, hunting land, timber tracts, country homes and mountain property throughout upper East Tennessee.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions"
+    ]
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Grainger County"
+    },
+    {
+      "state": "TN",
+      "county": "Hawkins County"
+    },
+    {
+      "state": "TN",
+      "county": "Sullivan County"
+    },
+    {
+      "state": "TN",
+      "county": "Hancock County"
+    },
+    {
+      "state": "TN",
+      "county": "Claiborne County"
+    },
+    {
+      "state": "TN",
+      "county": "Greene County"
+    },
+    {
+      "state": "TN",
+      "county": "Hamblen County"
+    },
+    {
+      "state": "TN",
+      "county": "Polk County"
+    },
+    {
+      "state": "TN",
+      "county": "Johnson County"
+    },
+    {
+      "state": "TN",
+      "county": "Union County"
+    },
+    {
+      "state": "TN",
+      "county": "Unicoi County"
+    },
+    {
+      "state": "TN",
+      "county": "Carter County"
+    },
+    {
+      "state": "TN",
+      "county": "Blount County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://ucclinchmountainrealty.com/"
+}

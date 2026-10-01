@@ -1,0 +1,30 @@
+{
+  "name": "Greene Forest and Farm",
+  "slug": "greene-forest-and-farm",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "640 Hwy 49 N",
+    "city": "Americus",
+    "region": "GA",
+    "postalCode": "31709"
+  },
+  "lat": 32.0404,
+  "lng": -84.2153,
+  "phone": "(229) 924-9048",
+  "website": "https://www.greeneforestandfarm.com/",
+  "sameAs": [],
+  "summary": "Americus real estate firm that buys, sells and manages farm and timberland properties, including hunting tracts, in southwest Georgia and Alabama.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "hunting-recreational"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.greeneforestandfarm.com/"
+}

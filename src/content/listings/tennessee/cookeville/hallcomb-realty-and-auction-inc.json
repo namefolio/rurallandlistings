@@ -1,0 +1,53 @@
+{
+  "name": "Hallcomb Realty & Auction Inc.",
+  "slug": "hallcomb-realty-and-auction-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "801 S Willow Ave",
+    "city": "Cookeville",
+    "region": "TN",
+    "postalCode": "38501"
+  },
+  "lat": 36.2178,
+  "lng": -85.5423,
+  "phone": "(931) 526-7718",
+  "website": "https://www.cookevilletn-realestate.com/",
+  "sameAs": [],
+  "summary": "Cookeville realty and auction firm listing farms, hunting and recreational land and country homes in the Upper Cumberland region.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Overton County"
+    },
+    {
+      "state": "TN",
+      "county": "White County"
+    },
+    {
+      "state": "TN",
+      "county": "Putnam County"
+    },
+    {
+      "state": "TN",
+      "county": "Morgan County"
+    },
+    {
+      "state": "TN",
+      "county": "Jackson County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.cookevilletn-realestate.com/contactus.htm"
+}

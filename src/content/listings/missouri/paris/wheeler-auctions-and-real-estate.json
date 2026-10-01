@@ -1,0 +1,27 @@
+{
+  "name": "Wheeler Auctions & Real Estate",
+  "slug": "wheeler-auctions-and-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "23101 Highway 24",
+    "city": "Paris",
+    "region": "MO",
+    "postalCode": "65275"
+  },
+  "lat": 39.4932,
+  "lng": -92.0113,
+  "phone": "(660) 327-5890",
+  "website": "https://wheelerauctions.com/",
+  "sameAs": [],
+  "summary": "Auction and real estate company based in Paris, Missouri, conducting land, farm and ranch real estate auctions as well as farm machinery sales in Missouri and nearby states.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "land-auctions"
+    ]
+  },
+  "agentType": "auctioneer",
+  "lastUpdated": "2026-10-01",
+  "source": "https://wheelerauctions.com/contact-us/"
+}

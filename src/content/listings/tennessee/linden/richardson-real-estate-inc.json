@@ -1,0 +1,54 @@
+{
+  "name": "Richardson Real Estate, Inc.",
+  "slug": "richardson-real-estate-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "227 W. Main St.",
+    "city": "Linden",
+    "region": "TN",
+    "postalCode": "37096"
+  },
+  "lat": 35.5944,
+  "lng": -87.8567,
+  "phone": "(931) 589-2455",
+  "website": "https://www.lindentnrealestate.com/",
+  "sameAs": [],
+  "summary": "Linden office selling farms, hunting and recreational acreage, timberland and riverfront property in Perry County and neighboring counties, with auction services.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Perry County"
+    },
+    {
+      "state": "TN",
+      "county": "Wayne County"
+    },
+    {
+      "state": "TN",
+      "county": "Lewis County"
+    },
+    {
+      "state": "TN",
+      "county": "Humphreys County"
+    },
+    {
+      "state": "TN",
+      "county": "Decatur County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.lindentnrealestate.com/"
+}

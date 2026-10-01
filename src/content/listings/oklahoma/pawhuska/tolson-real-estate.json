@@ -1,0 +1,31 @@
+{
+  "name": "Tolson Real Estate",
+  "slug": "tolson-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "211 East Main Street",
+    "city": "Pawhuska",
+    "region": "OK",
+    "postalCode": "74056"
+  },
+  "lat": 36.6904,
+  "lng": -96.3121,
+  "phone": "(918) 287-2630",
+  "website": "https://www.tolsonrealestate.com/",
+  "sameAs": [],
+  "summary": "Locally owned Pawhuska real estate office dating to 1905 that handles acreage along with residential and commercial property in Osage County.",
+  "attributes": {
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "OK",
+      "county": "Osage County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.tolsonrealestate.com/"
+}

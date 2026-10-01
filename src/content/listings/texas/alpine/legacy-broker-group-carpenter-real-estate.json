@@ -1,0 +1,43 @@
+{
+  "name": "Legacy Broker Group | Carpenter Real Estate",
+  "slug": "legacy-broker-group-carpenter-real-estate",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "708 E Ave East, Ste 6226",
+    "city": "Alpine",
+    "region": "TX",
+    "postalCode": "79830"
+  },
+  "lat": 30.2631,
+  "lng": -103.6541,
+  "phone": "(432) 837-3325",
+  "website": "https://www.legacybrokergroup.com/texas/locations/alpine-far-west-texas/",
+  "sameAs": [],
+  "summary": "Far West Texas office in Alpine that helps buyers and sellers with working ranches, raw land and homes around Alpine, Fort Davis and Marfa.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "Legacy Broker Group",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TX",
+      "county": "Brewster County"
+    },
+    {
+      "state": "TX",
+      "county": "Jeff Davis County"
+    },
+    {
+      "state": "TX",
+      "county": "Presidio County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.legacybrokergroup.com/texas/locations/alpine-far-west-texas/"
+}

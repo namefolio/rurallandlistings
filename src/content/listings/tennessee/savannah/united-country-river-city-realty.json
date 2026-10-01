@@ -1,0 +1,58 @@
+{
+  "name": "United Country River City Realty",
+  "slug": "united-country-river-city-realty",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "1465 Florence Rd",
+    "city": "Savannah",
+    "region": "TN",
+    "postalCode": "38372"
+  },
+  "lat": 35.2023,
+  "lng": -88.2005,
+  "phone": "(731) 925-7900",
+  "website": "https://www.savannah-tn-realestate.com/",
+  "sameAs": [],
+  "summary": "Savannah brokerage selling farms, hunting and timber property, equestrian farms and riverfront land in Hardin County and nearby Southwest Tennessee counties.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TN",
+      "county": "Hardin County"
+    },
+    {
+      "state": "TN",
+      "county": "Chester County"
+    },
+    {
+      "state": "TN",
+      "county": "Henderson County"
+    },
+    {
+      "state": "TN",
+      "county": "McNairy County"
+    },
+    {
+      "state": "TN",
+      "county": "Hardeman County"
+    },
+    {
+      "state": "TN",
+      "county": "Decatur County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.savannah-tn-realestate.com/index.html"
+}

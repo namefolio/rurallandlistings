@@ -1,0 +1,29 @@
+{
+  "name": "Habitat Land Company",
+  "slug": "habitat-land-company",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "418 E Booth Road",
+    "city": "Searcy",
+    "region": "AR",
+    "postalCode": "72143"
+  },
+  "lat": 35.2436,
+  "lng": -91.7317,
+  "phone": "(870) 830-5263",
+  "website": "https://habitatlandcompany.com/",
+  "sameAs": [],
+  "summary": "Searcy-based land brokerage selling Arkansas rural property including farmland, timberland, waterfowl and deer hunting tracts, and cabins, with a conservation-minded approach.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "timberland",
+      "hunting-recreational"
+    ],
+    "worksWithSellers": true
+  },
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://habitatlandcompany.com/"
+}

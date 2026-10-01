@@ -1,0 +1,61 @@
+{
+  "name": "United Country Hudson Properties",
+  "slug": "united-country-hudson-properties",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "215 E. Main St.",
+    "city": "Sonora",
+    "region": "TX",
+    "postalCode": "76950"
+  },
+  "lat": 30.5558,
+  "lng": -100.6307,
+  "phone": "(325) 387-6115",
+  "website": "https://www.unitedcountryhudsonproperties.com",
+  "sameAs": [],
+  "summary": "Sonora brokerage selling ranches, hunting properties, land and homes with acreage where West Texas meets the Hill Country, and also conducting auctions.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "land-auctions"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "TX",
+      "county": "Sutton County"
+    },
+    {
+      "state": "TX",
+      "county": "Crockett County"
+    },
+    {
+      "state": "TX",
+      "county": "Schleicher County"
+    },
+    {
+      "state": "TX",
+      "county": "Edwards County"
+    },
+    {
+      "state": "TX",
+      "county": "Val Verde County"
+    },
+    {
+      "state": "TX",
+      "county": "Kimble County"
+    },
+    {
+      "state": "TX",
+      "county": "Tom Green County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.unitedcountryhudsonproperties.com/index.html"
+}

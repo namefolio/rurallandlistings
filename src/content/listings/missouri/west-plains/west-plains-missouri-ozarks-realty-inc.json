@@ -1,0 +1,69 @@
+{
+  "name": "West Plains Missouri Ozarks Realty, Inc.",
+  "slug": "west-plains-missouri-ozarks-realty-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "3494 N. Hwy 63",
+    "city": "West Plains",
+    "region": "MO",
+    "postalCode": "65775"
+  },
+  "lat": 36.7284,
+  "lng": -91.8717,
+  "phone": "(417) 256-1000",
+  "website": "https://www.west-plains-missouri.com/",
+  "sameAs": [],
+  "summary": "United Country office in West Plains, with a Gainesville branch, marketing farms, ranches, hunting land, timber and recreational acreage in the south-central Missouri Ozarks.",
+  "attributes": {
+    "specialties": [
+      "farms-ranches",
+      "hunting-recreational",
+      "timberland"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "United Country Real Estate",
+  "agentType": "broker",
+  "countiesServed": [
+    {
+      "state": "MO",
+      "county": "Howell County"
+    },
+    {
+      "state": "MO",
+      "county": "Texas County"
+    },
+    {
+      "state": "MO",
+      "county": "Ozark County"
+    },
+    {
+      "state": "MO",
+      "county": "Douglas County"
+    },
+    {
+      "state": "MO",
+      "county": "Oregon County"
+    },
+    {
+      "state": "MO",
+      "county": "Shannon County"
+    },
+    {
+      "state": "MO",
+      "county": "Wright County"
+    },
+    {
+      "state": "MO",
+      "county": "Taney County"
+    },
+    {
+      "state": "MO",
+      "county": "Greene County"
+    }
+  ],
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.west-plains-missouri.com/index.html"
+}

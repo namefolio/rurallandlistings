@@ -1,0 +1,30 @@
+{
+  "name": "Mossy Oak Properties Stuttgart Land & Farm",
+  "slug": "mossy-oak-properties-stuttgart-land-and-farm",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "2309 S Main Street",
+    "city": "Stuttgart",
+    "region": "AR",
+    "postalCode": "72160"
+  },
+  "lat": 34.4854,
+  "lng": -91.5487,
+  "phone": "(501) 278-5330",
+  "website": "https://www.mossyoakproperties.com/office/mossy-oak-properties-stuttgart-land-farm/",
+  "sameAs": [],
+  "summary": "Stuttgart office of Mossy Oak Properties handling hunting land, farms and recreational acreage in the Grand Prairie and surrounding east-central Arkansas.",
+  "attributes": {
+    "specialties": [
+      "hunting-recreational",
+      "farms-ranches"
+    ],
+    "worksWithBuyers": true,
+    "worksWithSellers": true
+  },
+  "brokerage": "Mossy Oak Properties",
+  "agentType": "broker",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.mossyoakproperties.com/office/mossy-oak-properties-stuttgart-land-farm/"
+}

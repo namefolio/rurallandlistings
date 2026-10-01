@@ -1,0 +1,26 @@
+{
+  "name": "Ford Brothers, Inc.",
+  "slug": "ford-brothers-inc",
+  "status": "published",
+  "tier": "basic",
+  "address": {
+    "street": "3375 East Highway 80",
+    "city": "Somerset",
+    "region": "KY",
+    "postalCode": "42501"
+  },
+  "lat": 37.1029,
+  "lng": -84.5443,
+  "phone": "(606) 679-2212",
+  "website": "https://www.fordbrothersinc.com/",
+  "sameAs": [],
+  "summary": "Somerset auction company, operating since 1965, that conducts real estate and land auctions across south central and southeastern Kentucky.",
+  "attributes": {
+    "specialties": [
+      "land-auctions"
+    ]
+  },
+  "agentType": "auctioneer",
+  "lastUpdated": "2026-10-01",
+  "source": "https://www.fordbrothersinc.com/"
+}
